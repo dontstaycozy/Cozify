@@ -65,9 +65,6 @@
     <Compile Include="Guide.Designer.cs">
       <DependentUpon>Guide.cs</DependentUpon>
     </Compile>
-    <Compile Include="LockedAspectRatioForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="LOGIN.cs">
       <SubType>Form</SubType>
     </Compile>
