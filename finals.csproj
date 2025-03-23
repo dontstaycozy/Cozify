@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{31DD88FE-C168-4EF8-98A4-D4C246F1A87E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Cozify</RootNamespace>
+    <AssemblyName>Cozify</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AntdUI, Version=1.9.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\AntdUI.1.9.5\lib\net46\AntdUI.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.4.0.0, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>packages\MetroModernUI.1.4.0.0\lib\net\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Guide.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Guide.Designer.cs">
+      <DependentUpon>Guide.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LockedAspectRatioForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LOGIN.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LOGIN.Designer.cs">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginReg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginReg.Designer.cs">
+      <DependentUpon>LoginReg.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MAIN_HUB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MAIN_HUB.Designer.cs">
+      <DependentUpon>MAIN_HUB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JOURNAL.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JOURNAL.Designer.cs">
+      <DependentUpon>JOURNAL.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HABIT_CHECKER.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HABIT_CHECKER.Designer.cs">
+      <DependentUpon>HABIT_CHECKER.cs</DependentUpon>
+    </Compile>
+    <Compile Include="POMODORO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="POMODORO.Designer.cs">
+      <DependentUpon>POMODORO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="STATS.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="STATS.Designer.cs">
+      <DependentUpon>STATS.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TO_DO_LIST.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TO_DO_LIST.Designer.cs">
+      <DependentUpon>TO_DO_LIST.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Guide.resx">
+      <DependentUpon>Guide.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HABIT_CHECKER.resx">
+      <DependentUpon>HABIT_CHECKER.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LOGIN.resx">
+      <DependentUpon>LOGIN.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JOURNAL.resx">
+      <DependentUpon>JOURNAL.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginReg.resx">
+      <DependentUpon>LoginReg.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MAIN_HUB.resx">
+      <DependentUpon>MAIN_HUB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="POMODORO.resx">
+      <DependentUpon>POMODORO.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="STATS.resx">
+      <DependentUpon>STATS.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TO_DO_LIST.resx">
+      <DependentUpon>TO_DO_LIST.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\143053_what_am_i_doing.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ALL OF THE WEIRDEST ANIMAL CAFÉS IN SEOUL.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cat roof.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\girl window.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\rainy shop.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\234646_A_Gentle_Hour_of_Bliss.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Automation.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circled Play.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Clipboard.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Close Window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Journal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Lotus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Next.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open Door.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Pause_Button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Previous.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Repeat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Test Passed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tomato.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Minimize Window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Minimize Window1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Checked Checkbox.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Checked Checkbox1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Checked Checkbox2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maximize Window.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maximize Window1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maximize Window 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maximize Window 2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logout.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Minimize Window 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Close 1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Help.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Broom.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Reset.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circled Play1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\lake.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\004208_theres_a_cat_on_my_hat.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Open Door1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ana-luiza-speda-raposinha.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gray-sprunki.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bits-8bits.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Cat Profile.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
