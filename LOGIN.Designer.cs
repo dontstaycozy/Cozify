@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.tbxUsername = new System.Windows.Forms.TextBox();
+            this.tbxPassword = new System.Windows.Forms.TextBox();
+            this.tbxConfirmPassword = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnRegisterLogin = new AntdUI.Button();
             this.label3 = new AntdUI.Label();
@@ -42,6 +42,8 @@
             this.btnLoginExit = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lnklblLogin = new System.Windows.Forms.LinkLabel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -59,47 +61,42 @@
             this.label1.TabIndex = 1;
             this.label1.Text = "WELCOME TO COZIFY";
             // 
-            // textBox1
+            // tbxUsername
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.textBox1.ForeColor = System.Drawing.Color.White;
-            this.textBox1.Location = new System.Drawing.Point(574, 261);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(1);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(363, 52);
-            this.textBox1.TabIndex = 2;
-            this.textBox1.Text = "comferdable";
+            this.tbxUsername.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
+            this.tbxUsername.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbxUsername.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.tbxUsername.ForeColor = System.Drawing.Color.White;
+            this.tbxUsername.Location = new System.Drawing.Point(574, 261);
+            this.tbxUsername.Margin = new System.Windows.Forms.Padding(1);
+            this.tbxUsername.Multiline = true;
+            this.tbxUsername.Name = "tbxUsername";
+            this.tbxUsername.Size = new System.Drawing.Size(363, 52);
+            this.tbxUsername.TabIndex = 2;
             // 
-            // textBox2
+            // tbxPassword
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox2.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.textBox2.ForeColor = System.Drawing.Color.White;
-            this.textBox2.Location = new System.Drawing.Point(574, 353);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(1);
-            this.textBox2.Multiline = true;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(363, 52);
-            this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "comferdable";
+            this.tbxPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
+            this.tbxPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbxPassword.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.tbxPassword.ForeColor = System.Drawing.Color.White;
+            this.tbxPassword.Location = new System.Drawing.Point(574, 365);
+            this.tbxPassword.Margin = new System.Windows.Forms.Padding(1);
+            this.tbxPassword.Name = "tbxPassword";
+            this.tbxPassword.Size = new System.Drawing.Size(363, 23);
+            this.tbxPassword.TabIndex = 3;
             // 
-            // textBox3
+            // tbxConfirmPassword
             // 
-            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox3.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.textBox3.ForeColor = System.Drawing.SystemColors.MenuBar;
-            this.textBox3.Location = new System.Drawing.Point(574, 447);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(1);
-            this.textBox3.Multiline = true;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(363, 52);
-            this.textBox3.TabIndex = 4;
-            this.textBox3.Text = "S";
+            this.tbxConfirmPassword.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
+            this.tbxConfirmPassword.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbxConfirmPassword.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.tbxConfirmPassword.ForeColor = System.Drawing.SystemColors.MenuBar;
+            this.tbxConfirmPassword.Location = new System.Drawing.Point(574, 468);
+            this.tbxConfirmPassword.Margin = new System.Windows.Forms.Padding(1);
+            this.tbxConfirmPassword.Name = "tbxConfirmPassword";
+            this.tbxConfirmPassword.Size = new System.Drawing.Size(363, 23);
+            this.tbxConfirmPassword.TabIndex = 4;
             // 
             // label2
             // 
@@ -140,7 +137,7 @@
             // 
             this.label4.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label4.Location = new System.Drawing.Point(574, 326);
+            this.label4.Location = new System.Drawing.Point(574, 338);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(163, 23);
             this.label4.TabIndex = 13;
@@ -150,7 +147,7 @@
             // 
             this.label5.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label5.Location = new System.Drawing.Point(574, 420);
+            this.label5.Location = new System.Drawing.Point(574, 441);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(212, 23);
             this.label5.TabIndex = 14;
@@ -158,7 +155,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(905, 320);
+            this.button1.Location = new System.Drawing.Point(905, 330);
             this.button1.Margin = new System.Windows.Forms.Padding(1);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(32, 31);
@@ -219,12 +216,31 @@
             this.lnklblLogin.Text = "Login";
             this.lnklblLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(905, 433);
+            this.button2.Margin = new System.Windows.Forms.Padding(1);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(32, 31);
+            this.button2.TabIndex = 20;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
+            this.panel1.Location = new System.Drawing.Point(574, 261);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(363, 52);
+            this.panel1.TabIndex = 21;
+            // 
             // LOGIN
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(989, 650);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.lnklblLogin);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.btnLoginExit);
@@ -234,10 +250,11 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnRegisterLogin);
             this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tbxConfirmPassword);
+            this.Controls.Add(this.tbxPassword);
+            this.Controls.Add(this.tbxUsername);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(1);
@@ -257,9 +274,9 @@
 
         #endregion
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.TextBox tbxUsername;
+        private System.Windows.Forms.TextBox tbxPassword;
+        private System.Windows.Forms.TextBox tbxConfirmPassword;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.PictureBox pictureBox1;
         private AntdUI.Button btnRegisterLogin;
@@ -270,6 +287,8 @@
         private System.Windows.Forms.Button btnLoginExit;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.LinkLabel lnklblLogin;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Panel panel1;
     }
 }
 
