@@ -17,8 +17,6 @@ namespace finals
         public LOGIN()
         {
             InitializeComponent();
-            tbxPassword.PasswordChar = '●';
-            tbxConfirmPassword.PasswordChar = '●';
         }
           
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) 
