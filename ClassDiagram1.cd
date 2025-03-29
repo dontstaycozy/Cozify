@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Cozify.Guide" Collapsed="true">
+    <Position X="8.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAhAAACAAABCAACCAQAACAAAAAAAAAAAAAQBQACA=</HashCode>
+      <FileName>Guide.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="finals.HABIT_CHECKER" Collapsed="true">
+    <Position X="7.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEARgAAACIAABAAACCAAAACQAAAAAAAAABAAQAQCCA=</HashCode>
+      <FileName>HABIT_CHECKER.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="finals.JOURNAL" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAgAAACAAAAAAAyCAAAACAAAACAAAAAAAAYAQAAA=</HashCode>
+      <FileName>JOURNAL.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="finals.LOGIN" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAABgCgAQBgAAACACAACgAAgAkAAAAAAAQBAACQ=</HashCode>
+      <FileName>LOGIN.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cozify.LoginReg" Collapsed="true">
+    <Position X="5.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAQCAAAJQAAACAAAACAAAACgAAEAAAAABAAAA=</HashCode>
+      <FileName>LoginReg.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="finals.MAIN_HUB" Collapsed="true">
+    <Position X="8.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IESAqAASrjSAAbEQASCcAqgKAACNCAAEgFJEAQARhCA=</HashCode>
+      <FileName>MAIN_HUB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="finals.POMODORO" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAEACAhCBBQACCEAEFCAAAAAAJGQAQAAQBQIAA=</HashCode>
+      <FileName>POMODORO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cozify.STATS" Collapsed="true">
+    <Position X="5.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAAACCAAAACAAAAABAAAAAAAQAQAAA=</HashCode>
+      <FileName>STATS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="finals.TO_DO_LIST" Collapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAACAACBAAACCAAAECQAAAAIAAAAAABQAQEAA=</HashCode>
+      <FileName>TO_DO_LIST.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

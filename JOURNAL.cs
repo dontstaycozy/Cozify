@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace finals
+namespace finals//saves upon closing using database
 {
     public partial class JOURNAL: Form
     {
@@ -34,6 +34,11 @@ namespace finals
             }
         }
         private void btnAddJournalEntry_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnSaveEntry_Click(object sender, EventArgs e)
         {
 
         }

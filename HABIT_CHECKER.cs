@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace finals
+namespace finals//saves upon closing using database
 {
     public partial class HABIT_CHECKER: Form
     {
