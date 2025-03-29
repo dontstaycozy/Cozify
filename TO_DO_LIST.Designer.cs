@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.tblToDoList = new System.Windows.Forms.TableLayoutPanel();
+            this.txtHabitInput = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnClearList = new System.Windows.Forms.Button();
             this.btnAddToDoEntry = new AntdUI.Button();
-            this.tblToDoList = new System.Windows.Forms.TableLayoutPanel();
-            this.txtHabitInput = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.tblToDoList.SuspendLayout();
             this.SuspendLayout();
@@ -47,42 +47,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(327, 528);
             this.panel1.TabIndex = 0;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Pixeltype", 24F);
-            this.label1.Location = new System.Drawing.Point(12, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(137, 26);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "To Do List:";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TO_DO_LIST_MouseDown);
-            // 
-            // btnClearList
-            // 
-            this.btnClearList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClearList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.btnClearList.Image = global::Cozify.Properties.Resources.Broom;
-            this.btnClearList.Location = new System.Drawing.Point(12, 601);
-            this.btnClearList.Name = "btnClearList";
-            this.btnClearList.Size = new System.Drawing.Size(56, 60);
-            this.btnClearList.TabIndex = 6;
-            this.btnClearList.UseVisualStyleBackColor = true;
-            this.btnClearList.Click += new System.EventHandler(this.btnClearList_Click);
-            // 
-            // btnAddToDoEntry
-            // 
-            this.btnAddToDoEntry.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.btnAddToDoEntry.Font = new System.Drawing.Font("Pixeltype", 25F);
-            this.btnAddToDoEntry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnAddToDoEntry.Icon = global::Cozify.Properties.Resources.Plus;
-            this.btnAddToDoEntry.Location = new System.Drawing.Point(74, 601);
-            this.btnAddToDoEntry.Name = "btnAddToDoEntry";
-            this.btnAddToDoEntry.Size = new System.Drawing.Size(265, 60);
-            this.btnAddToDoEntry.TabIndex = 5;
-            this.btnAddToDoEntry.Text = "Add";
-            this.btnAddToDoEntry.Click += new System.EventHandler(this.btnAddToDoEntry_Click);
             // 
             // tblToDoList
             // 
@@ -112,6 +76,42 @@
             this.txtHabitInput.Name = "txtHabitInput";
             this.txtHabitInput.Size = new System.Drawing.Size(38, 39);
             this.txtHabitInput.TabIndex = 0;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Pixeltype", 24F);
+            this.label1.Location = new System.Drawing.Point(12, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(196, 26);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "(user)\'s Tasks";
+            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TO_DO_LIST_MouseDown);
+            // 
+            // btnClearList
+            // 
+            this.btnClearList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnClearList.Image = global::Cozify.Properties.Resources.Broom;
+            this.btnClearList.Location = new System.Drawing.Point(12, 601);
+            this.btnClearList.Name = "btnClearList";
+            this.btnClearList.Size = new System.Drawing.Size(56, 60);
+            this.btnClearList.TabIndex = 6;
+            this.btnClearList.UseVisualStyleBackColor = true;
+            this.btnClearList.Click += new System.EventHandler(this.btnClearList_Click);
+            // 
+            // btnAddToDoEntry
+            // 
+            this.btnAddToDoEntry.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnAddToDoEntry.Font = new System.Drawing.Font("Pixeltype", 25F);
+            this.btnAddToDoEntry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnAddToDoEntry.Icon = global::Cozify.Properties.Resources.Plus;
+            this.btnAddToDoEntry.Location = new System.Drawing.Point(74, 601);
+            this.btnAddToDoEntry.Name = "btnAddToDoEntry";
+            this.btnAddToDoEntry.Size = new System.Drawing.Size(265, 60);
+            this.btnAddToDoEntry.TabIndex = 5;
+            this.btnAddToDoEntry.Text = "Add";
+            this.btnAddToDoEntry.Click += new System.EventHandler(this.btnAddToDoEntry_Click);
             // 
             // TO_DO_LIST
             // 
