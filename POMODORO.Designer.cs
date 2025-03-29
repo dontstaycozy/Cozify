@@ -36,10 +36,10 @@
             this.label6 = new AntdUI.Label();
             this.titlePomo = new AntdUI.Label();
             this.tblLayoutPomo = new System.Windows.Forms.TableLayoutPanel();
-            this.lblTimer = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnResetPomo = new System.Windows.Forms.Button();
             this.btnStartPomo = new System.Windows.Forms.Button();
+            this.lblTimer = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.PomoMSG = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBreak)).BeginInit();
@@ -127,7 +127,6 @@
             this.titlePomo.Size = new System.Drawing.Size(275, 35);
             this.titlePomo.TabIndex = 12;
             this.titlePomo.Text = "Pomodoro Timer";
-            this.titlePomo.MouseDown += new System.Windows.Forms.MouseEventHandler(this.POMODORO_MouseDown);
             // 
             // tblLayoutPomo
             // 
@@ -142,27 +141,6 @@
             this.tblLayoutPomo.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tblLayoutPomo.Size = new System.Drawing.Size(127, 67);
             this.tblLayoutPomo.TabIndex = 15;
-            // 
-            // lblTimer
-            // 
-            this.lblTimer.AutoSize = true;
-            this.lblTimer.Font = new System.Drawing.Font("Pixeltype", 30F);
-            this.lblTimer.ForeColor = System.Drawing.Color.White;
-            this.lblTimer.Location = new System.Drawing.Point(303, 34);
-            this.lblTimer.Name = "lblTimer";
-            this.lblTimer.Size = new System.Drawing.Size(109, 31);
-            this.lblTimer.TabIndex = 16;
-            this.lblTimer.Text = "00: 00";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Cozify.Properties.Resources.bits_8bits;
-            this.pictureBox1.Location = new System.Drawing.Point(277, 101);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(111, 100);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox1.TabIndex = 17;
-            this.pictureBox1.TabStop = false;
             // 
             // btnResetPomo
             // 
@@ -189,6 +167,27 @@
             this.btnStartPomo.TabIndex = 14;
             this.btnStartPomo.UseVisualStyleBackColor = true;
             this.btnStartPomo.Click += new System.EventHandler(this.btnStartPomo_Click);
+            // 
+            // lblTimer
+            // 
+            this.lblTimer.AutoSize = true;
+            this.lblTimer.Font = new System.Drawing.Font("Pixeltype", 30F);
+            this.lblTimer.ForeColor = System.Drawing.Color.White;
+            this.lblTimer.Location = new System.Drawing.Point(303, 34);
+            this.lblTimer.Name = "lblTimer";
+            this.lblTimer.Size = new System.Drawing.Size(109, 31);
+            this.lblTimer.TabIndex = 16;
+            this.lblTimer.Text = "00: 00";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Cozify.Properties.Resources.bits_8bits;
+            this.pictureBox1.Location = new System.Drawing.Point(277, 101);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(111, 100);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
             // 
             // PomoMSG
             // 
@@ -220,7 +219,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "POMODORO";
             this.Load += new System.EventHandler(this.POMODORO_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.POMODORO_MouseDown);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numBreak)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSession)).EndInit();

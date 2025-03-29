@@ -206,7 +206,6 @@
             this.label6.TabIndex = 6;
             this.label6.Text = "Help";
             this.label6.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
-            this.label6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Guide_MouseDown);
             // 
             // Guide
             // 
@@ -221,7 +220,6 @@
             this.Name = "Guide";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Guide";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Guide_MouseDown);
             this.panel1.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();

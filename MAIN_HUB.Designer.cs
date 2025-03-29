@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.label1 = new System.Windows.Forms.Label();
+            this.WelcomeLabel = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pnlTime = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
@@ -79,19 +79,19 @@
             this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // WelcomeLabel
             // 
-            this.label1.AutoSize = true;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Font = new System.Drawing.Font("Pixeltype", 36F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(0, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(424, 37);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "(insert name)\'s space";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MAIN_HUB_MouseDown);
+            this.WelcomeLabel.AutoSize = true;
+            this.WelcomeLabel.Dock = System.Windows.Forms.DockStyle.Left;
+            this.WelcomeLabel.Font = new System.Drawing.Font("Pixeltype", 36F);
+            this.WelcomeLabel.ForeColor = System.Drawing.Color.White;
+            this.WelcomeLabel.Location = new System.Drawing.Point(0, 0);
+            this.WelcomeLabel.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.WelcomeLabel.Name = "WelcomeLabel";
+            this.WelcomeLabel.Size = new System.Drawing.Size(424, 37);
+            this.WelcomeLabel.TabIndex = 0;
+            this.WelcomeLabel.Text = "(insert name)\'s space";
+            this.WelcomeLabel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MAIN_HUB_MouseDown);
             // 
             // timer1
             // 
@@ -350,7 +350,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel4.Controls.Add(this.label1);
+            this.panel4.Controls.Add(this.WelcomeLabel);
             this.panel4.Location = new System.Drawing.Point(23, 12);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(697, 53);
@@ -542,7 +542,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label WelcomeLabel;
         private System.Windows.Forms.Button btnExitMainHub;
         private System.Windows.Forms.Button btnHabitChecker;
         private System.Windows.Forms.Button btnPomo;

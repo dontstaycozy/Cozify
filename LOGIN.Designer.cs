@@ -30,27 +30,28 @@
         {
             this.btnRegisterLogin = new AntdUI.Button();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btnRevealPassConfirm = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tbxPasswordConfirm = new System.Windows.Forms.TextBox();
             this.label5 = new AntdUI.Label();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new AntdUI.Label();
+            this.lnklblLogin = new System.Windows.Forms.LinkLabel();
             this.label2 = new AntdUI.Label();
+            this.label1 = new AntdUI.Label();
             this.panel7 = new System.Windows.Forms.Panel();
             this.panel8 = new System.Windows.Forms.Panel();
             this.tbxUsernameReg = new System.Windows.Forms.TextBox();
             this.label6 = new AntdUI.Label();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnRevealPass = new System.Windows.Forms.Button();
             this.panel6 = new System.Windows.Forms.Panel();
             this.tbxPassword = new System.Windows.Forms.TextBox();
             this.label4 = new AntdUI.Label();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.lnklblLogin = new System.Windows.Forms.LinkLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.btnRevealPass = new System.Windows.Forms.Button();
-            this.btnRevealPassConfirm = new System.Windows.Forms.Button();
             this.btnLoginExit = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.connectiontest = new AntdUI.Button();
             this.panel5.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -84,6 +85,22 @@
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(421, 108);
             this.panel5.TabIndex = 40;
+            // 
+            // btnRevealPassConfirm
+            // 
+            this.btnRevealPassConfirm.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnRevealPassConfirm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRevealPassConfirm.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRevealPassConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRevealPassConfirm.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnRevealPassConfirm.Image = global::Cozify.Properties.Resources.Closed_Eye;
+            this.btnRevealPassConfirm.Location = new System.Drawing.Point(340, 0);
+            this.btnRevealPassConfirm.Margin = new System.Windows.Forms.Padding(1);
+            this.btnRevealPassConfirm.Name = "btnRevealPassConfirm";
+            this.btnRevealPassConfirm.Size = new System.Drawing.Size(81, 56);
+            this.btnRevealPassConfirm.TabIndex = 42;
+            this.btnRevealPassConfirm.UseVisualStyleBackColor = false;
+            this.btnRevealPassConfirm.Click += new System.EventHandler(this.btnRevealPassConfirm_Click_1);
             // 
             // panel3
             // 
@@ -120,6 +137,7 @@
             // 
             // panel4
             // 
+            this.panel4.Controls.Add(this.connectiontest);
             this.panel4.Controls.Add(this.panel1);
             this.panel4.Controls.Add(this.panel7);
             this.panel4.Controls.Add(this.panel2);
@@ -143,16 +161,20 @@
             this.panel1.Size = new System.Drawing.Size(510, 83);
             this.panel1.TabIndex = 45;
             // 
-            // label1
+            // lnklblLogin
             // 
-            this.label1.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(50, 50);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(316, 30);
-            this.label1.TabIndex = 47;
-            this.label1.Text = "Already have an account?";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lnklblLogin.ActiveLinkColor = System.Drawing.Color.Silver;
+            this.lnklblLogin.AutoSize = true;
+            this.lnklblLogin.Font = new System.Drawing.Font("PixelSix10", 14F);
+            this.lnklblLogin.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(210)))), ((int)(((byte)(233)))));
+            this.lnklblLogin.Location = new System.Drawing.Point(352, 40);
+            this.lnklblLogin.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.lnklblLogin.Name = "lnklblLogin";
+            this.lnklblLogin.Size = new System.Drawing.Size(85, 30);
+            this.lnklblLogin.TabIndex = 48;
+            this.lnklblLogin.TabStop = true;
+            this.lnklblLogin.Text = "Login";
+            this.lnklblLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnklblLogin_LinkClicked);
             // 
             // label2
             // 
@@ -165,6 +187,17 @@
             this.label2.TabIndex = 46;
             this.label2.Text = "WELCOME TO COZIFY";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.label1.Location = new System.Drawing.Point(50, 50);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(316, 30);
+            this.label1.TabIndex = 47;
+            this.label1.Text = "Already have an account?";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // panel7
             // 
@@ -217,6 +250,22 @@
             this.panel2.Size = new System.Drawing.Size(421, 108);
             this.panel2.TabIndex = 43;
             // 
+            // btnRevealPass
+            // 
+            this.btnRevealPass.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnRevealPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnRevealPass.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnRevealPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRevealPass.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnRevealPass.Image = global::Cozify.Properties.Resources.Closed_Eye;
+            this.btnRevealPass.Location = new System.Drawing.Point(340, 0);
+            this.btnRevealPass.Margin = new System.Windows.Forms.Padding(1);
+            this.btnRevealPass.Name = "btnRevealPass";
+            this.btnRevealPass.Size = new System.Drawing.Size(81, 56);
+            this.btnRevealPass.TabIndex = 42;
+            this.btnRevealPass.UseVisualStyleBackColor = false;
+            this.btnRevealPass.Click += new System.EventHandler(this.btnRevealPass_Click_1);
+            // 
             // panel6
             // 
             this.panel6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
@@ -259,63 +308,6 @@
             this.panel10.Size = new System.Drawing.Size(510, 65);
             this.panel10.TabIndex = 46;
             // 
-            // lnklblLogin
-            // 
-            this.lnklblLogin.ActiveLinkColor = System.Drawing.Color.Silver;
-            this.lnklblLogin.AutoSize = true;
-            this.lnklblLogin.Font = new System.Drawing.Font("PixelSix10", 14F);
-            this.lnklblLogin.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(210)))), ((int)(((byte)(233)))));
-            this.lnklblLogin.Location = new System.Drawing.Point(352, 40);
-            this.lnklblLogin.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
-            this.lnklblLogin.Name = "lnklblLogin";
-            this.lnklblLogin.Size = new System.Drawing.Size(85, 30);
-            this.lnklblLogin.TabIndex = 48;
-            this.lnklblLogin.TabStop = true;
-            this.lnklblLogin.Text = "Login";
-            this.lnklblLogin.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnklblLogin_LinkClicked);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Cozify.Properties.Resources._234646_A_Gentle_Hour_of_Bliss;
-            this.pictureBox1.Location = new System.Drawing.Point(-442, 0);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(925, 650);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 28;
-            this.pictureBox1.TabStop = false;
-            // 
-            // btnRevealPass
-            // 
-            this.btnRevealPass.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnRevealPass.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnRevealPass.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRevealPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRevealPass.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnRevealPass.Image = global::Cozify.Properties.Resources.Closed_Eye;
-            this.btnRevealPass.Location = new System.Drawing.Point(340, 0);
-            this.btnRevealPass.Margin = new System.Windows.Forms.Padding(1);
-            this.btnRevealPass.Name = "btnRevealPass";
-            this.btnRevealPass.Size = new System.Drawing.Size(81, 56);
-            this.btnRevealPass.TabIndex = 42;
-            this.btnRevealPass.UseVisualStyleBackColor = false;
-            this.btnRevealPass.Click += new System.EventHandler(this.btnRevealPass_Click_1);
-            // 
-            // btnRevealPassConfirm
-            // 
-            this.btnRevealPassConfirm.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnRevealPassConfirm.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnRevealPassConfirm.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnRevealPassConfirm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRevealPassConfirm.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnRevealPassConfirm.Image = global::Cozify.Properties.Resources.Closed_Eye;
-            this.btnRevealPassConfirm.Location = new System.Drawing.Point(340, 0);
-            this.btnRevealPassConfirm.Margin = new System.Windows.Forms.Padding(1);
-            this.btnRevealPassConfirm.Name = "btnRevealPassConfirm";
-            this.btnRevealPassConfirm.Size = new System.Drawing.Size(81, 56);
-            this.btnRevealPassConfirm.TabIndex = 42;
-            this.btnRevealPassConfirm.UseVisualStyleBackColor = false;
-            this.btnRevealPassConfirm.Click += new System.EventHandler(this.btnRevealPassConfirm_Click_1);
-            // 
             // btnLoginExit
             // 
             this.btnLoginExit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -331,6 +323,25 @@
             this.btnLoginExit.TabIndex = 32;
             this.btnLoginExit.UseVisualStyleBackColor = false;
             this.btnLoginExit.Click += new System.EventHandler(this.btnLoginExit_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::Cozify.Properties.Resources._234646_A_Gentle_Hour_of_Bliss;
+            this.pictureBox1.Location = new System.Drawing.Point(-442, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(925, 650);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 28;
+            this.pictureBox1.TabStop = false;
+            // 
+            // connectiontest
+            // 
+            this.connectiontest.Location = new System.Drawing.Point(35, 542);
+            this.connectiontest.Name = "connectiontest";
+            this.connectiontest.Size = new System.Drawing.Size(75, 67);
+            this.connectiontest.TabIndex = 47;
+            this.connectiontest.Text = "button1";
+            this.connectiontest.Click += new System.EventHandler(this.connectiontest_Click);
             // 
             // LOGIN
             // 
@@ -390,6 +401,7 @@
         private AntdUI.Label label1;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.LinkLabel lnklblLogin;
+        private AntdUI.Button connectiontest;
     }
 }
 

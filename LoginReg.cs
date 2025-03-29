@@ -9,11 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.OleDb;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Cozify
 {
     public partial class LoginReg: Form
     {
+        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
+
         public LoginReg()
         {
             InitializeComponent();
@@ -21,9 +25,41 @@ namespace Cozify
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            MAIN_HUB mAIN_HUB = new MAIN_HUB();
-            mAIN_HUB.Show();
-            this.Hide();
+            string usernameLogin = tbxUsernameLogin.Text.Trim();
+            string passwordLogin = tbxPasswordLogin.Text.Trim();
+
+            /*/if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            {
+                MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }*/
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ? AND [Password] = ?";
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", usernameLogin);
+                    cmd.Parameters.AddWithValue("?", passwordLogin);
+
+                    int userExists = (int)cmd.ExecuteScalar();
+
+                    if (userExists > 0)
+                    {
+                        MessageBox.Show("Login Successful!", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        GlobalUser.LoggedInUsername = usernameLogin;
+                        MAIN_HUB mainHub = new MAIN_HUB();
+                        mainHub.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid Username or Password!", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+
         }
 
         private void centering()

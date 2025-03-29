@@ -11,25 +11,11 @@ using System.Windows.Forms;
 
 namespace Cozify
 {
-    public partial class STATS : Form
+    public partial class STATS : Base
     {
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        [DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
         public STATS()
         {
             InitializeComponent();
-            this.MouseDown += STAT_MouseDown;
-        }
-        private void STAT_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(this.Handle, 0xA1, 0x2, 0);
-            }
         }
     }
 }

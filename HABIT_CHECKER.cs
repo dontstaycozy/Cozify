@@ -26,12 +26,6 @@ namespace finals//saves upon closing using database
             this.MouseDown += HABIT_CHECKER_MouseDown;
         }
 
-        private void HABIT_CHECKER_Load(object sender, EventArgs e)
-        {
-            tblHabitChecker.Controls.Clear();
-            tblHabitChecker.RowCount = 0;
-        }
-
         private void HABIT_CHECKER_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
@@ -39,6 +33,14 @@ namespace finals//saves upon closing using database
                 ReleaseCapture();
                 SendMessage(this.Handle, 0xA1, 0x2, 0); // Dragging action
             }
+        }
+
+        private void HABIT_CHECKER_Load_1(object sender, EventArgs e)
+        {
+            tblHabitChecker.Controls.Clear();
+            tblHabitChecker.RowStyles.Clear();
+            tblHabitChecker.RowCount = 0;
+            //AddHabitRow();
         }
 
         private void btnAddHabit_Click(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace finals//saves upon closing using database
         {
 
             tblHabitChecker.RowCount++;
-            int rowIndex = tblHabitChecker.RowCount - 1; 
+            int rowIndex = tblHabitChecker.RowCount-1; 
 
             TextBox txtHabit = new TextBox
             {
@@ -61,7 +63,6 @@ namespace finals//saves upon closing using database
                 Anchor = AnchorStyles.Left | AnchorStyles.Right,
                 TextAlign = HorizontalAlignment.Left,
             };
-
             tblHabitChecker.Controls.Add(txtHabit, 1, rowIndex);
 
             for (int i = 2; i <= 8; i++)
@@ -89,7 +90,6 @@ namespace finals//saves upon closing using database
             };
 
             btnDelete.Click += (s, e) => DeleteHabitRow(rowIndex);
-
             tblHabitChecker.Controls.Add(btnDelete, 0, rowIndex);
             txtHabit.Focus();
         }
@@ -121,8 +121,9 @@ namespace finals//saves upon closing using database
                 }
             }
 
-            tblHabitChecker.RowCount--; // Decrease row count
+            tblHabitChecker.RowCount--;
         }
 
+        
     }
 }

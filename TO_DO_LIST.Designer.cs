@@ -86,7 +86,6 @@
             this.label1.Size = new System.Drawing.Size(196, 26);
             this.label1.TabIndex = 1;
             this.label1.Text = "(user)\'s Tasks";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TO_DO_LIST_MouseDown);
             // 
             // btnClearList
             // 
@@ -131,7 +130,6 @@
             this.Opacity = 0.9D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form5";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.TO_DO_LIST_MouseDown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tblToDoList.ResumeLayout(false);

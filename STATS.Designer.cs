@@ -50,7 +50,6 @@
             this.label1.Size = new System.Drawing.Size(301, 27);
             this.label1.TabIndex = 2;
             this.label1.Text = "(insert name)\'s Stats";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.STAT_MouseDown);
             // 
             // STATS
             // 
@@ -65,7 +64,6 @@
             this.Name = "STATS";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "STATS";
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.STAT_MouseDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

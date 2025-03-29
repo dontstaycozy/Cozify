@@ -56,7 +56,6 @@
             this.label1.Size = new System.Drawing.Size(1063, 55);
             this.label1.TabIndex = 0;
             this.label1.Text = "(insert user)\'s Habits";
-            this.label1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HABIT_CHECKER_MouseDown);
             // 
             // panel1
             // 
@@ -252,8 +251,7 @@
             this.Opacity = 0.9D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form4";
-            this.Load += new System.EventHandler(this.HABIT_CHECKER_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.HABIT_CHECKER_MouseDown);
+            this.Load += new System.EventHandler(this.HABIT_CHECKER_Load_1);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.tblHabitChecker.ResumeLayout(false);

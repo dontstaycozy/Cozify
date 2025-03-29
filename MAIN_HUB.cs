@@ -74,6 +74,7 @@ namespace finals
 
         private void MAIN_HUB_Load(object sender, EventArgs e)
         {
+            WelcomeLabel.Text = GlobalUser.LoggedInUsername + "'s space";
             this.Resize += MAIN_HUB_Resize;
             Centering();
         }
