@@ -28,11 +28,11 @@ namespace Cozify
             string usernameLogin = tbxUsernameLogin.Text.Trim();
             string passwordLogin = tbxPasswordLogin.Text.Trim();
 
-            /*/if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(usernameLogin) || string.IsNullOrWhiteSpace(passwordLogin))
             {
                 MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }*/
+            }
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();

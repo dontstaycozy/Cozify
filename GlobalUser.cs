@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Cozify
 {
+
     public static class GlobalUser
     {
         public static string LoggedInUsername { get; set; }

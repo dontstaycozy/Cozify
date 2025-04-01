@@ -2,13 +2,18 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.IO;
+using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using System.Data.OleDb;    
 
 namespace finals
 {
     public partial class POMODORO : Form
     {
+        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
+
+        private SoundPlayer alarm;
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
@@ -25,6 +30,7 @@ namespace finals
             pomoTimer = new Timer();
             pomoTimer.Interval = 1000;
             pomoTimer.Tick += Timer_Tick;
+            alarm = new SoundPlayer(Cozify.Properties.Resources.alarmsound);
         }
         private void POMODORO_MouseDown(object sender, MouseEventArgs e)
         {
@@ -73,7 +79,7 @@ namespace finals
                     btnStartPomo.Image = Image.FromStream(ms);
                 }
             }
-            else // Stop the timer
+            else
             {
                 pomoTimer.Stop();
                 using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
@@ -91,6 +97,7 @@ namespace finals
             }
             else
             {
+                alarm.Play();
                 pomoTimer.Stop();
                 isSession = !isSession;
                 PomoMSG.Text = isSession ? "Break Over! Time to work!" : "Take a break!";

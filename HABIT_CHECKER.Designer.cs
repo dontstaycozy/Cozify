@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new AntdUI.Label();
+            this.lblUserHabits = new AntdUI.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tblHabitChecker = new System.Windows.Forms.TableLayoutPanel();
             this.txtHabitInput = new System.Windows.Forms.TextBox();
@@ -42,20 +42,23 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnAddHabit = new AntdUI.Button();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.btnSaveHabits = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tblHabitChecker.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // label1
+            // lblUserHabits
             // 
-            this.label1.Font = new System.Drawing.Font("Pixeltype", 36F);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(12, 12);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(1063, 55);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "(insert user)\'s Habits";
+            this.lblUserHabits.Font = new System.Drawing.Font("Pixeltype", 36F);
+            this.lblUserHabits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.lblUserHabits.Location = new System.Drawing.Point(12, 12);
+            this.lblUserHabits.Name = "lblUserHabits";
+            this.lblUserHabits.Size = new System.Drawing.Size(1063, 55);
+            this.lblUserHabits.TabIndex = 0;
+            this.lblUserHabits.Text = "(insert user)\'s Habits";
             // 
             // panel1
             // 
@@ -219,15 +222,38 @@
             // btnAddHabit
             // 
             this.btnAddHabit.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnAddHabit.Dock = System.Windows.Forms.DockStyle.Left;
             this.btnAddHabit.Font = new System.Drawing.Font("Pixeltype", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddHabit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnAddHabit.Icon = global::Cozify.Properties.Resources.Plus;
-            this.btnAddHabit.Location = new System.Drawing.Point(22, 726);
+            this.btnAddHabit.Location = new System.Drawing.Point(0, 0);
             this.btnAddHabit.Name = "btnAddHabit";
-            this.btnAddHabit.Size = new System.Drawing.Size(1068, 60);
+            this.btnAddHabit.Size = new System.Drawing.Size(1000, 63);
             this.btnAddHabit.TabIndex = 2;
             this.btnAddHabit.Text = "Add Habit";
             this.btnAddHabit.Click += new System.EventHandler(this.btnAddHabit_Click);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.btnSaveHabits);
+            this.panel2.Controls.Add(this.btnAddHabit);
+            this.panel2.Location = new System.Drawing.Point(22, 723);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1068, 63);
+            this.panel2.TabIndex = 2;
+            // 
+            // btnSaveHabits
+            // 
+            this.btnSaveHabits.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSaveHabits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveHabits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnSaveHabits.Image = global::Cozify.Properties.Resources.Save2;
+            this.btnSaveHabits.Location = new System.Drawing.Point(1006, 0);
+            this.btnSaveHabits.Name = "btnSaveHabits";
+            this.btnSaveHabits.Size = new System.Drawing.Size(62, 63);
+            this.btnSaveHabits.TabIndex = 8;
+            this.btnSaveHabits.UseVisualStyleBackColor = true;
+            this.btnSaveHabits.Click += new System.EventHandler(this.btnSaveHabits_Click);
             // 
             // HABIT_CHECKER
             // 
@@ -235,14 +261,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(1110, 797);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
-            this.Controls.Add(this.btnAddHabit);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblUserHabits);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel3);
@@ -258,6 +284,7 @@
             this.tblHabitChecker.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -265,7 +292,7 @@
 
         #endregion
 
-        private AntdUI.Label label1;
+        private AntdUI.Label lblUserHabits;
         private System.Windows.Forms.Panel panel1;
         private AntdUI.Button btnAddHabit;
         private System.Windows.Forms.Label label3;
@@ -279,5 +306,7 @@
         private System.Windows.Forms.TextBox txtHabitInput;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btnSaveHabits;
     }
 }

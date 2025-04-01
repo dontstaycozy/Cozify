@@ -93,19 +93,16 @@ namespace finals
 
         private void btnRegisterLogin_Click(object sender, EventArgs e)
         {
-            //tbxUsernameReg
-            //tbxPassword
-            //tbxPasswordConfirm
 
             string username = tbxUsernameReg.Text.Trim();
             string password = tbxPassword.Text.Trim();
             string passwordConfirm = tbxPasswordConfirm.Text.Trim();
 
-            /*if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+            if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
             {
                 MessageBox.Show("Please fill in all fields.", "Registration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
-            }*/
+            }
 
             if (password != passwordConfirm)
             {
