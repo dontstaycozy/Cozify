@@ -93,6 +93,16 @@ namespace finals
         }
         private void MAIN_HUB_Resize(object sender, EventArgs e)
         {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form != this)
+                    {
+                        form.WindowState = FormWindowState.Minimized;
+                    }
+                }
+            }
             Centering();
         }
 

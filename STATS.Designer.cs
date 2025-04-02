@@ -30,6 +30,7 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.btnDeleteAcc = new AntdUI.Button();
             this.SuspendLayout();
             // 
             // panel1
@@ -37,7 +38,7 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
             this.panel1.Location = new System.Drawing.Point(27, 64);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(743, 355);
+            this.panel1.Size = new System.Drawing.Size(823, 386);
             this.panel1.TabIndex = 0;
             // 
             // label1
@@ -51,12 +52,24 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "(insert name)\'s Stats";
             // 
+            // btnDeleteAcc
+            // 
+            this.btnDeleteAcc.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnDeleteAcc.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnDeleteAcc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDeleteAcc.Location = new System.Drawing.Point(721, 467);
+            this.btnDeleteAcc.Name = "btnDeleteAcc";
+            this.btnDeleteAcc.Size = new System.Drawing.Size(129, 65);
+            this.btnDeleteAcc.TabIndex = 9;
+            this.btnDeleteAcc.Text = "Delete\r\n Account";
+            // 
             // STATS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(880, 544);
+            this.Controls.Add(this.btnDeleteAcc);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
@@ -73,5 +86,6 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
+        private AntdUI.Button btnDeleteAcc;
     }
 }

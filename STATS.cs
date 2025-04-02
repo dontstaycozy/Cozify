@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Cozify
 {
-    public partial class STATS : Base
+    public partial class STATS : BaseForm
     {
         public STATS()
         {

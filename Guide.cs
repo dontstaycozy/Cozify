@@ -12,9 +12,8 @@ using System.Data.OleDb;
 
 namespace Cozify
 {
-    public partial class Guide: Base
+    public partial class Guide: BaseForm
     {
-        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
         public Guide()
         {
             InitializeComponent();

@@ -13,16 +13,9 @@ using Cozify;
 
 namespace finals
 {
-    public partial class HABIT_CHECKER: Form
+    public partial class HABIT_CHECKER: BaseForm
     {
         private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
-
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        [DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
-
 
         public HABIT_CHECKER()
         {

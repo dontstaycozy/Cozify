@@ -19,7 +19,7 @@ namespace finals
     public partial class LOGIN : Form
     {
 
-        
+
         private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = C:\\Users\\fredwil\\Desktop\\Cozify Project\\CozifyUsers.accdb";
         OleDbConnection myConn;
         OleDbDataAdapter da;
@@ -156,6 +156,6 @@ namespace finals
             this.Hide();
         }
 
-        
+
     }
 }

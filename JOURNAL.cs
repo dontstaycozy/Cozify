@@ -13,15 +13,9 @@ using System.Windows.Forms;
 
 namespace finals
 {
-    public partial class JOURNAL: Form
+    public partial class JOURNAL: BaseForm
     {
         private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
-
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        [DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
 
         public JOURNAL()
         {
@@ -67,14 +61,12 @@ namespace finals
             }
         }
 
-
         private void btnAddJournalEntry_Click(object sender, EventArgs e)
         {
             lviewJournalEntries.SelectedItems.Clear();
             tbxEntryTitle.Clear();
             tbxJournalContent.Clear();
             tbxDateWritten.Text = DateTime.Now.ToString("MMMM d, yyyy");
-
             tbxEntryTitle.Focus();
         }
 

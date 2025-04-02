@@ -14,7 +14,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Cozify
 {
-    public partial class LoginReg: Form
+    public partial class LoginReg : Form
     {
         private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
 
@@ -72,7 +72,6 @@ namespace Cozify
             int tbx2 = (formWidth - panel2.Width) / 2;
             int regbtn = (formWidth - btnLogin.Width) / 2;
         }
-
         private void LoginReg_Load(object sender, EventArgs e)
         {
             centering();
@@ -103,7 +102,7 @@ namespace Cozify
                 {
                     btnRevealLoginPass.Image = Image.FromStream(ms);
                 }
-                
+
             }
         }
     }

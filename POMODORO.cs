@@ -5,20 +5,17 @@ using System.IO;
 using System.Media;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using System.Data.OleDb;    
+using System.Data.OleDb;
+using Cozify;
 
 namespace finals
 {
-    public partial class POMODORO : Form
+    public partial class POMODORO : BaseForm
     {
         private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
 
         private SoundPlayer alarm;
-        [DllImport("user32.dll")]
-        private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        [DllImport("user32.dll")]
-        private static extern bool ReleaseCapture();
+        
         private Timer pomoTimer;
         private int timeLeft;
         private bool isSession = true;
@@ -55,6 +52,26 @@ namespace finals
         {
             Centering();
         }
+        private void SavePomodoroSession(bool isWorkSession)// idk why di mogana ang addwithvalue....
+        {
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "INSERT INTO [Pomodoro Table] (Username, WorkTime, BreakTime, Completed, TimeSpent, IsWorkSession, SessionDate) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                    cmd.Parameters.Add("?", OleDbType.Integer).Value = isWorkSession ? (int)numSession.Value : 0;
+                    cmd.Parameters.Add("?", OleDbType.Integer).Value = isWorkSession ? 0 : (int)numBreak.Value;
+                    cmd.Parameters.Add("?", OleDbType.Boolean).Value = isWorkSession;
+                    cmd.Parameters.Add("?", OleDbType.Integer).Value = isWorkSession ? (int)numSession.Value * 60 : (int)numBreak.Value * 60;
+                    cmd.Parameters.Add("?", OleDbType.Boolean).Value = isWorkSession;
+                    cmd.Parameters.Add("?", OleDbType.Date).Value = DateTime.Now;
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
 
         private void btnStartPomo_Click(object sender, EventArgs e)
         {
@@ -88,6 +105,14 @@ namespace finals
                 }
             }
         }
+        private string GetBreakMessage()
+        {
+            string[] breakMessages = {"Take a break!","Drink water!","Go do some stretches!","Relax your eyes!","Stand up and walk around!"};
+
+            Random randomMessages = new Random();
+            return breakMessages[randomMessages.Next(breakMessages.Length)];
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
             if (timeLeft > 0)
@@ -99,8 +124,9 @@ namespace finals
             {
                 alarm.Play();
                 pomoTimer.Stop();
+                SavePomodoroSession(isSession); // save session
                 isSession = !isSession;
-                PomoMSG.Text = isSession ? "Break Over! Time to work!" : "Take a break!";
+                PomoMSG.Text = isSession ? "Break Over! Time to work!" : GetBreakMessage();
                 timeLeft = isSession ? (int)numSession.Value * 60 : (int)numBreak.Value * 60;
                 pomoTimer.Start();
             }

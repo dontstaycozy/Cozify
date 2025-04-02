@@ -20,14 +20,14 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+                #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+                /// <summary>
+                /// Required method for Designer support - do not modify
+                /// the contents of this method with the code editor.
+                /// </summary>
+                private void InitializeComponent()
+                {
             this.panel1 = new System.Windows.Forms.Panel();
             this.label2 = new AntdUI.Label();
             this.numBreak = new System.Windows.Forms.NumericUpDown();
@@ -41,11 +41,13 @@
             this.lblTimer = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.PomoMSG = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBreak)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numSession)).BeginInit();
             this.tblLayoutPomo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -192,13 +194,22 @@
             // PomoMSG
             // 
             this.PomoMSG.AutoSize = true;
+            this.PomoMSG.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PomoMSG.Font = new System.Drawing.Font("Pixeltype", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.PomoMSG.ForeColor = System.Drawing.Color.White;
-            this.PomoMSG.Location = new System.Drawing.Point(56, 123);
+            this.PomoMSG.Location = new System.Drawing.Point(0, 0);
             this.PomoMSG.Name = "PomoMSG";
             this.PomoMSG.Size = new System.Drawing.Size(197, 26);
             this.PomoMSG.TabIndex = 18;
             this.PomoMSG.Text = "You got this!  ><";
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.PomoMSG);
+            this.panel2.Location = new System.Drawing.Point(44, 101);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 100);
+            this.panel2.TabIndex = 19;
             // 
             // POMODORO
             // 
@@ -206,12 +217,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(440, 477);
-            this.Controls.Add(this.PomoMSG);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lblTimer);
             this.Controls.Add(this.tblLayoutPomo);
             this.Controls.Add(this.titlePomo);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "POMODORO";
@@ -224,12 +235,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.numSession)).EndInit();
             this.tblLayoutPomo.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
-        }
+                }
 
-        #endregion
+                #endregion
         private System.Windows.Forms.Panel panel1;
         private AntdUI.Label label6;
         private AntdUI.Label label1;
@@ -243,5 +256,6 @@
         private System.Windows.Forms.Label lblTimer;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label PomoMSG;
+        private System.Windows.Forms.Panel panel2;
     }
 }
