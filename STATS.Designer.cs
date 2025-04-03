@@ -57,18 +57,19 @@
             this.btnDeleteAcc.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
             this.btnDeleteAcc.Font = new System.Drawing.Font("Pixeltype", 22F);
             this.btnDeleteAcc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnDeleteAcc.Location = new System.Drawing.Point(721, 467);
+            this.btnDeleteAcc.Location = new System.Drawing.Point(721, 456);
             this.btnDeleteAcc.Name = "btnDeleteAcc";
             this.btnDeleteAcc.Size = new System.Drawing.Size(129, 65);
             this.btnDeleteAcc.TabIndex = 9;
             this.btnDeleteAcc.Text = "Delete\r\n Account";
+            this.btnDeleteAcc.Click += new System.EventHandler(this.btnDeleteAcc_Click);
             // 
             // STATS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.ClientSize = new System.Drawing.Size(880, 544);
+            this.ClientSize = new System.Drawing.Size(880, 533);
             this.Controls.Add(this.btnDeleteAcc);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);

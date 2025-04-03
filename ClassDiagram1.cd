@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.GlobalUser" Collapsed="true">
-    <Position X="18.25" Y="0.5" Width="1.5" />
+    <Position X="9" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GlobalUser.cs</FileName>
@@ -22,7 +22,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.LoginReg" Collapsed="true">
-    <Position X="21.75" Y="0.5" Width="1.5" />
+    <Position X="12.5" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAIAAAAAQCAAAJwAAACAAAACAAggCgAAAAAAAQBAAAA=</HashCode>
       <FileName>LoginReg.cs</FileName>
@@ -31,7 +31,7 @@
   <Class Name="Cozify.STATS" Collapsed="true">
     <Position X="4.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAAAAAAAABAAQAAAAA=</HashCode>
+      <HashCode>AAAAAAAAACAAABgAAACAAAACAAAAAAAAAABAAQEAAAA=</HashCode>
       <FileName>STATS.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -50,14 +50,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="finals.LOGIN" Collapsed="true">
-    <Position X="20" Y="0.5" Width="1.5" />
+    <Position X="10.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAgADABiKAARJwAAACADAACgIAgAgAAAAACAQBBAAA=</HashCode>
       <FileName>LOGIN.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.MAIN_HUB" Collapsed="true">
-    <Position X="18.25" Y="1.5" Width="1.5" />
+    <Position X="9" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IESAqAASrjSAAbEQASCcAqgKEACNCAAEgFJEAQARhCA=</HashCode>
       <FileName>MAIN_HUB.cs</FileName>
@@ -66,12 +66,12 @@
   <Class Name="finals.POMODORO" Collapsed="true">
     <Position X="9" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAEACAhCRhUAACEAEFCAAAAAEJGQAQAAQBAIAA=</HashCode>
+      <HashCode>AAgAAAAEACQhCRhUAACEAEFCAAAAAEJGQAQAAQBAIQA=</HashCode>
       <FileName>POMODORO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.Program" Collapsed="true">
-    <Position X="20" Y="1.5" Width="1.5" />
+    <Position X="10.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
@@ -85,13 +85,13 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Resources" Collapsed="true">
-    <Position X="21.75" Y="1.5" Width="1.5" />
+    <Position X="12.5" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QgIAAICAACIIBnxAQACFNMMAAYCwQEUAyCYANSEIAJA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Settings" Collapsed="true">
-    <Position X="18.25" Y="2.5" Width="1.5" />
+    <Position X="9" Y="6.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>

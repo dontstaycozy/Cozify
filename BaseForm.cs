@@ -14,7 +14,7 @@ namespace Cozify
 {
     public partial class BaseForm: Form
     {
-
+        
         //for dragging window
         [DllImport("user32.dll")]
         protected static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -29,7 +29,6 @@ namespace Cozify
                 SendMessage(this.Handle, 0xA1, 0x2, 0); // Allows dragging window
             }
         }
-
         public BaseForm()
         {
             InitializeComponent();
