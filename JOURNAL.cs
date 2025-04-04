@@ -36,6 +36,8 @@ namespace finals
             lviewJournalEntries.View = View.List;
             lblAuthorNameForJournal.Text = GlobalUser.LoggedInUsername + "'s Journal";
             LoadJournalEntries();
+
+            tbxDateWritten.Text = DateTime.Now.ToString("MMMM d, yyyy");
         }
         private void LoadJournalEntries()
         {
@@ -63,11 +65,20 @@ namespace finals
 
         private void btnAddJournalEntry_Click(object sender, EventArgs e)
         {
-            lviewJournalEntries.SelectedItems.Clear();
-            tbxEntryTitle.Clear();
-            tbxJournalContent.Clear();
-            tbxDateWritten.Text = DateTime.Now.ToString("MMMM d, yyyy");
-            tbxEntryTitle.Focus();
+            lviewJournalEntries.SelectedItems.Clear(); // Clear any selected item
+
+            string defaultTitle = "Enter Title";
+            tbxEntryTitle.Text = defaultTitle; // Set title placeholder
+            tbxJournalContent.Text = "Write something...."; // Set content placeholder
+            tbxDateWritten.Text = DateTime.Now.ToString("MMMM d, yyyy"); // Set today's date
+
+            // Add the new entry to the ListView if it doesn't already exist
+            if (!lviewJournalEntries.Items.Cast<ListViewItem>().Any(item => item.Text == defaultTitle))
+            {
+                lviewJournalEntries.Items.Add(new ListViewItem(defaultTitle));
+            }
+
+            tbxEntryTitle.Focus(); // Move focus to the title field for editing
         }
 
         private void btnSaveEntry_Click(object sender, EventArgs e)

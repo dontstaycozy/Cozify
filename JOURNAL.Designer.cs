@@ -37,8 +37,8 @@
             this.btnDeleteEntry = new AntdUI.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel6 = new System.Windows.Forms.Panel();
-            this.tbxDateWritten = new AntdUI.Label();
             this.tbxEntryTitle = new System.Windows.Forms.TextBox();
+            this.tbxDateWritten = new AntdUI.Label();
             this.lblEntryTitle = new System.Windows.Forms.TextBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
@@ -162,20 +162,8 @@
             this.panel6.Location = new System.Drawing.Point(0, 0);
             this.panel6.Margin = new System.Windows.Forms.Padding(2);
             this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(722, 48);
+            this.panel6.Size = new System.Drawing.Size(722, 60);
             this.panel6.TabIndex = 3;
-            // 
-            // tbxDateWritten
-            // 
-            this.tbxDateWritten.Dock = System.Windows.Forms.DockStyle.Right;
-            this.tbxDateWritten.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.tbxDateWritten.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.tbxDateWritten.Location = new System.Drawing.Point(449, 0);
-            this.tbxDateWritten.Name = "tbxDateWritten";
-            this.tbxDateWritten.Size = new System.Drawing.Size(273, 48);
-            this.tbxDateWritten.TabIndex = 1;
-            this.tbxDateWritten.Text = "";
-            this.tbxDateWritten.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // tbxEntryTitle
             // 
@@ -187,6 +175,19 @@
             this.tbxEntryTitle.Name = "tbxEntryTitle";
             this.tbxEntryTitle.Size = new System.Drawing.Size(424, 30);
             this.tbxEntryTitle.TabIndex = 0;
+            this.tbxEntryTitle.Text = "Enter Title";
+            // 
+            // tbxDateWritten
+            // 
+            this.tbxDateWritten.Dock = System.Windows.Forms.DockStyle.Right;
+            this.tbxDateWritten.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.tbxDateWritten.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.tbxDateWritten.Location = new System.Drawing.Point(449, 0);
+            this.tbxDateWritten.Name = "tbxDateWritten";
+            this.tbxDateWritten.Size = new System.Drawing.Size(273, 60);
+            this.tbxDateWritten.TabIndex = 1;
+            this.tbxDateWritten.Text = "";
+            this.tbxDateWritten.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblEntryTitle
             // 
@@ -253,6 +254,7 @@
             this.tbxJournalContent.Name = "tbxJournalContent";
             this.tbxJournalContent.Size = new System.Drawing.Size(684, 453);
             this.tbxJournalContent.TabIndex = 8;
+            this.tbxJournalContent.Text = "Write something....";
             // 
             // panel2
             // 

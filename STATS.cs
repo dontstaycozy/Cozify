@@ -83,5 +83,51 @@ namespace Cozify
                 MessageBox.Show("An error occurred while deleting the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        private void btnClearAcc_Click(object sender, EventArgs e)
+        {
+            string username = GlobalUser.LoggedInUsername;
+
+            DialogResult result = MessageBox.Show("Are you sure you want to clear your account? This action cannot be undone.",
+                                                  "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
+                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
+                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
+                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
+
+                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
+                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
+                    using (OleDbCommand cmd3 = new OleDbCommand(deleteHabitsQuery, conn))
+                    using (OleDbCommand cmd4 = new OleDbCommand(deleteToDoQuery, conn))
+                    {
+                        cmd1.Parameters.AddWithValue("?", username);
+                        cmd2.Parameters.AddWithValue("?", username);
+                        cmd3.Parameters.AddWithValue("?", username);
+                        cmd4.Parameters.AddWithValue("?", username);
+
+                        cmd1.ExecuteNonQuery();
+                        cmd2.ExecuteNonQuery();
+                        cmd3.ExecuteNonQuery();
+                        cmd4.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Your account has been cleared successfully.", "Account Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while clearing the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
