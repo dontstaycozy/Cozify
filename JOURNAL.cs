@@ -37,7 +37,7 @@ namespace finals
             lblAuthorNameForJournal.Text = GlobalUser.LoggedInUsername + "'s Journal";
             LoadJournalEntries();
 
-            tbxDateWritten.Text = DateTime.Now.ToString("MMMM d, yyyy");
+            tbxDateWritten.Text = DateTime.Now.ToString("MM/dd/yyyy");
         }
         private void LoadJournalEntries()
         {
@@ -70,7 +70,7 @@ namespace finals
             string defaultTitle = "Enter Title";
             tbxEntryTitle.Text = defaultTitle; // Set title placeholder
             tbxJournalContent.Text = "Write something...."; // Set content placeholder
-            tbxDateWritten.Text = DateTime.Now.ToString("MMMM d, yyyy"); // Set today's date
+            tbxDateWritten.Text = DateTime.Now.ToString("MM/dd/yyyy"); // Set today's date
 
             // Add the new entry to the ListView if it doesn't already exist
             if (!lviewJournalEntries.Items.Cast<ListViewItem>().Any(item => item.Text == defaultTitle))
@@ -148,6 +148,12 @@ namespace finals
 
             MessageBox.Show("Journal entry saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadJournalEntries();
+            string defaultTitle = "Enter Title";
+            tbxEntryTitle.Text = defaultTitle;
+            tbxJournalContent.Text = "Write something....";
+            tbxDateWritten.Text = DateTime.Now.ToString("MM/dd/yyyy");
+            tbxEntryTitle.Focus();
+
         }
 
 
