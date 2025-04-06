@@ -1,100 +1,104 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="Cozify.BaseForm" Collapsed="true">
-    <Position X="10" Y="0.5" Width="1.5" />
+    <Position X="11" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAACCACAACAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <HashCode>AAAAAAAAACAQAAAAACCACAACAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>BaseForm.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.GlobalUser" Collapsed="true">
-    <Position X="9" Y="4.25" Width="1.5" />
+    <Position X="17.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GlobalUser.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cozify.Guide" Collapsed="true">
-    <Position X="11.25" Y="2" Width="1.5" />
+  <Class Name="Cozify.Guide">
+    <Position X="16.75" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAhAAACAAABAAAACAQAACAAAAAAAAAAAAAQBAACA=</HashCode>
       <FileName>Guide.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cozify.LoginReg" Collapsed="true">
-    <Position X="12.5" Y="4.25" Width="1.5" />
+  <Class Name="Cozify.LoginReg">
+    <Position X="14.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAQCAAAJwAAACAAAACAAggCgAAAAAAAQBAAAA=</HashCode>
+      <HashCode>AAIAAAAAQCAAAJQAAACAAAACAAggCgAAAAAAAQBAAAA=</HashCode>
       <FileName>LoginReg.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cozify.STATS" Collapsed="true">
-    <Position X="4.5" Y="2" Width="1.5" />
+  <Class Name="Cozify.STATS">
+    <Position X="5.5" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABgAAACAAAACAAAAAAAAAABAAQEAAAA=</HashCode>
+      <HashCode>AAAAAAAAAGAAABgAAACAAAACAAAAAAAAAABAAQkAAAA=</HashCode>
       <FileName>STATS.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="finals.HABIT_CHECKER" Collapsed="true">
-    <Position X="6.75" Y="2" Width="1.5" />
+  <Class Name="finals.HABIT_CHECKER">
+    <Position X="7.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAEAQgAAACIAABgIAECAAAACYAAABAABAABAAQAACCA=</HashCode>
+      <HashCode>AAEAQgAAACAEABAAAECAAAACYAAABAABAABAAQAACCA=</HashCode>
       <FileName>HABIT_CHECKER.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="finals.JOURNAL" Collapsed="true">
-    <Position X="13.5" Y="2" Width="1.5" />
+  <Class Name="finals.JOURNAL">
+    <Position X="19" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>ACAAAAAAAHAgABgQAwCAAAACQIAACAgAAAIABQUBAAE=</HashCode>
+      <HashCode>ACAAAAAAAHAgABAQAwCAAAACQIAACAgAAAIABQUBAAE=</HashCode>
       <FileName>JOURNAL.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="finals.LOGIN" Collapsed="true">
-    <Position X="10.75" Y="4.25" Width="1.5" />
+  <Class Name="finals.LOGIN">
+    <Position X="12.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAgADABiKAARJwAAACADAACgIAgAgAAAAACAQBBAAA=</HashCode>
+      <HashCode>AAAAADABiKAARJgAAACADAACgAAgAgAAAAAAAQBBAAA=</HashCode>
       <FileName>LOGIN.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.MAIN_HUB" Collapsed="true">
-    <Position X="9" Y="5.25" Width="1.5" />
+    <Position X="1.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IESAqAASrjSAAbEQASCcAqgKEACNCAAEgFJEAQARhCA=</HashCode>
       <FileName>MAIN_HUB.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="finals.POMODORO" Collapsed="true">
-    <Position X="9" Y="2" Width="1.5" />
+  <Class Name="finals.POMODORO">
+    <Position X="10" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAgAAAAEACQhCRhUAACEAEFCAAAAAEJGQAQAAQBAIQA=</HashCode>
+      <HashCode>AAgAAAAEACQhCRBUAACEAEFCAAAAAEJGQAQAAQBAIQA=</HashCode>
       <FileName>POMODORO.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.Program" Collapsed="true">
-    <Position X="10.75" Y="5.25" Width="1.5" />
+    <Position X="17.25" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="finals.TO_DO_LIST" Collapsed="true">
-    <Position X="15.75" Y="2" Width="1.5" />
+  <Class Name="finals.TO_DO_LIST">
+    <Position X="21.25" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAQQAAACAAGBgAAACAAAEiQACAAIAAgAAAFQAAUAA=</HashCode>
+      <HashCode>AAAAQQAAACAEGAAAAACAAAEiQAAAAIAAAAAAFQAAUAA=</HashCode>
       <FileName>TO_DO_LIST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Resources" Collapsed="true">
-    <Position X="12.5" Y="5.25" Width="1.5" />
+    <Position X="17.25" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>QgIAAICAACIIBnxAQACFNMMAAYCwQEUAyCYANSEIAJA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Settings" Collapsed="true">
-    <Position X="9" Y="6.25" Width="1.5" />
+    <Position X="19.25" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
+  </Class>
+  <Class Name="System.Windows.Forms.Form" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

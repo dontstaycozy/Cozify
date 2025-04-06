@@ -69,7 +69,8 @@ namespace finals
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-
+            this.Close();
+            LOGIN lOGIN = new LOGIN();
         }
 
         private void MAIN_HUB_Load(object sender, EventArgs e)
@@ -213,6 +214,7 @@ namespace finals
             btnLogOut.Visible = !isFocused;
             lblClock.Visible = !isFocused;
             lblDate.Visible = !isFocused;
+            btnStatistics.Visible = !isFocused;
 
         }
 

@@ -14,7 +14,7 @@ namespace Cozify
 {
     public partial class BaseForm: Form
     {
-        
+        protected dbHelper db;
         //for dragging window
         [DllImport("user32.dll")]
         protected static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -33,6 +33,7 @@ namespace Cozify
         {
             InitializeComponent();
             this.MouseDown += BaseForm_MouseDown;
+            db = new dbHelper();
         }
     }
 }

@@ -14,9 +14,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace Cozify
 {
-    public partial class LoginReg : Form
+    public partial class LoginReg : BaseForm
     {
-        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
+        
 
         public LoginReg()
         {
@@ -33,33 +33,8 @@ namespace Cozify
                 MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
-            {
-                conn.Open();
-
-                string query = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ? AND [Password] = ?";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", usernameLogin);
-                    cmd.Parameters.AddWithValue("?", passwordLogin);
-
-                    int userExists = (int)cmd.ExecuteScalar();
-
-                    if (userExists > 0)
-                    {
-                        MessageBox.Show("Login Successful!", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        GlobalUser.LoggedInUsername = usernameLogin;
-                        MAIN_HUB mainHub = new MAIN_HUB();
-                        mainHub.Show();
-                        this.Hide();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid Username or Password!", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-
+            db.Login(usernameLogin, passwordLogin);
+            
         }
 
         private void centering()

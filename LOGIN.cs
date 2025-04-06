@@ -16,25 +16,12 @@ using Vanara.PInvoke;
 
 namespace finals
 {
-    public partial class LOGIN : Form
+    public partial class LOGIN : BaseForm
     {
-
-
-        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = C:\\Users\\fredwil\\Desktop\\Cozify Project\\CozifyUsers.accdb";
-        OleDbConnection myConn;
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
-        DataSet ds;
-
         private void connectiontest_Click(object sender, EventArgs e)
         {
-            myConn = new OleDbConnection("Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\\Users\\fredwil\\Desktop\\Cozify Project\\CozifyUsers.accdb");
-            ds = new DataSet();
-            myConn.Open();
-            System.Windows.Forms.MessageBox.Show("Connected successfully!");
-            myConn.Close();
-
-        }
+            db.connectionTest(); 
+        } // Test the connection to the database
         public LOGIN()
         {
             InitializeComponent();
@@ -107,46 +94,17 @@ namespace finals
             if (password != passwordConfirm)
             {
                 MessageBox.Show("Passwords do not match!", "Registration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MAIN_HUB mainHub = new MAIN_HUB();
+                mainHub.Show();
                 return;
             }
 
-            // Check if username already exists
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
-            {
-                conn.Open();
-
-                /*// Check if user exists
-                string checkUserQuery = "SELECT COUNT(*) FROM Users WHERE Username = ?";
-                using (OleDbCommand cmd = new OleDbCommand(checkUserQuery, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", username);
-                    int userExists = (int)cmd.ExecuteScalar();
-
-                    if (userExists > 0)
-                    {
-                        MessageBox.Show("Username already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-                }*/
-
-                // Insert new user
-                string insertQuery = "INSERT INTO [Users Table] (Username, [Password], CreatedAt) VALUES (?, ?, ?)";
-                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", username);
-                    cmd.Parameters.AddWithValue("?", password); // NOTE: You should hash passwords for security!
-                    cmd.Parameters.AddWithValue("?", DateTime.Now.ToString("yyyy - MM - dd"));
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            db.Register(username, password);   
 
                 // Redirect to Login
                 LoginReg loginReg = new LoginReg();
                 loginReg.Show();
                 this.Hide();
-            }
         }
 
         private void lnklblLogin_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

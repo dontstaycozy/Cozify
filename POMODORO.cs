@@ -12,8 +12,6 @@ namespace finals
 {
     public partial class POMODORO : BaseForm
     {
-        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
-
         private SoundPlayer alarm;
         private Timer pomoTimer;
         private int timeLeft;
@@ -58,25 +56,7 @@ namespace finals
 
         private void SavePomodoroSession(bool completed, int workTime, int breakTime)
         {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
-            {
-                conn.Open();
-                string query = "INSERT INTO [Pomodoro Table] (Username, WorkTime, BreakTime, Completed, TimeSpent, SessionDate) VALUES (?, ?, ?, ?, ?, ?);";
-
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
-                {
-                    int totalTimeSpent = (workTime + breakTime);
-
-                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
-                    cmd.Parameters.Add("?", OleDbType.Integer).Value = workTime*60;
-                    cmd.Parameters.Add("?", OleDbType.Integer).Value = breakTime*60;
-                    cmd.Parameters.Add("?", OleDbType.Boolean).Value = completed;
-                    cmd.Parameters.Add("?", OleDbType.Integer).Value = totalTimeSpent * 60;
-                    cmd.Parameters.Add("?", OleDbType.Date).Value = DateTime.Now;
-
-                    cmd.ExecuteNonQuery();
-                }
-            }
+            db.SavePomodoroSession(completed, workTime, breakTime);
         }
 
         private void btnStartPomo_Click(object sender, EventArgs e)

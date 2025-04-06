@@ -15,9 +15,6 @@ namespace finals // Saves upon closing using database
 {
     public partial class TO_DO_LIST : BaseForm
     {
-        private string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source= C:\Users\fredwil\Desktop\Cozify Project\CozifyUsers.accdb";
-
-
         public TO_DO_LIST()
         {
             InitializeComponent();
@@ -35,72 +32,25 @@ namespace finals // Saves upon closing using database
 
         private void TO_DO_LIST_Load(object sender, EventArgs e)
         {
-            lblUserTask.Text = GlobalUser.LoggedInUsername + "'s Tasks";
-            LoadTasks();
-        }
-
-        private void LoadTasks()
-        {
             tblToDoList.Controls.Clear();
             tblToDoList.RowStyles.Clear();
             tblToDoList.RowCount = 0;
-
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            lblUserTask.Text = GlobalUser.LoggedInUsername + "'s Tasks";
+            db.LoadToDoList(tblToDoList);
+            for (int i = 0; i < tblToDoList.RowCount; i++)
             {
-                conn.Open();
-                string query = "SELECT Activity, isDone FROM [ToDo List Table] WHERE Username = ?;";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    using (OleDbDataReader reader = cmd.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            string activity = reader["Activity"].ToString();
-                            bool isDone = reader.GetBoolean(reader.GetOrdinal("isDone"));
-                            AddToDoRow(activity, isDone);
-                        }
-                    }
-                }
+                RebindDeleteButton(i);
             }
         }
+
         private void btnSaveList_Click(object sender, EventArgs e)
         {
-            SaveTasks();
-        }
-        private void SaveTasks()
-        {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
-            {
-                conn.Open();
-                string query = "DELETE FROM [ToDo List Table] WHERE Username = ?;";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    cmd.ExecuteNonQuery();
-                }
-                query = "INSERT INTO [ToDo List Table] (Username, Activity, isDone) VALUES (?, ?, ?);";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
-                {
-                    foreach (Control control in tblToDoList.Controls)
-                    {
-                        if (control is CheckBox chkDone)
-                        {
-                            int rowIndex = tblToDoList.GetRow(chkDone);
-                            Control txtTask = tblToDoList.GetControlFromPosition(1, rowIndex);
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                            cmd.Parameters.AddWithValue("?", txtTask.Text);
-                            cmd.Parameters.AddWithValue("?", chkDone.Checked);
-                            cmd.ExecuteNonQuery();
-                        }
-                    }
-                }
-            }
+            db.SaveToDoList(tblToDoList);
         }
         private void btnAddToDoEntry_Click(object sender, EventArgs e)
         {
-            AddToDoRow("", false);
+            db.AddToDoRow(tblToDoList, "", false);
+            RebindDeleteButton(tblToDoList.RowCount - 1);
         }
 
         private void btnClearList_Click(object sender, EventArgs e)
@@ -109,55 +59,19 @@ namespace finals // Saves upon closing using database
             tblToDoList.RowStyles.Clear();
             tblToDoList.RowCount = 0;
         }
-
-        private void AddToDoRow(string taskText, bool isDone)
+        private void RebindDeleteButton(int rowIndex)
         {
-            int rowIndex = tblToDoList.RowCount;
-            tblToDoList.RowCount++;
-
-            CheckBox chkDone = new CheckBox
+            Control control = tblToDoList.GetControlFromPosition(0, rowIndex);
+            if (control is Button btnDelete)
             {
-                Checked = isDone,
-                Anchor = AnchorStyles.None
-            };
-
-            TextBox txtTask = new TextBox
-            {
-                BorderStyle = BorderStyle.None,
-                BackColor = Color.FromArgb(52, 73, 91),
-                ForeColor = Color.White,
-                Font = new Font("Pixeltype", 20F, FontStyle.Regular),
-                Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                TextAlign = HorizontalAlignment.Left,
-                Text = taskText
-            };
-
-            Button btnDelete = new Button
-            {
-                Text = "X",
-                BackColor = Color.FromArgb(40, 56, 69),
-                ForeColor = Color.White,
-                Font = new Font("Pixeltype", 12F, FontStyle.Regular),
-                Size = new Size(23, 23),
-                Anchor = AnchorStyles.None,
-                FlatStyle = FlatStyle.Flat
-            };
-
-            btnDelete.Click += (s, e) => DeleteToDoRow(rowIndex);
-
-            tblToDoList.Controls.Add(chkDone, 2, rowIndex);
-            tblToDoList.Controls.Add(txtTask, 1, rowIndex);
-            tblToDoList.Controls.Add(btnDelete, 0, rowIndex);
+                btnDelete.Click += (s, e) => DeleteToDoRow(rowIndex);
+            }
         }
-
         private void DeleteToDoRow(int rowIndex)
         {
-            if (rowIndex < 0 || rowIndex >= tblToDoList.RowCount)
-                return;
-
-            for (int i = 0; i < tblToDoList.ColumnCount; i++)
+            for (int col = 0; col < tblToDoList.ColumnCount; col++)
             {
-                Control control = tblToDoList.GetControlFromPosition(i, rowIndex);
+                var control = tblToDoList.GetControlFromPosition(col, rowIndex);
                 if (control != null)
                 {
                     tblToDoList.Controls.Remove(control);
@@ -167,17 +81,19 @@ namespace finals // Saves upon closing using database
 
             for (int i = rowIndex + 1; i < tblToDoList.RowCount; i++)
             {
-                for (int j = 0; j < tblToDoList.ColumnCount; j++)
+                for (int col = 0; col < tblToDoList.ColumnCount; col++)
                 {
-                    Control control = tblToDoList.GetControlFromPosition(j, i);
-                    if (control != null)
-                        tblToDoList.SetRow(control, i - 1);
+                    Control c = tblToDoList.GetControlFromPosition(col, i);
+                    if (c != null)
+                    {
+                        tblToDoList.SetRow(c, i - 1);
+                    }
                 }
             }
 
             tblToDoList.RowCount--;
+            if (tblToDoList.RowStyles.Count > rowIndex)
+                tblToDoList.RowStyles.RemoveAt(rowIndex);
         }
-
-        
     }
 }
