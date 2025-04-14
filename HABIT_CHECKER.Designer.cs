@@ -44,6 +44,7 @@
             this.btnAddHabit = new AntdUI.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnSaveHabits = new System.Windows.Forms.Button();
+            this.btnClearHabits = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.tblHabitChecker.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -228,13 +229,14 @@
             this.btnAddHabit.Icon = global::Cozify.Properties.Resources.Plus;
             this.btnAddHabit.Location = new System.Drawing.Point(0, 0);
             this.btnAddHabit.Name = "btnAddHabit";
-            this.btnAddHabit.Size = new System.Drawing.Size(1000, 63);
+            this.btnAddHabit.Size = new System.Drawing.Size(944, 63);
             this.btnAddHabit.TabIndex = 2;
             this.btnAddHabit.Text = "Add Habit";
             this.btnAddHabit.Click += new System.EventHandler(this.btnAddHabit_Click);
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnClearHabits);
             this.panel2.Controls.Add(this.btnSaveHabits);
             this.panel2.Controls.Add(this.btnAddHabit);
             this.panel2.Location = new System.Drawing.Point(22, 723);
@@ -254,6 +256,19 @@
             this.btnSaveHabits.TabIndex = 8;
             this.btnSaveHabits.UseVisualStyleBackColor = true;
             this.btnSaveHabits.Click += new System.EventHandler(this.btnSaveHabits_Click);
+            // 
+            // btnClearHabits
+            // 
+            this.btnClearHabits.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnClearHabits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClearHabits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnClearHabits.Image = global::Cozify.Properties.Resources.Broom;
+            this.btnClearHabits.Location = new System.Drawing.Point(950, 0);
+            this.btnClearHabits.Name = "btnClearHabits";
+            this.btnClearHabits.Size = new System.Drawing.Size(56, 63);
+            this.btnClearHabits.TabIndex = 9;
+            this.btnClearHabits.UseVisualStyleBackColor = true;
+            this.btnClearHabits.Click += new System.EventHandler(this.btnClearHabits_Click);
             // 
             // HABIT_CHECKER
             // 
@@ -308,5 +323,6 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnSaveHabits;
+        private System.Windows.Forms.Button btnClearHabits;
     }
 }

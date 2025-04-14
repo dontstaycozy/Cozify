@@ -49,7 +49,7 @@ namespace finals // Saves upon closing using database
         }
         private void btnAddToDoEntry_Click(object sender, EventArgs e)
         {
-            db.AddToDoRow(tblToDoList, "", false);
+            db.AddToDoRow(tblToDoList, "", false, DateTime.Now);
             RebindDeleteButton(tblToDoList.RowCount - 1);
         }
 
@@ -79,7 +79,7 @@ namespace finals // Saves upon closing using database
                 }
             }
 
-            for (int i = rowIndex + 1; i < tblToDoList.RowCount; i++)
+            for (int i = rowIndex; i < tblToDoList.RowCount; i++)
             {
                 for (int col = 0; col < tblToDoList.ColumnCount; col++)
                 {
@@ -90,8 +90,11 @@ namespace finals // Saves upon closing using database
                     }
                 }
             }
-
-            tblToDoList.RowCount--;
+            if (tblToDoList.RowCount > 0)
+            {
+                tblToDoList.RowCount--;
+            }
+            //tblToDoList.RowCount--;
             if (tblToDoList.RowStyles.Count > rowIndex)
                 tblToDoList.RowStyles.RemoveAt(rowIndex);
         }

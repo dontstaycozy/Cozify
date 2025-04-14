@@ -34,7 +34,7 @@ namespace Cozify
                 return;
             }
             db.Login(usernameLogin, passwordLogin);
-            
+            this.Hide();
         }
 
         private void centering()

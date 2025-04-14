@@ -10,11 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-//note: need calendar, free draw for journal, and a way to add music
-//note: need to add a way to add a habit checker
-//note: need to add a way to add a to do list
-//note: need to add a way to add a pomo timer
-//note: need to add a way to add a zen mode
+//add music player, add analytics and monitoring, add admin account
 namespace finals
 {
     public partial class MAIN_HUB: Form
@@ -26,6 +22,7 @@ namespace finals
         private POMODORO pomo;
         private STATS sTAT;
         private bool isFocused = false;
+        private Form activeFeature = null;
 
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -69,14 +66,22 @@ namespace finals
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
+            if (habitChecker != null && !habitChecker.IsDisposed) habitChecker.Close();
+            if (toDo != null && !toDo.IsDisposed) toDo.Close();
+            if (journal != null && !journal.IsDisposed) journal.Close();
+            if (guide != null && !guide.IsDisposed) guide.Close();
+            if (pomo != null && !pomo.IsDisposed) pomo.Close();
+            if (sTAT != null && !sTAT.IsDisposed) sTAT.Close();
             this.Close();
-            LOGIN lOGIN = new LOGIN();
+            //LOGIN lOGIN = new LOGIN();
+            //lOGIN.Show();
         }
 
         private void MAIN_HUB_Load(object sender, EventArgs e)
         {
             WelcomeLabel.Text = GlobalUser.LoggedInUsername + "'s space";
             this.Resize += MAIN_HUB_Resize;
+            //MainHub.TopMost = true; // Set the form to be topmost
             Centering();
         }
 
@@ -90,18 +95,23 @@ namespace finals
             int pnlMusicDock_Y = formHeight - pnlMusicDock.Height - 6;
             pnlMusicDock.Location = new Point(pnlMusicDock_X, pnlMusicDock_Y);
 
-
         }
         private void MAIN_HUB_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
             {
-                foreach (Form form in Application.OpenForms)
+                // Minimize the active feature if it exists
+                if (activeFeature != null && !activeFeature.IsDisposed)
                 {
-                    if (form != this)
-                    {
-                        form.WindowState = FormWindowState.Minimized;
-                    }
+                    activeFeature.WindowState = FormWindowState.Minimized;
+                }
+            }
+            else if (this.WindowState == FormWindowState.Normal)
+            {
+                // Restore the active feature if it exists
+                if (activeFeature != null && !activeFeature.IsDisposed)
+                {
+                    activeFeature.WindowState = FormWindowState.Normal;
                 }
             }
             Centering();
@@ -120,10 +130,14 @@ namespace finals
                 habitChecker.FormClosed += HabitChecker_FormClosed;
                 habitChecker.Show();
                 habitChecker.TopMost = true;
+
+                activeFeature = habitChecker;
+
             }
             else
             {
                 habitChecker.Close();
+                activeFeature = null;
             }
             
         }
@@ -131,6 +145,7 @@ namespace finals
         private void HabitChecker_FormClosed(object sender, FormClosedEventArgs e)
         {
             habitChecker = null;
+            activeFeature = null;
         }
 
 
@@ -142,12 +157,14 @@ namespace finals
                 toDo.FormClosed += ToDo_FormClosed;
                 toDo.Show();
                 toDo.TopMost = true;
+
+                activeFeature = toDo;
             }
             else
             {
                 toDo.Close();
+                activeFeature = null;
             }
-           // 
         }
 
         private void ToDo_FormClosed(object sender, FormClosedEventArgs e)
@@ -163,17 +180,20 @@ namespace finals
                 journal.FormClosed += Journal_FormClosed;
                 journal.Show();
                 journal.TopMost = true;
+
+                activeFeature = journal;
             }
             else
             {
                 journal.Close();
+                activeFeature = null;
             }
-            //
         }
 
         private void Journal_FormClosed(object sender, FormClosedEventArgs e)
         {
             journal = null;
+            activeFeature = null;
         }
 
 
@@ -185,17 +205,19 @@ namespace finals
                 pomo.FormClosed += Pomo_FormClosed;
                 pomo.Show();
                 pomo.TopMost = true;
+                activeFeature = pomo;
             }
             else
             {
                 pomo.Close();
+                activeFeature = null;
             }
-            //
         }
 
         private void Pomo_FormClosed(object sender, FormClosedEventArgs e)
         {
             pomo = null;
+            activeFeature = null;
         }
 
         private void btnZenMode_Click(object sender, EventArgs e)
@@ -226,16 +248,20 @@ namespace finals
                 guide.FormClosed += Pomo_FormClosed;
                 guide.Show();
                 guide.TopMost = true;
+
+                activeFeature = guide;
             }
             else
             {
                 guide.Close();
+                activeFeature = null;
             }
            // 
         }
         private void Guide_FormClosed(object sender, FormClosedEventArgs e)
         {
             guide = null;
+            activeFeature = null;
         }
 
         private void ChecklistToolTip_Show(object sender, EventArgs e)
@@ -251,16 +277,19 @@ namespace finals
                 sTAT.FormClosed += Statistics_FormClosed;
                 sTAT.Show();
                 sTAT.TopMost = true;
+                activeFeature = sTAT;
             }
             else
             {
                 sTAT.Close();
+                activeFeature = null;
             }
         }
 
         private void Statistics_FormClosed(object sender, FormClosedEventArgs e)
         {
             sTAT = null;
+            activeFeature = null;
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using finals;
 using System.Drawing;
 using System.Runtime.CompilerServices;
+using System.Collections;
 
 namespace Cozify//database helper
 {
@@ -34,6 +35,111 @@ namespace Cozify//database helper
             MessageBox.Show("Connected successfully!");
             myConn.Close();
         }
+
+        public void DeleteAcc()
+        {
+            string username = GlobalUser.LoggedInUsername;
+
+            DialogResult result = MessageBox.Show("Are you sure you want to delete your account? This action cannot be undone.",
+                                                  "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
+                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
+                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
+                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
+                    string deleteUserQuery = "DELETE FROM [Users Table] WHERE Username = ?";
+
+                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
+                    {
+                        cmd1.Parameters.AddWithValue("?", username);
+                        cmd1.ExecuteNonQuery();
+                    }
+
+                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
+                    {
+                        cmd2.Parameters.AddWithValue("?", username);
+                        cmd2.ExecuteNonQuery();
+                    }
+
+                    using (OleDbCommand cmd3 = new OleDbCommand(deleteUserQuery, conn))
+                    {
+                        cmd3.Parameters.AddWithValue("?", username);
+                        cmd3.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Your account has been deleted successfully.", "Account Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                foreach (Form form in Application.OpenForms)
+                {
+                    if (form is MAIN_HUB)
+                    {
+                        form.Close();
+                        break;
+                    }
+                }
+
+                // Log the user out and return to login screen
+                GlobalUser.LoggedInUsername = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while deleting the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        public void ClearData()
+        {
+            string username = GlobalUser.LoggedInUsername;
+
+            DialogResult result = MessageBox.Show("Are you sure you want to clear your account? This action cannot be undone.",
+                                                  "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result != DialogResult.Yes)
+                return;
+
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+
+                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
+                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
+                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
+                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
+
+                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
+                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
+                    using (OleDbCommand cmd3 = new OleDbCommand(deleteHabitsQuery, conn))
+                    using (OleDbCommand cmd4 = new OleDbCommand(deleteToDoQuery, conn))
+                    {
+                        cmd1.Parameters.AddWithValue("?", username);
+                        cmd2.Parameters.AddWithValue("?", username);
+                        cmd3.Parameters.AddWithValue("?", username);
+                        cmd4.Parameters.AddWithValue("?", username);
+
+                        cmd1.ExecuteNonQuery();
+                        cmd2.ExecuteNonQuery();
+                        cmd3.ExecuteNonQuery();
+                        cmd4.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show("Your account has been cleared successfully.", "Account Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while clearing the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
         //login and register stuff
         public void Register(string username, string password)
         {
@@ -42,8 +148,8 @@ namespace Cozify//database helper
             {
                 conn.Open();
 
-                /*// Check if user exists
-                string checkUserQuery = "SELECT COUNT(*) FROM Users WHERE Username = ?";
+                // Check if user exists
+                string checkUserQuery = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ?";
                 using (OleDbCommand cmd = new OleDbCommand(checkUserQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("?", username);
@@ -54,7 +160,7 @@ namespace Cozify//database helper
                         MessageBox.Show("Username already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
-                }*/
+                }
 
                 // Insert new user
                 string insertQuery = "INSERT INTO [Users Table] (Username, [Password], CreatedAt) VALUES (?, ?, ?)";
@@ -101,6 +207,8 @@ namespace Cozify//database helper
                 }
             }
         }
+
+        //journal stuff
 
         public void LoadJournal(ListView journalListView)
         {
@@ -292,7 +400,8 @@ namespace Cozify//database helper
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT HabitName, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday FROM [Habit Checker Table] WHERE Username = ?";
+                string query = "SELECT HabitName, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, HabitDateAdded FROM [Habit Checker Table] WHERE Username = ?";
+
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
@@ -303,7 +412,11 @@ namespace Cozify//database helper
                             string name = reader.GetString(0);
                             bool[] days = new bool[7];
                             for (int i = 0; i < 7; i++)
+                            {
                                 days[i] = reader.GetBoolean(i + 1);
+                            }
+
+                            DateTime habitDateAdded = reader.GetDateTime(8);
 
                             AddHabitRow(tblHabitChecker, name, days[0], days[1], days[2], days[3], days[4], days[5], days[6]);
                         }
@@ -312,6 +425,37 @@ namespace Cozify//database helper
             }
         }
         
+                        /*1. Weekly or Monthly Analytics
+                If you want to say something like:
+
+                “You added 4 new habits this week!”
+
+                You’ll need the HabitDateAdded value and compare it with the current date.
+
+                2. Show “Recently Added Habits”
+                Display to the user which habits they just added in the past few days.
+
+                csharp
+                Copy
+                Edit
+                if ((DateTime.Now - dateAdded).TotalDays <= 7)
+                {
+                            // mark it as recently added
+                        }
+                3. Streak Tracking (future)
+                You can use HabitDateAdded to calculate:
+
+                How long a habit has existed
+
+                When a habit streak started or reset
+
+                4. Sorting Habits by Date
+                You could list habits from newest to oldest for better UI/UX.
+
+                5. User Feedback
+                You could show messages like:
+
+                "You’ve been building habits since April 8, 2025!"*/
         public void SaveHabitChecker(TableLayoutPanel tblHabitChecker)
         {
             using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -325,7 +469,8 @@ namespace Cozify//database helper
                     deleteCmd.ExecuteNonQuery();
                 }
 
-                string insertQuery = "INSERT INTO [Habit Checker Table] (Username, HabitName, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                string insertQuery = "INSERT INTO [Habit Checker Table] (Username, HabitName, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, HabitDateAdded) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
 
                 foreach (Control control in tblHabitChecker.Controls)
                 {
@@ -349,6 +494,7 @@ namespace Cozify//database helper
                             foreach (bool val in checkedDays)
                                 insertCmd.Parameters.AddWithValue("?", val);
 
+                            insertCmd.Parameters.AddWithValue("?", DateTime.Now.ToString("MM/dd/yyyy"));
                             insertCmd.ExecuteNonQuery();
                         }
                     }
@@ -356,11 +502,18 @@ namespace Cozify//database helper
             }
         }
 
-        
+
 
         // To Do List
 
-        public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone)
+        public class TaskMetaData
+        {
+            public DateTime TaskDateAdded { get; set; }
+            public DateTime? TaskDateCompleted { get; set; }
+        }
+
+
+        public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone, DateTime dateAdded, DateTime? dateCompleted = null)
         {
             tblToDoList.RowCount++;
             int rowIndex = tblToDoList.RowCount - 1;
@@ -368,7 +521,12 @@ namespace Cozify//database helper
             CheckBox chkDone = new CheckBox
             {
                 Checked = isDone,
-                Anchor = AnchorStyles.None
+                Anchor = AnchorStyles.None,
+                Tag = new TaskMetaData
+                {
+                    TaskDateAdded = dateAdded,
+                    TaskDateCompleted = dateCompleted
+                }
             };
             tblToDoList.Controls.Add(chkDone, 2, rowIndex);
 
@@ -395,15 +553,15 @@ namespace Cozify//database helper
                 FlatStyle = FlatStyle.Flat
             };
             tblToDoList.Controls.Add(btnDelete, 0, rowIndex);
-
         }
+
 
         public void LoadToDoList(TableLayoutPanel tblToDoList)
         {
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Activity, isDone FROM [ToDo List Table] WHERE Username = ?";
+                string query = "SELECT Activity, isDone, TaskDateAdded, TaskDateCompleted FROM [ToDo List Table] WHERE Username = ?";
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
@@ -413,7 +571,10 @@ namespace Cozify//database helper
                         {
                             string activity = reader["Activity"].ToString();
                             bool isDone = reader.GetBoolean(1);
-                            AddToDoRow(tblToDoList, activity, isDone);
+                            DateTime dateAdded = reader.GetDateTime(2);
+                            DateTime? dateCompleted = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3);
+
+                            AddToDoRow(tblToDoList, activity, isDone, dateAdded, dateCompleted);
                         }
                     }
                 }
@@ -425,14 +586,15 @@ namespace Cozify//database helper
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "DELETE FROM [ToDo List Table] WHERE Username = ?;";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                string insertQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?;";
+                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
                 {
                     cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
                     cmd.ExecuteNonQuery();
                 }
-                query = "INSERT INTO [ToDo List Table] (Username, Activity, isDone) VALUES (?, ?, ?);";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                insertQuery = "INSERT INTO [ToDo List Table] (Username, Activity, isDone, TaskDateAdded, TaskDateCompleted) VALUES (?, ?, ?, ?, ?);";
+
+                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
                 {
                     foreach (Control control in tblToDoList.Controls)
                     {
@@ -440,13 +602,24 @@ namespace Cozify//database helper
                         {
                             int rowIndex = tblToDoList.GetRow(chkDone);
                             Control txtTask = tblToDoList.GetControlFromPosition(1, rowIndex);
+                            if (txtTask == null || !(txtTask is TextBox txtBox)) continue;
+
+                            var meta = chkDone.Tag as TaskMetaData;
+                            if (meta == null) continue;
+
+                            if (chkDone.Checked && meta.TaskDateCompleted == null)
+                                meta.TaskDateCompleted = DateTime.Now;
+
                             cmd.Parameters.Clear();
                             cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                            cmd.Parameters.AddWithValue("?", txtTask.Text);
+                            cmd.Parameters.AddWithValue("?", txtBox.Text);
                             cmd.Parameters.AddWithValue("?", chkDone.Checked);
+                            cmd.Parameters.AddWithValue("?", meta.TaskDateAdded.ToString("MM/dd/yyyy"));
+                            cmd.Parameters.AddWithValue("?", meta.TaskDateCompleted.HasValue ? (object)meta.TaskDateCompleted.Value.ToString("MM/dd/yyyy") : DBNull.Value);
                             cmd.ExecuteNonQuery();
                         }
                     }
+
                 }
             }
         }

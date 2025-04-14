@@ -52,6 +52,7 @@
             this.btnExitMainHub = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btnHelpMainHub = new System.Windows.Forms.Button();
             this.pnlPicContainer = new System.Windows.Forms.Panel();
             this.PicBox1 = new System.Windows.Forms.PictureBox();
             this.panel6 = new System.Windows.Forms.Panel();
@@ -60,7 +61,6 @@
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblClock = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
-            this.btnHelpMainHub = new System.Windows.Forms.Button();
             this.btnStatistics = new System.Windows.Forms.Button();
             this.pnlTime.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -366,6 +366,21 @@
             this.panel5.Size = new System.Drawing.Size(70, 65);
             this.panel5.TabIndex = 23;
             // 
+            // btnHelpMainHub
+            // 
+            this.btnHelpMainHub.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnHelpMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnHelpMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHelpMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnHelpMainHub.Image = global::Cozify.Properties.Resources.Help;
+            this.btnHelpMainHub.Location = new System.Drawing.Point(0, 0);
+            this.btnHelpMainHub.Margin = new System.Windows.Forms.Padding(1);
+            this.btnHelpMainHub.Name = "btnHelpMainHub";
+            this.btnHelpMainHub.Size = new System.Drawing.Size(70, 65);
+            this.btnHelpMainHub.TabIndex = 18;
+            this.btnHelpMainHub.UseVisualStyleBackColor = false;
+            this.btnHelpMainHub.Click += new System.EventHandler(this.btnHelpMainHub_Click);
+            // 
             // pnlPicContainer
             // 
             this.pnlPicContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -459,21 +474,6 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(69, 58);
             this.panel8.TabIndex = 27;
-            // 
-            // btnHelpMainHub
-            // 
-            this.btnHelpMainHub.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnHelpMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnHelpMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHelpMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnHelpMainHub.Image = global::Cozify.Properties.Resources.Help;
-            this.btnHelpMainHub.Location = new System.Drawing.Point(0, 0);
-            this.btnHelpMainHub.Margin = new System.Windows.Forms.Padding(1);
-            this.btnHelpMainHub.Name = "btnHelpMainHub";
-            this.btnHelpMainHub.Size = new System.Drawing.Size(70, 65);
-            this.btnHelpMainHub.TabIndex = 18;
-            this.btnHelpMainHub.UseVisualStyleBackColor = false;
-            this.btnHelpMainHub.Click += new System.EventHandler(this.btnHelpMainHub_Click);
             // 
             // btnStatistics
             // 

@@ -29,47 +29,222 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new AntdUI.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblTotalTimeSpentPomo = new System.Windows.Forms.Label();
+            this.lblTotalHabitsAdded = new System.Windows.Forms.Label();
+            this.lblLastActive = new System.Windows.Forms.Label();
+            this.lblTimeLaunchedCozify = new System.Windows.Forms.Label();
+            this.lblTracksNumber = new System.Windows.Forms.Label();
+            this.lblTimeSpentCozify = new System.Windows.Forms.Label();
+            this.lblWordCountAvgPerEntry = new System.Windows.Forms.Label();
+            this.lblNumberOfEntries = new System.Windows.Forms.Label();
+            this.lblOldestTaskAge = new System.Windows.Forms.Label();
+            this.lblTotalTasksCompleted = new System.Windows.Forms.Label();
+            this.lblTasksAdded = new System.Windows.Forms.Label();
+            this.lblPomoSessionsCompelted = new System.Windows.Forms.Label();
+            this.lblStatUser = new System.Windows.Forms.Label();
             this.btnDeleteAcc = new AntdUI.Button();
             this.btnClearAcc = new AntdUI.Button();
+            this.btnShowStats = new AntdUI.Button();
             this.panel1.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.panel1.Controls.Add(this.label2);
+            this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Location = new System.Drawing.Point(27, 64);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(823, 386);
+            this.panel1.Size = new System.Drawing.Size(823, 446);
             this.panel1.TabIndex = 0;
             // 
-            // label2
+            // tableLayoutPanel1
             // 
-            this.label2.Location = new System.Drawing.Point(4, 4);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(204, 23);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "label2";
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTimeSpentPomo, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalHabitsAdded, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblLastActive, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lblTimeLaunchedCozify, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lblTracksNumber, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblTimeSpentCozify, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblWordCountAvgPerEntry, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.lblNumberOfEntries, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.lblOldestTaskAge, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 9);
+            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 1, 3);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 12;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(823, 446);
+            this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // label1
+            // lblTotalTimeSpentPomo
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Pixeltype", 26F);
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(22, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(301, 27);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "(insert name)\'s Stats";
+            this.lblTotalTimeSpentPomo.AutoSize = true;
+            this.lblTotalTimeSpentPomo.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTotalTimeSpentPomo.ForeColor = System.Drawing.Color.White;
+            this.lblTotalTimeSpentPomo.Location = new System.Drawing.Point(414, 80);
+            this.lblTotalTimeSpentPomo.Name = "lblTotalTimeSpentPomo";
+            this.lblTotalTimeSpentPomo.Size = new System.Drawing.Size(304, 21);
+            this.lblTotalTimeSpentPomo.TabIndex = 36;
+            this.lblTotalTimeSpentPomo.Text = "Total time spent on Pomdoro:";
+            // 
+            // lblTotalHabitsAdded
+            // 
+            this.lblTotalHabitsAdded.AutoSize = true;
+            this.lblTotalHabitsAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTotalHabitsAdded.ForeColor = System.Drawing.Color.White;
+            this.lblTotalHabitsAdded.Location = new System.Drawing.Point(414, 0);
+            this.lblTotalHabitsAdded.Name = "lblTotalHabitsAdded";
+            this.lblTotalHabitsAdded.Size = new System.Drawing.Size(213, 21);
+            this.lblTotalHabitsAdded.TabIndex = 34;
+            this.lblTotalHabitsAdded.Text = "Total Habits added: ";
+            // 
+            // lblLastActive
+            // 
+            this.lblLastActive.AutoSize = true;
+            this.lblLastActive.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblLastActive.ForeColor = System.Drawing.Color.White;
+            this.lblLastActive.Location = new System.Drawing.Point(3, 120);
+            this.lblLastActive.Name = "lblLastActive";
+            this.lblLastActive.Size = new System.Drawing.Size(136, 21);
+            this.lblLastActive.TabIndex = 32;
+            this.lblLastActive.Text = "Last active:";
+            // 
+            // lblTimeLaunchedCozify
+            // 
+            this.lblTimeLaunchedCozify.AutoSize = true;
+            this.lblTimeLaunchedCozify.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTimeLaunchedCozify.ForeColor = System.Drawing.Color.White;
+            this.lblTimeLaunchedCozify.Location = new System.Drawing.Point(3, 40);
+            this.lblTimeLaunchedCozify.Name = "lblTimeLaunchedCozify";
+            this.lblTimeLaunchedCozify.Size = new System.Drawing.Size(372, 21);
+            this.lblTimeLaunchedCozify.TabIndex = 12;
+            this.lblTimeLaunchedCozify.Text = "Number of times Cozify is launched:";
+            // 
+            // lblTracksNumber
+            // 
+            this.lblTracksNumber.AutoSize = true;
+            this.lblTracksNumber.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTracksNumber.ForeColor = System.Drawing.Color.White;
+            this.lblTracksNumber.Location = new System.Drawing.Point(3, 80);
+            this.lblTracksNumber.Name = "lblTracksNumber";
+            this.lblTracksNumber.Size = new System.Drawing.Size(193, 21);
+            this.lblTracksNumber.TabIndex = 13;
+            this.lblTracksNumber.Text = "Tracks in playlist:";
+            // 
+            // lblTimeSpentCozify
+            // 
+            this.lblTimeSpentCozify.AutoSize = true;
+            this.lblTimeSpentCozify.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTimeSpentCozify.ForeColor = System.Drawing.Color.White;
+            this.lblTimeSpentCozify.Location = new System.Drawing.Point(3, 0);
+            this.lblTimeSpentCozify.Name = "lblTimeSpentCozify";
+            this.lblTimeSpentCozify.Size = new System.Drawing.Size(262, 21);
+            this.lblTimeSpentCozify.TabIndex = 11;
+            this.lblTimeSpentCozify.Text = "Time spent using Cozify: ";
+            // 
+            // lblWordCountAvgPerEntry
+            // 
+            this.lblWordCountAvgPerEntry.AutoSize = true;
+            this.lblWordCountAvgPerEntry.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblWordCountAvgPerEntry.ForeColor = System.Drawing.Color.White;
+            this.lblWordCountAvgPerEntry.Location = new System.Drawing.Point(3, 240);
+            this.lblWordCountAvgPerEntry.Name = "lblWordCountAvgPerEntry";
+            this.lblWordCountAvgPerEntry.Size = new System.Drawing.Size(343, 21);
+            this.lblWordCountAvgPerEntry.TabIndex = 25;
+            this.lblWordCountAvgPerEntry.Text = "Word count average per entry: ";
+            // 
+            // lblNumberOfEntries
+            // 
+            this.lblNumberOfEntries.AutoSize = true;
+            this.lblNumberOfEntries.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblNumberOfEntries.ForeColor = System.Drawing.Color.White;
+            this.lblNumberOfEntries.Location = new System.Drawing.Point(3, 200);
+            this.lblNumberOfEntries.Name = "lblNumberOfEntries";
+            this.lblNumberOfEntries.Size = new System.Drawing.Size(261, 21);
+            this.lblNumberOfEntries.TabIndex = 24;
+            this.lblNumberOfEntries.Text = "Journal Entries Written:";
+            // 
+            // lblOldestTaskAge
+            // 
+            this.lblOldestTaskAge.AutoSize = true;
+            this.lblOldestTaskAge.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblOldestTaskAge.ForeColor = System.Drawing.Color.White;
+            this.lblOldestTaskAge.Location = new System.Drawing.Point(3, 400);
+            this.lblOldestTaskAge.Name = "lblOldestTaskAge";
+            this.lblOldestTaskAge.Size = new System.Drawing.Size(289, 21);
+            this.lblOldestTaskAge.TabIndex = 31;
+            this.lblOldestTaskAge.Text = "Oldest incomplete task age:";
+            // 
+            // lblTotalTasksCompleted
+            // 
+            this.lblTotalTasksCompleted.AutoSize = true;
+            this.lblTotalTasksCompleted.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTotalTasksCompleted.ForeColor = System.Drawing.Color.White;
+            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(3, 360);
+            this.lblTotalTasksCompleted.Name = "lblTotalTasksCompleted";
+            this.lblTotalTasksCompleted.Size = new System.Drawing.Size(246, 21);
+            this.lblTotalTasksCompleted.TabIndex = 30;
+            this.lblTotalTasksCompleted.Text = "Total Tasks completed:";
+            // 
+            // lblTasksAdded
+            // 
+            this.lblTasksAdded.AutoSize = true;
+            this.lblTasksAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTasksAdded.ForeColor = System.Drawing.Color.White;
+            this.lblTasksAdded.Location = new System.Drawing.Point(3, 320);
+            this.lblTasksAdded.Name = "lblTasksAdded";
+            this.lblTasksAdded.Size = new System.Drawing.Size(203, 21);
+            this.lblTasksAdded.TabIndex = 29;
+            this.lblTasksAdded.Text = "Total tasks added:";
+            // 
+            // lblPomoSessionsCompelted
+            // 
+            this.lblPomoSessionsCompelted.AutoSize = true;
+            this.lblPomoSessionsCompelted.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblPomoSessionsCompelted.ForeColor = System.Drawing.Color.White;
+            this.lblPomoSessionsCompelted.Location = new System.Drawing.Point(414, 120);
+            this.lblPomoSessionsCompelted.Name = "lblPomoSessionsCompelted";
+            this.lblPomoSessionsCompelted.Size = new System.Drawing.Size(222, 21);
+            this.lblPomoSessionsCompelted.TabIndex = 35;
+            this.lblPomoSessionsCompelted.Text = "Sessions completed:";
+            // 
+            // lblStatUser
+            // 
+            this.lblStatUser.AutoSize = true;
+            this.lblStatUser.Font = new System.Drawing.Font("Pixeltype", 26F);
+            this.lblStatUser.ForeColor = System.Drawing.Color.White;
+            this.lblStatUser.Location = new System.Drawing.Point(22, 21);
+            this.lblStatUser.Name = "lblStatUser";
+            this.lblStatUser.Size = new System.Drawing.Size(279, 27);
+            this.lblStatUser.TabIndex = 2;
+            this.lblStatUser.Text = "Username\'s Activity";
             // 
             // btnDeleteAcc
             // 
+            this.btnDeleteAcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnDeleteAcc.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
             this.btnDeleteAcc.Font = new System.Drawing.Font("Pixeltype", 22F);
             this.btnDeleteAcc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnDeleteAcc.Location = new System.Drawing.Point(721, 456);
+            this.btnDeleteAcc.Location = new System.Drawing.Point(721, 523);
             this.btnDeleteAcc.Name = "btnDeleteAcc";
             this.btnDeleteAcc.Size = new System.Drawing.Size(129, 65);
             this.btnDeleteAcc.TabIndex = 9;
@@ -78,32 +253,51 @@
             // 
             // btnClearAcc
             // 
+            this.btnClearAcc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnClearAcc.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
             this.btnClearAcc.Font = new System.Drawing.Font("Pixeltype", 22F);
             this.btnClearAcc.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnClearAcc.Location = new System.Drawing.Point(574, 456);
+            this.btnClearAcc.Location = new System.Drawing.Point(574, 523);
             this.btnClearAcc.Name = "btnClearAcc";
             this.btnClearAcc.Size = new System.Drawing.Size(141, 65);
             this.btnClearAcc.TabIndex = 10;
             this.btnClearAcc.Text = "Clear Data";
             this.btnClearAcc.Click += new System.EventHandler(this.btnClearAcc_Click);
             // 
+            // btnShowStats
+            // 
+            this.btnShowStats.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnShowStats.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnShowStats.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnShowStats.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnShowStats.Location = new System.Drawing.Point(427, 523);
+            this.btnShowStats.Name = "btnShowStats";
+            this.btnShowStats.Size = new System.Drawing.Size(141, 65);
+            this.btnShowStats.TabIndex = 11;
+            this.btnShowStats.Text = "Show Stats";
+            this.btnShowStats.Click += new System.EventHandler(this.btnShowStats_Click);
+            // 
             // STATS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.ClientSize = new System.Drawing.Size(880, 533);
+            this.ClientSize = new System.Drawing.Size(880, 600);
+            this.Controls.Add(this.btnShowStats);
             this.Controls.Add(this.btnClearAcc);
             this.Controls.Add(this.btnDeleteAcc);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblStatUser);
             this.Controls.Add(this.panel1);
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "STATS";
+            this.Opacity = 0.9D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "STATS";
+            this.Load += new System.EventHandler(this.STATS_Load);
             this.panel1.ResumeLayout(false);
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -112,9 +306,22 @@
         #endregion
 
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblStatUser;
         private AntdUI.Button btnDeleteAcc;
-        private AntdUI.Label label2;
         private AntdUI.Button btnClearAcc;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label lblTimeSpentCozify;
+        private System.Windows.Forms.Label lblTimeLaunchedCozify;
+        private System.Windows.Forms.Label lblTracksNumber;
+        private AntdUI.Button btnShowStats;
+        private System.Windows.Forms.Label lblOldestTaskAge;
+        private System.Windows.Forms.Label lblTotalTasksCompleted;
+        private System.Windows.Forms.Label lblTasksAdded;
+        private System.Windows.Forms.Label lblWordCountAvgPerEntry;
+        private System.Windows.Forms.Label lblNumberOfEntries;
+        private System.Windows.Forms.Label lblLastActive;
+        private System.Windows.Forms.Label lblTotalTimeSpentPomo;
+        private System.Windows.Forms.Label lblTotalHabitsAdded;
+        private System.Windows.Forms.Label lblPomoSessionsCompelted;
     }
 }

@@ -92,5 +92,12 @@ namespace finals
         {
             db.SaveHabitChecker(tblHabitChecker);
         }
+
+        private void btnClearHabits_Click(object sender, EventArgs e)
+        {
+            tblHabitChecker.Controls.Clear();
+            tblHabitChecker.RowStyles.Clear();
+            tblHabitChecker.RowCount = 0;
+        }
     }
 }
