@@ -10,6 +10,7 @@ using finals;
 using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using System.Diagnostics;
 
 namespace Cozify//database helper
 {
@@ -25,7 +26,6 @@ namespace Cozify//database helper
         OleDbDataAdapter da;
         OleDbCommand cmd;
         DataSet ds;
-
 
         public void connectionTest()
         {
@@ -43,8 +43,10 @@ namespace Cozify//database helper
             DialogResult result = MessageBox.Show("Are you sure you want to delete your account? This action cannot be undone.",
                                                   "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result != DialogResult.Yes)
+            {
                 return;
-
+            }
+                
             try
             {
                 using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -143,37 +145,72 @@ namespace Cozify//database helper
         //login and register stuff
         public void Register(string username, string password)
         {
-            // Check if username already exists
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            try
             {
-                conn.Open();
-
-                // Check if user exists
-                string checkUserQuery = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ?";
-                using (OleDbCommand cmd = new OleDbCommand(checkUserQuery, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("?", username);
-                    int userExists = (int)cmd.ExecuteScalar();
+                    conn.Open();
 
-                    if (userExists > 0)
+                    // Check if user exists
+                    string checkUserQuery = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ?";
+                    using (OleDbCommand cmd = new OleDbCommand(checkUserQuery, conn))
                     {
-                        MessageBox.Show("Username already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
+                        cmd.Parameters.AddWithValue("@username", username);
+                        int userExists = (int)cmd.ExecuteScalar();
+
+                        if (userExists > 0)
+                        {
+                            MessageBox.Show("Username already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+                    }
+
+                    // Insert new user with explicit parameter types
+                    string insertQuery = @"
+                INSERT INTO [Users Table] 
+                (Username, [Password], CreatedAt, TimeSpentUsingCozify, NoOfTimesCozifyOpened, LastActive) 
+                VALUES (?, ?, ?, ?, ?, ?)";
+
+                    using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
+                    {
+                        // Add parameters with explicit types
+                        cmd.Parameters.Add("@username", OleDbType.VarChar).Value = username;
+                        cmd.Parameters.Add("@password", OleDbType.VarChar).Value = password;
+
+                        // Use proper date format without spaces
+                        cmd.Parameters.Add("@createdAt", OleDbType.Date).Value = DateTime.Now;
+
+                        // Numeric defaults
+                        cmd.Parameters.Add("@timeSpent", OleDbType.Double).Value = 0.0;
+                        cmd.Parameters.Add("@launches", OleDbType.Integer).Value = 0;
+                        cmd.Parameters.Add("@lastActive", OleDbType.Date).Value = DateTime.Now;
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Registration failed - no rows affected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
-
-                // Insert new user
-                string insertQuery = "INSERT INTO [Users Table] (Username, [Password], CreatedAt) VALUES (?, ?, ?)";
-                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
-                {
-                    cmd.Parameters.AddWithValue("?", username);
-                    cmd.Parameters.AddWithValue("?", password); // NOTE: You should hash passwords for security!
-                    cmd.Parameters.AddWithValue("?", DateTime.Now.ToString("yyyy - MM - dd"));
-
-                    cmd.ExecuteNonQuery();
-                }
-
-                MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (OleDbException dbEx)
+            {
+                MessageBox.Show($"Database error: {dbEx.Message}\n\nPlease check your database structure.",
+                              "Database Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error: {ex.Message}",
+                              "Error",
+                              MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
             }
         }
 
@@ -232,6 +269,24 @@ namespace Cozify//database helper
                     }
                 }
             }
+        }
+
+        public int JournalCount()
+        {
+            int count = 0;
+
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM [Journal Table] WHERE Username = ?";
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    count = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            return count;
         }
         public void SaveJournal(string newTitle, string newContent, string dateText, string originalTitle = null)
         {
@@ -390,7 +445,7 @@ namespace Cozify//database helper
             };
             tblHabitChecker.Controls.Add(btnDelete, 0, rowIndex);
         }
-        
+
         public void LoadHabits(TableLayoutPanel tblHabitChecker)
         {
             tblHabitChecker.Controls.Clear();
@@ -424,8 +479,8 @@ namespace Cozify//database helper
                 }
             }
         }
-        
-                        /*1. Weekly or Monthly Analytics
+        /*
+                1. Weekly or Monthly Analytics
                 If you want to say something like:
 
                 “You added 4 new habits this week!”
@@ -455,7 +510,8 @@ namespace Cozify//database helper
                 5. User Feedback
                 You could show messages like:
 
-                "You’ve been building habits since April 8, 2025!"*/
+                "You’ve been building habits since April 8, 2025!"
+        */
         public void SaveHabitChecker(TableLayoutPanel tblHabitChecker)
         {
             using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -463,6 +519,7 @@ namespace Cozify//database helper
                 conn.Open();
 
                 string deleteQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
+
                 using (OleDbCommand deleteCmd = new OleDbCommand(deleteQuery, conn))
                 {
                     deleteCmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
@@ -502,8 +559,6 @@ namespace Cozify//database helper
             }
         }
 
-
-
         // To Do List
 
         public class TaskMetaData
@@ -511,7 +566,6 @@ namespace Cozify//database helper
             public DateTime TaskDateAdded { get; set; }
             public DateTime? TaskDateCompleted { get; set; }
         }
-
 
         public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone, DateTime dateAdded, DateTime? dateCompleted = null)
         {
@@ -555,7 +609,6 @@ namespace Cozify//database helper
             tblToDoList.Controls.Add(btnDelete, 0, rowIndex);
         }
 
-
         public void LoadToDoList(TableLayoutPanel tblToDoList)
         {
             using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -579,6 +632,50 @@ namespace Cozify//database helper
                     }
                 }
             }
+        }
+
+        public int ToDoCount()
+        {
+            int count = 0;
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM [ToDo List Table] WHERE Username = ?";
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    count = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            return count;
+        }
+        public int CompleteToDoCount(bool? completed = null)
+        {
+            int count = 0;
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+
+                string query = "SELECT COUNT(*) FROM [ToDo List Table] WHERE Username = ?";
+
+                if (completed.HasValue)
+                {
+                    query += " AND isDone = ?";
+                }
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+
+                    if (completed.HasValue)
+                    {
+                        // Use proper parameter type for your database
+                        cmd.Parameters.AddWithValue("?", completed.Value ? 1 : 0);
+                    }
+                    count = Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+            return count;
         }
 
         public void SaveToDoList(TableLayoutPanel tblToDoList)
@@ -649,6 +746,143 @@ namespace Cozify//database helper
             }
         }
 
-    }
+        // Stats/Activity of user
+        //note: work on this later
+        public void LoadUserStats(Label UserTimeSpent, Label TimesLaunched, Label LastActive)
+        {
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+                    string query = "SELECT TimeSpentUsingCozify, NoOfTimesCozifyOpened, LastActive FROM [Users Table] WHERE Username = ?";
 
+                    using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+
+                        using (OleDbDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                double timeSpent = reader.IsDBNull(0) ? 0 : Convert.ToDouble(reader.GetValue(0));
+                                int timesOpened = reader.IsDBNull(1) ? 0 : Convert.ToInt32(reader.GetValue(1));
+                                string lastActive = reader.IsDBNull(2)
+                                    ? "Never active"
+                                    : reader.GetDateTime(2).ToString("MMM dd, h:mm tt");
+
+                                UserTimeSpent.Text = $"Time spent: {timeSpent:F2} hrs";
+                                TimesLaunched.Text = $"Times Cozify launched: {timesOpened}";
+                                LastActive.Text = $"Last active: {lastActive}";
+                            }
+                            else
+                            {
+                                throw new Exception("User not found in the database.");
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading stats: {ex.Message}\n\nPlease check database structure.");
+                UserTimeSpent.Text = "Time Spent: 0 hours";
+                TimesLaunched.Text = "Times Cozify launched: 0";
+                LastActive.Text = "Last active: Never active";
+            }
+        }
+
+        private double UserSessionSeconds = 0;
+        private Timer UserSessionTimer;
+
+        public void SessionStartTime()
+        {
+            UserSessionSeconds = 0;
+
+            UserSessionTimer = new Timer();
+            UserSessionTimer.Interval = 1000; // 1 second interval
+            UserSessionTimer.Tick += (sender, e) => UserSessionSeconds++;
+            UserSessionTimer.Start();
+        }
+
+        public void StopSessionTimer()
+        {
+            if (UserSessionSeconds <= 0)
+            {
+                UserSessionSeconds = 0;
+                return;
+            }
+
+            double hoursSpent = UserSessionSeconds / 3600.0;
+            Debug.WriteLine($"Preparing to save session data: {hoursSpent:F4} hours");
+
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // First verify user exists
+                    string checkUserQuery = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ?";
+                    using (OleDbCommand checkCmd = new OleDbCommand(checkUserQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                        int userCount = (int)checkCmd.ExecuteScalar();
+
+                        if (userCount == 0)
+                        {
+                            MessageBox.Show($"User '{GlobalUser.LoggedInUsername}' not found in database",
+                                          "Update Failed",
+                                          MessageBoxButtons.OK,
+                                          MessageBoxIcon.Warning);
+                            return;
+                        }
+                    }
+
+                    // Proceed with update
+                    string updateQuery = @"
+                        UPDATE [Users Table]
+                        SET 
+                            TimeSpentUsingCozify = TimeSpentUsingCozify + ?,
+                            LastActive = ?,
+                            NoOfTimesCozifyOpened = NoOfTimesCozifyOpened + 1
+                        WHERE Username = ?";
+
+                    using (OleDbCommand cmd = new OleDbCommand(updateQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("?", hoursSpent);
+                        cmd.Parameters.AddWithValue("?", DateTime.Now);
+                        cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+                        Debug.WriteLine($"Rows affected: {rowsAffected}");
+
+                        if (rowsAffected > 0)
+                        {
+                            Debug.WriteLine($"Successfully updated user {GlobalUser.LoggedInUsername}");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Update failed: {ex}");
+                MessageBox.Show($"Failed to save session data:\n{ex.Message}",
+                               "Database Error",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (UserSessionTimer != null)
+                {
+                    UserSessionTimer.Stop();
+                    UserSessionTimer.Dispose();
+                    UserSessionTimer = null;
+                }
+                UserSessionSeconds = 0;
+            }
+        }
+
+    }
 }

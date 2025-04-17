@@ -33,15 +33,14 @@
             this.lblTotalTimeSpentPomo = new System.Windows.Forms.Label();
             this.lblTotalHabitsAdded = new System.Windows.Forms.Label();
             this.lblLastActive = new System.Windows.Forms.Label();
-            this.lblTimeLaunchedCozify = new System.Windows.Forms.Label();
+            this.lblTimesLaunchedCozify = new System.Windows.Forms.Label();
             this.lblTracksNumber = new System.Windows.Forms.Label();
             this.lblTimeSpentCozify = new System.Windows.Forms.Label();
-            this.lblWordCountAvgPerEntry = new System.Windows.Forms.Label();
-            this.lblNumberOfEntries = new System.Windows.Forms.Label();
-            this.lblOldestTaskAge = new System.Windows.Forms.Label();
-            this.lblTotalTasksCompleted = new System.Windows.Forms.Label();
-            this.lblTasksAdded = new System.Windows.Forms.Label();
+            this.lblNoOfJournalEntries = new System.Windows.Forms.Label();
             this.lblPomoSessionsCompelted = new System.Windows.Forms.Label();
+            this.lblTasksAdded = new System.Windows.Forms.Label();
+            this.lblTotalTasksCompleted = new System.Windows.Forms.Label();
+            this.lblOldestTaskAge = new System.Windows.Forms.Label();
             this.lblStatUser = new System.Windows.Forms.Label();
             this.btnDeleteAcc = new AntdUI.Button();
             this.btnClearAcc = new AntdUI.Button();
@@ -67,15 +66,14 @@
             this.tableLayoutPanel1.Controls.Add(this.lblTotalTimeSpentPomo, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblTotalHabitsAdded, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblLastActive, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lblTimeLaunchedCozify, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lblTimesLaunchedCozify, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblTracksNumber, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblTimeSpentCozify, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblWordCountAvgPerEntry, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.lblNumberOfEntries, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.lblOldestTaskAge, 0, 10);
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblNoOfJournalEntries, 0, 5);
             this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblOldestTaskAge, 0, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -128,16 +126,16 @@
             this.lblLastActive.TabIndex = 32;
             this.lblLastActive.Text = "Last active:";
             // 
-            // lblTimeLaunchedCozify
+            // lblTimesLaunchedCozify
             // 
-            this.lblTimeLaunchedCozify.AutoSize = true;
-            this.lblTimeLaunchedCozify.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblTimeLaunchedCozify.ForeColor = System.Drawing.Color.White;
-            this.lblTimeLaunchedCozify.Location = new System.Drawing.Point(3, 40);
-            this.lblTimeLaunchedCozify.Name = "lblTimeLaunchedCozify";
-            this.lblTimeLaunchedCozify.Size = new System.Drawing.Size(372, 21);
-            this.lblTimeLaunchedCozify.TabIndex = 12;
-            this.lblTimeLaunchedCozify.Text = "Number of times Cozify is launched:";
+            this.lblTimesLaunchedCozify.AutoSize = true;
+            this.lblTimesLaunchedCozify.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTimesLaunchedCozify.ForeColor = System.Drawing.Color.White;
+            this.lblTimesLaunchedCozify.Location = new System.Drawing.Point(3, 40);
+            this.lblTimesLaunchedCozify.Name = "lblTimesLaunchedCozify";
+            this.lblTimesLaunchedCozify.Size = new System.Drawing.Size(372, 21);
+            this.lblTimesLaunchedCozify.TabIndex = 12;
+            this.lblTimesLaunchedCozify.Text = "Number of times Cozify is launched:";
             // 
             // lblTracksNumber
             // 
@@ -161,60 +159,16 @@
             this.lblTimeSpentCozify.TabIndex = 11;
             this.lblTimeSpentCozify.Text = "Time spent using Cozify: ";
             // 
-            // lblWordCountAvgPerEntry
+            // lblNoOfJournalEntries
             // 
-            this.lblWordCountAvgPerEntry.AutoSize = true;
-            this.lblWordCountAvgPerEntry.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblWordCountAvgPerEntry.ForeColor = System.Drawing.Color.White;
-            this.lblWordCountAvgPerEntry.Location = new System.Drawing.Point(3, 240);
-            this.lblWordCountAvgPerEntry.Name = "lblWordCountAvgPerEntry";
-            this.lblWordCountAvgPerEntry.Size = new System.Drawing.Size(343, 21);
-            this.lblWordCountAvgPerEntry.TabIndex = 25;
-            this.lblWordCountAvgPerEntry.Text = "Word count average per entry: ";
-            // 
-            // lblNumberOfEntries
-            // 
-            this.lblNumberOfEntries.AutoSize = true;
-            this.lblNumberOfEntries.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblNumberOfEntries.ForeColor = System.Drawing.Color.White;
-            this.lblNumberOfEntries.Location = new System.Drawing.Point(3, 200);
-            this.lblNumberOfEntries.Name = "lblNumberOfEntries";
-            this.lblNumberOfEntries.Size = new System.Drawing.Size(261, 21);
-            this.lblNumberOfEntries.TabIndex = 24;
-            this.lblNumberOfEntries.Text = "Journal Entries Written:";
-            // 
-            // lblOldestTaskAge
-            // 
-            this.lblOldestTaskAge.AutoSize = true;
-            this.lblOldestTaskAge.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblOldestTaskAge.ForeColor = System.Drawing.Color.White;
-            this.lblOldestTaskAge.Location = new System.Drawing.Point(3, 400);
-            this.lblOldestTaskAge.Name = "lblOldestTaskAge";
-            this.lblOldestTaskAge.Size = new System.Drawing.Size(289, 21);
-            this.lblOldestTaskAge.TabIndex = 31;
-            this.lblOldestTaskAge.Text = "Oldest incomplete task age:";
-            // 
-            // lblTotalTasksCompleted
-            // 
-            this.lblTotalTasksCompleted.AutoSize = true;
-            this.lblTotalTasksCompleted.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblTotalTasksCompleted.ForeColor = System.Drawing.Color.White;
-            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(3, 360);
-            this.lblTotalTasksCompleted.Name = "lblTotalTasksCompleted";
-            this.lblTotalTasksCompleted.Size = new System.Drawing.Size(246, 21);
-            this.lblTotalTasksCompleted.TabIndex = 30;
-            this.lblTotalTasksCompleted.Text = "Total Tasks completed:";
-            // 
-            // lblTasksAdded
-            // 
-            this.lblTasksAdded.AutoSize = true;
-            this.lblTasksAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblTasksAdded.ForeColor = System.Drawing.Color.White;
-            this.lblTasksAdded.Location = new System.Drawing.Point(3, 320);
-            this.lblTasksAdded.Name = "lblTasksAdded";
-            this.lblTasksAdded.Size = new System.Drawing.Size(203, 21);
-            this.lblTasksAdded.TabIndex = 29;
-            this.lblTasksAdded.Text = "Total tasks added:";
+            this.lblNoOfJournalEntries.AutoSize = true;
+            this.lblNoOfJournalEntries.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblNoOfJournalEntries.ForeColor = System.Drawing.Color.White;
+            this.lblNoOfJournalEntries.Location = new System.Drawing.Point(3, 200);
+            this.lblNoOfJournalEntries.Name = "lblNoOfJournalEntries";
+            this.lblNoOfJournalEntries.Size = new System.Drawing.Size(261, 21);
+            this.lblNoOfJournalEntries.TabIndex = 24;
+            this.lblNoOfJournalEntries.Text = "Journal Entries Written:";
             // 
             // lblPomoSessionsCompelted
             // 
@@ -226,6 +180,39 @@
             this.lblPomoSessionsCompelted.Size = new System.Drawing.Size(222, 21);
             this.lblPomoSessionsCompelted.TabIndex = 35;
             this.lblPomoSessionsCompelted.Text = "Sessions completed:";
+            // 
+            // lblTasksAdded
+            // 
+            this.lblTasksAdded.AutoSize = true;
+            this.lblTasksAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTasksAdded.ForeColor = System.Drawing.Color.White;
+            this.lblTasksAdded.Location = new System.Drawing.Point(3, 280);
+            this.lblTasksAdded.Name = "lblTasksAdded";
+            this.lblTasksAdded.Size = new System.Drawing.Size(203, 21);
+            this.lblTasksAdded.TabIndex = 29;
+            this.lblTasksAdded.Text = "Total tasks added:";
+            // 
+            // lblTotalTasksCompleted
+            // 
+            this.lblTotalTasksCompleted.AutoSize = true;
+            this.lblTotalTasksCompleted.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblTotalTasksCompleted.ForeColor = System.Drawing.Color.White;
+            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(3, 320);
+            this.lblTotalTasksCompleted.Name = "lblTotalTasksCompleted";
+            this.lblTotalTasksCompleted.Size = new System.Drawing.Size(246, 21);
+            this.lblTotalTasksCompleted.TabIndex = 30;
+            this.lblTotalTasksCompleted.Text = "Total Tasks completed:";
+            // 
+            // lblOldestTaskAge
+            // 
+            this.lblOldestTaskAge.AutoSize = true;
+            this.lblOldestTaskAge.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblOldestTaskAge.ForeColor = System.Drawing.Color.White;
+            this.lblOldestTaskAge.Location = new System.Drawing.Point(3, 360);
+            this.lblOldestTaskAge.Name = "lblOldestTaskAge";
+            this.lblOldestTaskAge.Size = new System.Drawing.Size(289, 21);
+            this.lblOldestTaskAge.TabIndex = 31;
+            this.lblOldestTaskAge.Text = "Oldest incomplete task age:";
             // 
             // lblStatUser
             // 
@@ -311,14 +298,13 @@
         private AntdUI.Button btnClearAcc;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Label lblTimeSpentCozify;
-        private System.Windows.Forms.Label lblTimeLaunchedCozify;
+        private System.Windows.Forms.Label lblTimesLaunchedCozify;
         private System.Windows.Forms.Label lblTracksNumber;
         private AntdUI.Button btnShowStats;
         private System.Windows.Forms.Label lblOldestTaskAge;
         private System.Windows.Forms.Label lblTotalTasksCompleted;
         private System.Windows.Forms.Label lblTasksAdded;
-        private System.Windows.Forms.Label lblWordCountAvgPerEntry;
-        private System.Windows.Forms.Label lblNumberOfEntries;
+        private System.Windows.Forms.Label lblNoOfJournalEntries;
         private System.Windows.Forms.Label lblLastActive;
         private System.Windows.Forms.Label lblTotalTimeSpentPomo;
         private System.Windows.Forms.Label lblTotalHabitsAdded;

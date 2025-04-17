@@ -47,6 +47,7 @@ namespace finals // Saves upon closing using database
         {
             db.SaveToDoList(tblToDoList);
         }
+
         private void btnAddToDoEntry_Click(object sender, EventArgs e)
         {
             db.AddToDoRow(tblToDoList, "", false, DateTime.Now);

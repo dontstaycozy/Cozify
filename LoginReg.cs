@@ -80,5 +80,10 @@ namespace Cozify
 
             }
         }
+
+        private void btnForgetPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+
+        }
     }
 }

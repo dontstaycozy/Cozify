@@ -31,18 +31,18 @@ namespace Cozify
 /*
     labels i have rn for user's activitiy are: 
      
-lblTimeSpentCozify
-lblTimeLaunchedCozify
-lblTracksNumber
-lblLastActive
-lblNumberOfEntries
-lblWordCountAvgPerEntry
-lblTasksAdded
-lblTotalTasksCompleted
-lblOldestTaskAge
-lblTotalHabitsAdded
-lblTotalTimeSpentPomo
-lblPomoSessionsCompelted
+        lblTimeSpentCozify
+        lblTimeLaunchedCozify
+        lblTracksNumber
+        lblLastActive
+        lblNumberOfEntries
+        lblWordCountAvgPerEntry
+        lblTasksAdded
+        lblTotalTasksCompleted
+        lblOldestTaskAge
+        lblTotalHabitsAdded
+        lblTotalTimeSpentPomo
+        lblPomoSessionsCompelted
      
     */
 public partial class STATS : BaseForm
@@ -67,8 +67,17 @@ public partial class STATS : BaseForm
 
     private void STATS_Load(object sender, EventArgs e)
     {
-        lblStatUser.Text = GlobalUser.LoggedInUsername + "'s Activity";
-    }
+            db.LoadUserStats(lblTimeSpentCozify, lblTimesLaunchedCozify, lblLastActive);
+
+            int totalToDoCount = db.ToDoCount();
+            int completedToDoCount = db.CompleteToDoCount(true);
+            int journalCount = db.JournalCount();
+
+            lblNoOfJournalEntries.Text = $"Journal Entries Written: {journalCount}";
+            lblTasksAdded.Text = $"To-Do List Entries: {totalToDoCount}";
+            lblTotalTasksCompleted.Text = $"Total Completed Tasks: {completedToDoCount}";
+            lblStatUser.Text = $"{GlobalUser.LoggedInUsername}'s Activity";
+        }
 
     private void btnShowStats_Click(object sender, EventArgs e)
     {

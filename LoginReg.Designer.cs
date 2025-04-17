@@ -38,6 +38,8 @@
             this.btnRevealLoginPass = new System.Windows.Forms.Button();
             this.btnGoBackToRegister = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.btnForgetPassword = new System.Windows.Forms.LinkLabel();
+            this.label1 = new AntdUI.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -47,7 +49,7 @@
             // 
             this.label4.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label4.Location = new System.Drawing.Point(112, 452);
+            this.label4.Location = new System.Drawing.Point(112, 435);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(163, 23);
             this.label4.TabIndex = 26;
@@ -57,7 +59,7 @@
             // 
             this.label3.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label3.Location = new System.Drawing.Point(112, 339);
+            this.label3.Location = new System.Drawing.Point(112, 322);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(126, 23);
             this.label3.TabIndex = 25;
@@ -92,7 +94,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
             this.panel1.Controls.Add(this.tbxPasswordLogin);
-            this.panel1.Location = new System.Drawing.Point(112, 479);
+            this.panel1.Location = new System.Drawing.Point(112, 462);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(374, 62);
             this.panel1.TabIndex = 32;
@@ -101,7 +103,7 @@
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
             this.panel2.Controls.Add(this.tbxUsernameLogin);
-            this.panel2.Location = new System.Drawing.Point(112, 367);
+            this.panel2.Location = new System.Drawing.Point(112, 350);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(374, 62);
             this.panel2.TabIndex = 33;
@@ -126,7 +128,7 @@
             this.btnRevealLoginPass.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRevealLoginPass.ForeColor = System.Drawing.SystemColors.ActiveCaption;
             this.btnRevealLoginPass.Image = global::Cozify.Properties.Resources.Closed_Eye;
-            this.btnRevealLoginPass.Location = new System.Drawing.Point(405, 433);
+            this.btnRevealLoginPass.Location = new System.Drawing.Point(405, 416);
             this.btnRevealLoginPass.Margin = new System.Windows.Forms.Padding(1);
             this.btnRevealLoginPass.Name = "btnRevealLoginPass";
             this.btnRevealLoginPass.Size = new System.Drawing.Size(81, 44);
@@ -158,12 +160,39 @@
             this.pictureBox1.TabIndex = 27;
             this.pictureBox1.TabStop = false;
             // 
+            // btnForgetPassword
+            // 
+            this.btnForgetPassword.ActiveLinkColor = System.Drawing.Color.Silver;
+            this.btnForgetPassword.AutoSize = true;
+            this.btnForgetPassword.Font = new System.Drawing.Font("PixelSix10", 14F);
+            this.btnForgetPassword.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(210)))), ((int)(((byte)(233)))));
+            this.btnForgetPassword.Location = new System.Drawing.Point(350, 527);
+            this.btnForgetPassword.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
+            this.btnForgetPassword.Name = "btnForgetPassword";
+            this.btnForgetPassword.Size = new System.Drawing.Size(145, 30);
+            this.btnForgetPassword.TabIndex = 50;
+            this.btnForgetPassword.TabStop = true;
+            this.btnForgetPassword.Text = "Click Here";
+            this.btnForgetPassword.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.btnForgetPassword_LinkClicked);
+            // 
+            // label1
+            // 
+            this.label1.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.label1.Location = new System.Drawing.Point(112, 531);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(272, 30);
+            this.label1.TabIndex = 49;
+            this.label1.Text = "Forgot your password?";
+            // 
             // LoginReg
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(580, 639);
+            this.Controls.Add(this.btnForgetPassword);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnRevealLoginPass);
             this.Controls.Add(this.btnGoBackToRegister);
@@ -183,6 +212,7 @@
             this.panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -198,5 +228,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.TextBox tbxUsernameLogin;
+        private System.Windows.Forms.LinkLabel btnForgetPassword;
+        private AntdUI.Label label1;
     }
 }

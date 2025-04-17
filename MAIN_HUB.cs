@@ -6,6 +6,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 //add music player, add analytics and monitoring, add admin account
 namespace finals
 {
-    public partial class MAIN_HUB: Form
+    public partial class MAIN_HUB: BaseForm
     {
         private HABIT_CHECKER habitChecker;
         private TO_DO_LIST toDo;
@@ -23,6 +24,7 @@ namespace finals
         private STATS sTAT;
         private bool isFocused = false;
         private Form activeFeature = null;
+
 
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -72,17 +74,32 @@ namespace finals
             if (guide != null && !guide.IsDisposed) guide.Close();
             if (pomo != null && !pomo.IsDisposed) pomo.Close();
             if (sTAT != null && !sTAT.IsDisposed) sTAT.Close();
+            db.StopSessionTimer();
             this.Close();
-            //LOGIN lOGIN = new LOGIN();
-            //lOGIN.Show();
+            LOGIN lOGIN = new LOGIN();
+            lOGIN.Show();
         }
 
         private void MAIN_HUB_Load(object sender, EventArgs e)
         {
-            WelcomeLabel.Text = GlobalUser.LoggedInUsername + "'s space";
-            this.Resize += MAIN_HUB_Resize;
-            //MainHub.TopMost = true; // Set the form to be topmost
-            Centering();
+            try
+            {
+                WelcomeLabel.Text = $"{GlobalUser.LoggedInUsername}'s space";
+                this.Resize += MAIN_HUB_Resize;
+                this.FormClosing += MAIN_HUB_FormClosing;
+                db.SessionStartTime();
+                Centering();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing session: {ex.Message}");
+            }
+        }
+
+        private void MAIN_HUB_FormClosing(object sender, FormClosingEventArgs e)//fix TIMESPENT PLEASE
+        {
+            db.StopSessionTimer();
         }
 
         private void Centering()
@@ -256,7 +273,6 @@ namespace finals
                 guide.Close();
                 activeFeature = null;
             }
-           // 
         }
         private void Guide_FormClosed(object sender, FormClosedEventArgs e)
         {

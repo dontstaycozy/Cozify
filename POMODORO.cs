@@ -23,22 +23,11 @@ namespace finals
         public POMODORO()
         {
             InitializeComponent();
-            this.MouseDown += POMODORO_MouseDown;
             pomoTimer = new Timer();
             pomoTimer.Interval = 1000;
             pomoTimer.Tick += Timer_Tick;
             alarm = new SoundPlayer(Cozify.Properties.Resources.alarmsound);
         }
-
-        private void POMODORO_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(this.Handle, 0xA1, 0x2, 0); // Dragging action
-            }
-        }
-
         private void Centering()
         {
             int formWidth = this.ClientSize.Width;

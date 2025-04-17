@@ -514,7 +514,6 @@
             this.Name = "MAIN_HUB";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
-            this.Load += new System.EventHandler(this.MAIN_HUB_Load);
             this.Resize += new System.EventHandler(this.MAIN_HUB_Resize);
             this.pnlTime.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
