@@ -70,34 +70,7 @@ namespace finals // Saves upon closing using database
         }
         private void DeleteToDoRow(int rowIndex)
         {
-            for (int col = 0; col < tblToDoList.ColumnCount; col++)
-            {
-                var control = tblToDoList.GetControlFromPosition(col, rowIndex);
-                if (control != null)
-                {
-                    tblToDoList.Controls.Remove(control);
-                    control.Dispose();
-                }
-            }
-
-            for (int i = rowIndex; i < tblToDoList.RowCount; i++)
-            {
-                for (int col = 0; col < tblToDoList.ColumnCount; col++)
-                {
-                    Control c = tblToDoList.GetControlFromPosition(col, i);
-                    if (c != null)
-                    {
-                        tblToDoList.SetRow(c, i - 1);
-                    }
-                }
-            }
-            if (tblToDoList.RowCount > 0)
-            {
-                tblToDoList.RowCount--;
-            }
-            //tblToDoList.RowCount--;
-            if (tblToDoList.RowStyles.Count > rowIndex)
-                tblToDoList.RowStyles.RemoveAt(rowIndex);
+            db.DeleteToDoRow(tblToDoList, rowIndex);
         }
     }
 }

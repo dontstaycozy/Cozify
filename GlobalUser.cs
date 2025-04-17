@@ -11,6 +11,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using System.Collections;
 using System.Diagnostics;
+using System.Net.NetworkInformation;
 
 namespace Cozify//database helper
 {
@@ -46,7 +47,7 @@ namespace Cozify//database helper
             {
                 return;
             }
-                
+
             try
             {
                 using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -283,11 +284,11 @@ namespace Cozify//database helper
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
                     cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    count = Convert.ToInt32(cmd.ExecuteScalar());
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
-            return count;
         }
+
         public void SaveJournal(string newTitle, string newContent, string dateText, string originalTitle = null)
         {
             if (string.IsNullOrWhiteSpace(newTitle) || string.IsNullOrWhiteSpace(newContent))
@@ -401,7 +402,13 @@ namespace Cozify//database helper
 
         // Habit Checker
 
-        public void AddHabitRow(TableLayoutPanel tblHabitChecker, string habitText, bool sun, bool mon, bool tues, bool wed, bool thurs, bool fri, bool sat)
+        public class HabitMetaData
+        {
+            public DateTime HabitDateAdded { get; set; }
+            public bool IsDeleted { get; set; }
+        }
+
+        public void AddHabitRow(TableLayoutPanel tblHabitChecker, string habitText, bool sun, bool mon, bool tues, bool wed, bool thurs, bool fri, bool sat, DateTime? dateAdded = null)
         {
             tblHabitChecker.RowCount++;
             int rowIndex = tblHabitChecker.RowCount - 1;
@@ -414,7 +421,12 @@ namespace Cozify//database helper
                 Font = new Font("Pixeltype", 23F, FontStyle.Regular),
                 Anchor = AnchorStyles.Left | AnchorStyles.Right,
                 TextAlign = HorizontalAlignment.Left,
-                Text = habitText
+                Text = habitText,
+                Tag = new HabitMetaData
+                {
+                    HabitDateAdded = dateAdded ?? DateTime.Now,
+                    IsDeleted = false
+                }
             };
             tblHabitChecker.Controls.Add(txtHabit, 1, rowIndex);
 
@@ -455,31 +467,56 @@ namespace Cozify//database helper
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT HabitName, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, HabitDateAdded FROM [Habit Checker Table] WHERE Username = ?";
+                string query = @"SELECT HabitName, Sunday, Monday, Tuesday, Wednesday, 
+                        Thursday, Friday, Saturday, HabitDateAdded
+                        FROM [Habit Checker Table] 
+                        WHERE Username = ? 
+                        AND isHabitDeleted = False
+                        ORDER BY HabitDateAdded DESC";
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+
                     using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            string name = reader.GetString(0);
+                            string name = reader["HabitName"].ToString();
                             bool[] days = new bool[7];
                             for (int i = 0; i < 7; i++)
                             {
-                                days[i] = reader.GetBoolean(i + 1);
+                                days[i] = Convert.ToBoolean(reader[i + 1]);
                             }
+                            DateTime dateAdded = Convert.ToDateTime(reader["HabitDateAdded"]);
 
-                            DateTime habitDateAdded = reader.GetDateTime(8);
-
-                            AddHabitRow(tblHabitChecker, name, days[0], days[1], days[2], days[3], days[4], days[5], days[6]);
+                            AddHabitRow(tblHabitChecker, name, days[0], days[1], days[2],
+                                       days[3], days[4], days[5], days[6], dateAdded);
                         }
                     }
                 }
             }
         }
+
+        public int HabitCount()
+        {
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"SELECT COUNT(*) 
+                FROM [Habit Checker Table] 
+                WHERE Username = ?";
+
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    return Convert.ToInt32(cmd.ExecuteScalar());
+                }
+            }
+        }
         /*
+                 
                 1. Weekly or Monthly Analytics
                 If you want to say something like:
 
@@ -511,63 +548,215 @@ namespace Cozify//database helper
                 You could show messages like:
 
                 "You’ve been building habits since April 8, 2025!"
+                
         */
         public void SaveHabitChecker(TableLayoutPanel tblHabitChecker)
         {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            Debug.WriteLine("SaveHabitChecker called");
+            try
             {
-                conn.Open();
-
-                string deleteQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
-
-                using (OleDbCommand deleteCmd = new OleDbCommand(deleteQuery, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    deleteCmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    deleteCmd.ExecuteNonQuery();
-                }
+                    conn.Open();
 
-                string insertQuery = "INSERT INTO [Habit Checker Table] (Username, HabitName, Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, HabitDateAdded) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    // Get all existing habits for this user
+                    var existingHabits = new List<(string Name, DateTime DateAdded)>();
+                    string getExistingQuery = @"SELECT HabitName, HabitDateAdded 
+                                      FROM [Habit Checker Table] 
+                                      WHERE Username = ?";
 
-
-                foreach (Control control in tblHabitChecker.Controls)
-                {
-                    if (control is TextBox txtHabit)
+                    using (OleDbCommand cmd = new OleDbCommand(getExistingQuery, conn))
                     {
-                        int rowIndex = tblHabitChecker.GetRow(txtHabit);
-                        if (tblHabitChecker.GetColumn(txtHabit) != 1) continue;
-
-                        string habit = txtHabit.Text;
-                        bool[] checkedDays = new bool[7];
-                        for (int i = 0; i < 7; i++)
+                        cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                        using (OleDbDataReader reader = cmd.ExecuteReader())
                         {
-                            Control chk = tblHabitChecker.GetControlFromPosition(i + 2, rowIndex);
-                            checkedDays[i] = chk is CheckBox box && box.Checked;
-                        }
-
-                        using (OleDbCommand insertCmd = new OleDbCommand(insertQuery, conn))
-                        {
-                            insertCmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                            insertCmd.Parameters.AddWithValue("?", habit);
-                            foreach (bool val in checkedDays)
-                                insertCmd.Parameters.AddWithValue("?", val);
-
-                            insertCmd.Parameters.AddWithValue("?", DateTime.Now.ToString("MM/dd/yyyy"));
-                            insertCmd.ExecuteNonQuery();
+                            while (reader.Read())
+                            {
+                                existingHabits.Add((reader["HabitName"].ToString(),
+                                                  Convert.ToDateTime(reader["HabitDateAdded"])));
+                            }
                         }
                     }
+
+                    // Process all habits in the UI
+                    int savedCount = 0;
+                    foreach (Control control in tblHabitChecker.Controls)
+                    {
+                        if (control is TextBox txtHabit && tblHabitChecker.GetColumn(txtHabit) == 1)
+                        {
+                            int rowIndex = tblHabitChecker.GetRow(txtHabit);
+                            string habit = txtHabit.Text;
+                            var meta = txtHabit.Tag as HabitMetaData;
+                            if (meta == null) continue;
+
+                            bool[] checkedDays = new bool[7];
+                            for (int i = 0; i < 7; i++)
+                            {
+                                Control chk = tblHabitChecker.GetControlFromPosition(i + 2, rowIndex);
+                                checkedDays[i] = chk is CheckBox box && box.Checked;
+                            }
+
+                            // Check if this habit exists in database
+                            bool existsInDb = existingHabits.Any(h =>
+                                h.Name.Equals(habit, StringComparison.OrdinalIgnoreCase) &&
+                                h.DateAdded == meta.HabitDateAdded);
+
+                            if (existsInDb)
+                            {
+                                // Update existing habit
+                                string updateQuery = @"UPDATE [Habit Checker Table] 
+                                            SET Sunday = ?, Monday = ?, Tuesday = ?,
+                                                Wednesday = ?, Thursday = ?, Friday = ?,
+                                                Saturday = ?, isHabitDeleted = ?
+                                            WHERE Username = ? 
+                                            AND HabitName = ?
+                                            AND HabitDateAdded = ?";
+
+                                using (OleDbCommand cmd = new OleDbCommand(updateQuery, conn))
+                                {
+                                    // Add day parameters
+                                    for (int i = 0; i < 7; i++)
+                                    {
+                                        cmd.Parameters.Add($"@day{i}", OleDbType.Boolean).Value = checkedDays[i];
+                                    }
+
+                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
+                                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                    cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit;
+                                    cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.HabitDateAdded;
+
+                                    cmd.ExecuteNonQuery();
+                                    savedCount++;
+                                }
+                            }
+                            else
+                            {
+                                // Insert new habit
+                                string insertQuery = @"INSERT INTO [Habit Checker Table] 
+                                            (Username, HabitName, Sunday, Monday, Tuesday,
+                                             Wednesday, Thursday, Friday, Saturday, 
+                                             HabitDateAdded, isHabitDeleted)
+                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+                                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
+                                {
+                                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                    cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit;
+
+                                    // Add day parameters
+                                    for (int i = 0; i < 7; i++)
+                                    {
+                                        cmd.Parameters.Add($"@day{i}", OleDbType.Boolean).Value = checkedDays[i];
+                                    }
+
+                                    cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.HabitDateAdded;
+                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
+
+                                    cmd.ExecuteNonQuery();
+                                    savedCount++;
+                                }
+                            }
+                        }
+                    }
+
+                    // Mark habits not in UI as deleted
+                    foreach (var habit in existingHabits)
+                    {
+                        bool existsInUI = false;
+                        foreach (Control control in tblHabitChecker.Controls)
+                        {
+                            if (control is TextBox txtHabit &&
+                                tblHabitChecker.GetColumn(txtHabit) == 1 &&
+                                txtHabit.Text.Equals(habit.Name, StringComparison.OrdinalIgnoreCase) &&
+                                (txtHabit.Tag as HabitMetaData)?.HabitDateAdded == habit.DateAdded)
+                            {
+                                existsInUI = true;
+                                break;
+                            }
+                        }
+
+                        if (!existsInUI)
+                        {
+                            string markDeletedQuery = @"UPDATE [Habit Checker Table] 
+                                              SET isHabitDeleted = True
+                                              WHERE Username = ? 
+                                              AND HabitName = ?
+                                              AND HabitDateAdded = ?";
+
+                            using (OleDbCommand cmd = new OleDbCommand(markDeletedQuery, conn))
+                            {
+                                cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit.Name;
+                                cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = habit.DateAdded;
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    Debug.WriteLine($"Saved {savedCount} habits");
+                    MessageBox.Show($"Successfully saved {savedCount} habits", "Saved",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Save error: {ex}");
+                MessageBox.Show($"Failed to save habits: {ex.Message}", "Error",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // To Do List
+        public void DeleteHabitRow(TableLayoutPanel tblHabitChecker, int rowIndex)
+        {
+            var txtHabit = tblHabitChecker.GetControlFromPosition(1, rowIndex) as TextBox;
+            if (txtHabit?.Tag is HabitMetaData meta)
+            {
+                // Mark as deleted in the metadata
+                meta.IsDeleted = true;
 
+                // Remove from UI
+                for (int col = 0; col < tblHabitChecker.ColumnCount; col++)
+                {
+                    var control = tblHabitChecker.GetControlFromPosition(col, rowIndex);
+                    if (control != null)
+                    {
+                        tblHabitChecker.Controls.Remove(control);
+                        control.Dispose();
+                    }
+                }
+
+                // Shift remaining rows up
+                for (int r = rowIndex + 1; r < tblHabitChecker.RowCount; r++)
+                {
+                    for (int c = 0; c < tblHabitChecker.ColumnCount; c++)
+                    {
+                        var control = tblHabitChecker.GetControlFromPosition(c, r);
+                        if (control != null) tblHabitChecker.SetRow(control, r - 1);
+                    }
+                }
+
+                if (tblHabitChecker.RowCount > 0)
+                {
+                    tblHabitChecker.RowCount--;
+                }
+
+                if (tblHabitChecker.RowStyles.Count > rowIndex)
+                    tblHabitChecker.RowStyles.RemoveAt(rowIndex);
+
+                // Save changes to database
+                SaveHabitChecker(tblHabitChecker);
+            }
+        }
+
+        //To DO List
         public class TaskMetaData
         {
             public DateTime TaskDateAdded { get; set; }
             public DateTime? TaskDateCompleted { get; set; }
+            public bool IsDeleted { get; set; }
         }
 
-        public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone, DateTime dateAdded, DateTime? dateCompleted = null)
+        public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone, DateTime dateAdded, DateTime? dateCompleted = null, bool isDeleted = false)
         {
             tblToDoList.RowCount++;
             int rowIndex = tblToDoList.RowCount - 1;
@@ -579,7 +768,8 @@ namespace Cozify//database helper
                 Tag = new TaskMetaData
                 {
                     TaskDateAdded = dateAdded,
-                    TaskDateCompleted = dateCompleted
+                    TaskDateCompleted = dateCompleted,
+                    IsDeleted = isDeleted
                 }
             };
             tblToDoList.Controls.Add(chkDone, 2, rowIndex);
@@ -592,7 +782,8 @@ namespace Cozify//database helper
                 Font = new Font("Pixeltype", 20F, FontStyle.Regular),
                 Anchor = AnchorStyles.Left | AnchorStyles.Right,
                 TextAlign = HorizontalAlignment.Left,
-                Text = TaskText
+                Text = TaskText,
+                Tag = dateAdded // Store creation date for reference
             };
             tblToDoList.Controls.Add(txtTask, 1, rowIndex);
 
@@ -609,114 +800,303 @@ namespace Cozify//database helper
             tblToDoList.Controls.Add(btnDelete, 0, rowIndex);
         }
 
-        public void LoadToDoList(TableLayoutPanel tblToDoList)
+        public void LoadToDoList(TableLayoutPanel tblToDoList, bool includeDeleted = false)
         {
+            tblToDoList.Controls.Clear();
+            tblToDoList.RowCount = 0;
+
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Activity, isDone, TaskDateAdded, TaskDateCompleted FROM [ToDo List Table] WHERE Username = ?";
+                string query = @"SELECT Activity, isDone, TaskDateAdded, TaskDateCompleted, isTaskDeleted 
+                        FROM [ToDo List Table] 
+                        WHERE Username = ?";
+
+                if (!includeDeleted)
+                {
+                    query += " AND isTaskDeleted = False";
+                }
+
+                query += " ORDER BY TaskDateAdded DESC";
+
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+
                     using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             string activity = reader["Activity"].ToString();
-                            bool isDone = reader.GetBoolean(1);
-                            DateTime dateAdded = reader.GetDateTime(2);
-                            DateTime? dateCompleted = reader.IsDBNull(3) ? (DateTime?)null : reader.GetDateTime(3);
+                            bool isDone = Convert.ToBoolean(reader["isDone"]);
+                            DateTime dateAdded = Convert.ToDateTime(reader["TaskDateAdded"]);
+                            DateTime? dateCompleted = reader.IsDBNull(3) ? null : (DateTime?)reader["TaskDateCompleted"];
+                            bool isDeleted = includeDeleted && Convert.ToBoolean(reader["isTaskDeleted"]);
 
-                            AddToDoRow(tblToDoList, activity, isDone, dateAdded, dateCompleted);
+                            AddToDoRow(tblToDoList, activity, isDone, dateAdded, dateCompleted, isDeleted);
                         }
                     }
                 }
             }
         }
 
-        public int ToDoCount()
+        public int ToDoCount(bool includeDeleted = false)
         {
-            int count = 0;
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM [ToDo List Table] WHERE Username = ?";
+                string query = @"SELECT COUNT(*) 
+                        FROM [ToDo List Table] 
+                        WHERE Username = ?";
+
+                if (!includeDeleted)
+                {
+                    query += " AND isTaskDeleted = False";
+                }
+
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    count = Convert.ToInt32(cmd.ExecuteScalar());
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
-            return count;
         }
-        public int CompleteToDoCount(bool? completed = null)
+
+        public int CompleteToDoCount(bool countCompleted, bool includeDeleted = false)
         {
-            int count = 0;
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
+                string query = @"SELECT COUNT(*) 
+                        FROM [ToDo List Table] 
+                        WHERE Username = ? 
+                        AND isDone = ?";
 
-                string query = "SELECT COUNT(*) FROM [ToDo List Table] WHERE Username = ?";
-
-                if (completed.HasValue)
+                if (!includeDeleted)
                 {
-                    query += " AND isDone = ?";
+                    query += " AND isTaskDeleted = False";
                 }
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-
-                    if (completed.HasValue)
-                    {
-                        // Use proper parameter type for your database
-                        cmd.Parameters.AddWithValue("?", completed.Value ? 1 : 0);
-                    }
-                    count = Convert.ToInt32(cmd.ExecuteScalar());
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                    cmd.Parameters.Add("@isDone", OleDbType.Boolean).Value = countCompleted;
+                    return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
-            return count;
         }
 
         public void SaveToDoList(TableLayoutPanel tblToDoList)
         {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            Debug.WriteLine("SaveToDoList called");
+            try
             {
-                conn.Open();
-                string insertQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?;";
-                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    cmd.ExecuteNonQuery();
-                }
-                insertQuery = "INSERT INTO [ToDo List Table] (Username, Activity, isDone, TaskDateAdded, TaskDateCompleted) VALUES (?, ?, ?, ?, ?);";
+                    conn.Open();
 
-                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
-                {
+                    // Get all existing tasks (including deleted ones)
+                    var existingTasks = new List<(string Activity, DateTime DateAdded)>();
+                    string getExistingQuery = @"SELECT Activity, TaskDateAdded 
+                                      FROM [ToDo List Table] 
+                                      WHERE Username = ?";
+
+                    using (OleDbCommand cmd = new OleDbCommand(getExistingQuery, conn))
+                    {
+                        cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                        using (OleDbDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                existingTasks.Add((reader["Activity"].ToString(),
+                                                Convert.ToDateTime(reader["TaskDateAdded"])));
+                            }
+                        }
+                    }
+
+                    // Process all tasks in the UI
+                    int savedCount = 0;
                     foreach (Control control in tblToDoList.Controls)
                     {
                         if (control is CheckBox chkDone)
                         {
                             int rowIndex = tblToDoList.GetRow(chkDone);
-                            Control txtTask = tblToDoList.GetControlFromPosition(1, rowIndex);
-                            if (txtTask == null || !(txtTask is TextBox txtBox)) continue;
+                            var txtTask = tblToDoList.GetControlFromPosition(1, rowIndex) as TextBox;
+                            if (txtTask == null) continue;
 
                             var meta = chkDone.Tag as TaskMetaData;
                             if (meta == null) continue;
 
+                            // Update completion date if newly checked
                             if (chkDone.Checked && meta.TaskDateCompleted == null)
+                            {
                                 meta.TaskDateCompleted = DateTime.Now;
+                            }
 
-                            cmd.Parameters.Clear();
-                            cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                            cmd.Parameters.AddWithValue("?", txtBox.Text);
-                            cmd.Parameters.AddWithValue("?", chkDone.Checked);
-                            cmd.Parameters.AddWithValue("?", meta.TaskDateAdded.ToString("MM/dd/yyyy"));
-                            cmd.Parameters.AddWithValue("?", meta.TaskDateCompleted.HasValue ? (object)meta.TaskDateCompleted.Value.ToString("MM/dd/yyyy") : DBNull.Value);
-                            cmd.ExecuteNonQuery();
+                            // Check if task exists in database
+                            bool existsInDb = existingTasks.Any(t =>
+                                t.Activity.Equals(txtTask.Text, StringComparison.OrdinalIgnoreCase) &&
+                                t.DateAdded == meta.TaskDateAdded);
+
+                            if (existsInDb)
+                            {
+                                // Update existing task
+                                string updateQuery = @"UPDATE [ToDo List Table] 
+                                            SET isDone = ?, 
+                                                TaskDateCompleted = ?,
+                                                isTaskDeleted = ?
+                                            WHERE Username = ? 
+                                            AND Activity = ?
+                                            AND TaskDateAdded = ?";
+
+                                using (OleDbCommand cmd = new OleDbCommand(updateQuery, conn))
+                                {
+                                    cmd.Parameters.Add("@isDone", OleDbType.Boolean).Value = chkDone.Checked;
+                                    cmd.Parameters.Add("@dateCompleted", OleDbType.Date).Value =
+                                        meta.TaskDateCompleted.HasValue ?
+                                        (object)meta.TaskDateCompleted.Value :
+                                        DBNull.Value;
+                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
+                                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                    cmd.Parameters.Add("@activity", OleDbType.VarChar).Value = txtTask.Text;
+                                    cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.TaskDateAdded;
+
+                                    cmd.ExecuteNonQuery();
+                                    savedCount++;
+                                }
+                            }
+                            else
+                            {
+                                // Insert new task
+                                string insertQuery = @"INSERT INTO [ToDo List Table] 
+                                            (Username, Activity, isDone, TaskDateAdded, 
+                                             TaskDateCompleted, isTaskDeleted)
+                                            VALUES (?, ?, ?, ?, ?, ?)";
+
+                                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
+                                {
+                                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                    cmd.Parameters.Add("@activity", OleDbType.VarChar).Value = txtTask.Text;
+                                    cmd.Parameters.Add("@isDone", OleDbType.Boolean).Value = chkDone.Checked;
+                                    cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.TaskDateAdded;
+                                    cmd.Parameters.Add("@dateCompleted", OleDbType.Date).Value =
+                                        meta.TaskDateCompleted.HasValue ?
+                                        (object)meta.TaskDateCompleted.Value :
+                                        DBNull.Value;
+                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
+
+                                    cmd.ExecuteNonQuery();
+                                    savedCount++;
+                                }
+                            }
                         }
                     }
 
+                    // Mark tasks not in UI as deleted
+                    foreach (var task in existingTasks)
+                    {
+                        bool existsInUI = false;
+                        foreach (Control control in tblToDoList.Controls)
+                        {
+                            if (control is TextBox txtBox &&
+                                tblToDoList.GetColumn(txtBox) == 1 &&
+                                txtBox.Text.Equals(task.Activity, StringComparison.OrdinalIgnoreCase) &&
+                                (tblToDoList.GetControlFromPosition(2, tblToDoList.GetRow(txtBox))?.Tag as TaskMetaData)?.TaskDateAdded == task.DateAdded)
+                            {
+                                existsInUI = true;
+                                break;
+                            }
+                        }
+
+                        if (!existsInUI)
+                        {
+                            string markDeletedQuery = @"UPDATE [ToDo List Table] 
+                                              SET isTaskDeleted = True
+                                              WHERE Username = ? 
+                                              AND Activity = ?
+                                              AND TaskDateAdded = ?";
+
+                            using (OleDbCommand cmd = new OleDbCommand(markDeletedQuery, conn))
+                            {
+                                cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                cmd.Parameters.Add("@activity", OleDbType.VarChar).Value = task.Activity;
+                                cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = task.DateAdded;
+                                cmd.ExecuteNonQuery();
+                            }
+                        }
+                    }
+
+                    Debug.WriteLine($"Saved {savedCount} tasks");
+                    MessageBox.Show($"Successfully saved {savedCount} tasks", "Saved",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Save error: {ex}");
+                MessageBox.Show($"Failed to save tasks: {ex.Message}", "Error",
+                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void DeleteToDoRow(TableLayoutPanel tblToDoList, int rowIndex)
+        {
+            var chkDone = tblToDoList.GetControlFromPosition(2, rowIndex) as CheckBox;
+            var txtTask = tblToDoList.GetControlFromPosition(1, rowIndex) as TextBox;
+
+            if (chkDone?.Tag is TaskMetaData meta && txtTask != null)
+            {
+                try
+                {
+                    using (OleDbConnection conn = new OleDbConnection(connectionString))
+                    {
+                        conn.Open();
+                        string query = @"UPDATE [ToDo List Table] 
+                               SET isTaskDeleted = True
+                               WHERE Username = ? 
+                               AND Activity = ?
+                               AND TaskDateAdded = ?";
+
+                        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                        {
+                            cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                            cmd.Parameters.Add("@activity", OleDbType.VarChar).Value = txtTask.Text;
+                            cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.TaskDateAdded;
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+                            Debug.WriteLine($"Marked {rowsAffected} task(s) as deleted");
+
+                            if (rowsAffected > 0)
+                            {
+                                // Remove from UI
+                                tblToDoList.Controls.Remove(chkDone);
+                                tblToDoList.Controls.Remove(txtTask);
+                                var btnDelete = tblToDoList.GetControlFromPosition(0, rowIndex);
+                                if (btnDelete != null) tblToDoList.Controls.Remove(btnDelete);
+
+                                // Shift remaining rows up
+                                for (int r = rowIndex + 1; r < tblToDoList.RowCount; r++)
+                                {
+                                    for (int c = 0; c < tblToDoList.ColumnCount; c++)
+                                    {
+                                        var control = tblToDoList.GetControlFromPosition(c, r);
+                                        if (control != null) tblToDoList.SetRow(control, r - 1);
+                                    }
+                                }
+
+                                if (tblToDoList.RowCount > 0)
+                                {
+                                    tblToDoList.RowCount--;
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Delete error: {ex}");
+                    MessageBox.Show($"Failed to delete task: {ex.Message}", "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
