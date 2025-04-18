@@ -212,6 +212,16 @@ namespace Cozify.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Circled_Play2 {
+            get {
+                object obj = ResourceManager.GetObject("Circled Play2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Clipboard {
             get {
                 object obj = ResourceManager.GetObject("Clipboard", resourceCulture);
@@ -432,9 +442,39 @@ namespace Cozify.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Music_Library {
+            get {
+                object obj = ResourceManager.GetObject("Music Library", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Music_Library1 {
+            get {
+                object obj = ResourceManager.GetObject("Music Library1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Next {
             get {
                 object obj = ResourceManager.GetObject("Next", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Next_page {
+            get {
+                object obj = ResourceManager.GetObject("Next page", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -502,6 +542,16 @@ namespace Cozify.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Previous_Page {
+            get {
+                object obj = ResourceManager.GetObject("Previous Page", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap rainy_shop {
             get {
                 object obj = ResourceManager.GetObject("rainy shop", resourceCulture);
@@ -515,6 +565,16 @@ namespace Cozify.Properties {
         internal static System.Drawing.Bitmap Repeat {
             get {
                 object obj = ResourceManager.GetObject("Repeat", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Repeat1 {
+            get {
+                object obj = ResourceManager.GetObject("Repeat1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -575,6 +635,16 @@ namespace Cozify.Properties {
         internal static System.Drawing.Bitmap Tomato {
             get {
                 object obj = ResourceManager.GetObject("Tomato", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Voice {
+            get {
+                object obj = ResourceManager.GetObject("Voice", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

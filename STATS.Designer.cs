@@ -40,7 +40,6 @@
             this.lblPomoSessionsCompelted = new System.Windows.Forms.Label();
             this.lblTasksAdded = new System.Windows.Forms.Label();
             this.lblTotalTasksCompleted = new System.Windows.Forms.Label();
-            this.lblOldestTaskAge = new System.Windows.Forms.Label();
             this.lblStatUser = new System.Windows.Forms.Label();
             this.btnDeleteAcc = new AntdUI.Button();
             this.btnClearAcc = new AntdUI.Button();
@@ -73,7 +72,6 @@
             this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 7);
             this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.lblOldestTaskAge, 0, 9);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -203,17 +201,6 @@
             this.lblTotalTasksCompleted.TabIndex = 30;
             this.lblTotalTasksCompleted.Text = "Total Tasks completed:";
             // 
-            // lblOldestTaskAge
-            // 
-            this.lblOldestTaskAge.AutoSize = true;
-            this.lblOldestTaskAge.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblOldestTaskAge.ForeColor = System.Drawing.Color.White;
-            this.lblOldestTaskAge.Location = new System.Drawing.Point(3, 360);
-            this.lblOldestTaskAge.Name = "lblOldestTaskAge";
-            this.lblOldestTaskAge.Size = new System.Drawing.Size(289, 21);
-            this.lblOldestTaskAge.TabIndex = 31;
-            this.lblOldestTaskAge.Text = "Oldest incomplete task age:";
-            // 
             // lblStatUser
             // 
             this.lblStatUser.AutoSize = true;
@@ -301,7 +288,6 @@
         private System.Windows.Forms.Label lblTimesLaunchedCozify;
         private System.Windows.Forms.Label lblTracksNumber;
         private AntdUI.Button btnShowStats;
-        private System.Windows.Forms.Label lblOldestTaskAge;
         private System.Windows.Forms.Label lblTotalTasksCompleted;
         private System.Windows.Forms.Label lblTasksAdded;
         private System.Windows.Forms.Label lblNoOfJournalEntries;

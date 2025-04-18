@@ -390,5 +390,26 @@
   <ItemGroup>
     <None Include="Resources\Mail.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Repeat1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Circled Play2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Next page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Previous Page.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music Library.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Music Library1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Voice.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

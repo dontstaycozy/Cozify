@@ -88,7 +88,6 @@ namespace finals
                 this.Resize += MAIN_HUB_Resize;
                 this.FormClosing += MAIN_HUB_FormClosing;
                 db.SessionStartTime();
-                Centering();
 
             }
             catch (Exception ex)
@@ -102,17 +101,6 @@ namespace finals
             db.StopSessionTimer();
         }
 
-        private void Centering()
-        {
-            int formWidth = this.ClientSize.Width;
-            int formHeight = this.ClientSize.Height;
-
-            // Center the Music Dock at the bot
-            int pnlMusicDock_X = (formWidth - pnlMusicDock.Width) / 2;
-            int pnlMusicDock_Y = formHeight - pnlMusicDock.Height - 6;
-            pnlMusicDock.Location = new Point(pnlMusicDock_X, pnlMusicDock_Y);
-
-        }
         private void MAIN_HUB_Resize(object sender, EventArgs e)
         {
             if (this.WindowState == FormWindowState.Minimized)
@@ -131,7 +119,6 @@ namespace finals
                     activeFeature.WindowState = FormWindowState.Normal;
                 }
             }
-            Centering();
         }
 
         private void MainHubClock(object sender, EventArgs e)
@@ -306,6 +293,35 @@ namespace finals
         {
             sTAT = null;
             activeFeature = null;
+        }
+
+        private void btnMusicLib_Click_1(object sender, EventArgs e)
+        {
+
+        }
+        private void btnPlayORStopTrack_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnPrevTrack_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnNextTrack_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnLoopTracks_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void trkBarVolumeSlider_Scroll(object sender, EventArgs e)
+        {
+
         }
     }
 }
