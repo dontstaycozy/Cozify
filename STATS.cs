@@ -69,13 +69,15 @@ public partial class STATS : BaseForm
     {
             db.LoadUserStats(lblTimeSpentCozify, lblTimesLaunchedCozify, lblLastActive);
 
-            int totalToDoCount = db.ToDoCount();
-            int completedToDoCount = db.CompleteToDoCount(true);
+            int totalToDoCount = db.ToDoCount(true);
+            int totalCompletedToDoCount = db.CompleteToDoCount(true, true);
             int journalCount = db.JournalCount();
+            int habitcount = db.HabitCount();
 
             lblNoOfJournalEntries.Text = $"Journal Entries Written: {journalCount}";
             lblTasksAdded.Text = $"To-Do List Entries: {totalToDoCount}";
-            lblTotalTasksCompleted.Text = $"Total Completed Tasks: {completedToDoCount}";
+            lblTotalTasksCompleted.Text = $"Total Completed Tasks: {totalCompletedToDoCount}";
+            lblTotalHabitsAdded.Text = $"Total Habits Added: {habitcount}";
             lblStatUser.Text = $"{GlobalUser.LoggedInUsername}'s Activity";
         }
 

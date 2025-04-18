@@ -515,41 +515,7 @@ namespace Cozify//database helper
                 }
             }
         }
-        /*
-                 
-                1. Weekly or Monthly Analytics
-                If you want to say something like:
-
-                “You added 4 new habits this week!”
-
-                You’ll need the HabitDateAdded value and compare it with the current date.
-
-                2. Show “Recently Added Habits”
-                Display to the user which habits they just added in the past few days.
-
-                csharp
-                Copy
-                Edit
-                if ((DateTime.Now - dateAdded).TotalDays <= 7)
-                {
-                            // mark it as recently added
-                        }
-                3. Streak Tracking (future)
-                You can use HabitDateAdded to calculate:
-
-                How long a habit has existed
-
-                When a habit streak started or reset
-
-                4. Sorting Habits by Date
-                You could list habits from newest to oldest for better UI/UX.
-
-                5. User Feedback
-                You could show messages like:
-
-                "You’ve been building habits since April 8, 2025!"
-                
-        */
+        
         public void SaveHabitChecker(TableLayoutPanel tblHabitChecker)
         {
             Debug.WriteLine("SaveHabitChecker called");
@@ -573,7 +539,7 @@ namespace Cozify//database helper
                             while (reader.Read())
                             {
                                 existingHabits.Add((reader["HabitName"].ToString(),
-                                                  Convert.ToDateTime(reader["HabitDateAdded"])));
+                                Convert.ToDateTime(reader["HabitDateAdded"])));
                             }
                         }
                     }
@@ -756,51 +722,57 @@ namespace Cozify//database helper
             public bool IsDeleted { get; set; }
         }
 
-        public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone, DateTime dateAdded, DateTime? dateCompleted = null, bool isDeleted = false)
+        public void AddToDoRow(TableLayoutPanel tblToDoList, string TaskText, bool isDone,
+                      DateTime dateAdded, DateTime? dateCompleted = null, bool isDeleted = false)
         {
-            tblToDoList.RowCount++;
-            int rowIndex = tblToDoList.RowCount - 1;
-
-            CheckBox chkDone = new CheckBox
+            if (!isDeleted)
             {
-                Checked = isDone,
-                Anchor = AnchorStyles.None,
-                Tag = new TaskMetaData
+                tblToDoList.RowCount++;
+                int rowIndex = tblToDoList.RowCount - 1;
+
+                CheckBox chkDone = new CheckBox
                 {
-                    TaskDateAdded = dateAdded,
-                    TaskDateCompleted = dateCompleted,
-                    IsDeleted = isDeleted
-                }
-            };
-            tblToDoList.Controls.Add(chkDone, 2, rowIndex);
+                    Checked = isDone,
+                    Anchor = AnchorStyles.None,
+                    Tag = new TaskMetaData
+                    {
+                        TaskDateAdded = dateAdded,
+                        TaskDateCompleted = dateCompleted,
+                        IsDeleted = isDeleted
+                    }
+                };
+                tblToDoList.Controls.Add(chkDone, 2, rowIndex);
 
-            TextBox txtTask = new TextBox
-            {
-                BorderStyle = BorderStyle.None,
-                BackColor = Color.FromArgb(52, 73, 91),
-                ForeColor = Color.White,
-                Font = new Font("Pixeltype", 20F, FontStyle.Regular),
-                Anchor = AnchorStyles.Left | AnchorStyles.Right,
-                TextAlign = HorizontalAlignment.Left,
-                Text = TaskText,
-                Tag = dateAdded // Store creation date for reference
-            };
-            tblToDoList.Controls.Add(txtTask, 1, rowIndex);
+                TextBox txtTask = new TextBox
+                {
+                    BorderStyle = BorderStyle.None,
+                    BackColor = Color.FromArgb(52, 73, 91),
+                    ForeColor = Color.White,
+                    Font = new Font("Pixeltype", 20F, FontStyle.Regular),
+                    Anchor = AnchorStyles.Left | AnchorStyles.Right,
+                    TextAlign = HorizontalAlignment.Left,
+                    Text = TaskText,
+                    Tag = dateAdded // Store creation date
+                };
+                tblToDoList.Controls.Add(txtTask, 1, rowIndex);
 
-            Button btnDelete = new Button
-            {
-                Text = "X",
-                BackColor = Color.FromArgb(40, 56, 69),
-                ForeColor = Color.White,
-                Font = new Font("Pixeltype", 12F, FontStyle.Regular),
-                Size = new Size(23, 23),
-                Anchor = AnchorStyles.None,
-                FlatStyle = FlatStyle.Flat
-            };
-            tblToDoList.Controls.Add(btnDelete, 0, rowIndex);
+                Button btnDelete = new Button
+                {
+                    Text = "X",
+                    BackColor = Color.FromArgb(40, 56, 69),
+                    ForeColor = Color.White,
+                    Font = new Font("Pixeltype", 12F, FontStyle.Regular),
+                    Size = new Size(23, 23),
+                    Anchor = AnchorStyles.None,
+                    FlatStyle = FlatStyle.Flat,
+                    Tag = rowIndex
+                };
+                btnDelete.Click += (s, e) => DeleteToDoRow(tblToDoList, rowIndex);
+                tblToDoList.Controls.Add(btnDelete, 0, rowIndex);
+            }
         }
 
-        public void LoadToDoList(TableLayoutPanel tblToDoList, bool includeDeleted = false)
+        public void LoadToDoList(TableLayoutPanel tblToDoList, bool showDeleted = false)
         {
             tblToDoList.Controls.Clear();
             tblToDoList.RowCount = 0;
@@ -812,7 +784,7 @@ namespace Cozify//database helper
                         FROM [ToDo List Table] 
                         WHERE Username = ?";
 
-                if (!includeDeleted)
+                if (!showDeleted)
                 {
                     query += " AND isTaskDeleted = False";
                 }
@@ -831,7 +803,7 @@ namespace Cozify//database helper
                             bool isDone = Convert.ToBoolean(reader["isDone"]);
                             DateTime dateAdded = Convert.ToDateTime(reader["TaskDateAdded"]);
                             DateTime? dateCompleted = reader.IsDBNull(3) ? null : (DateTime?)reader["TaskDateCompleted"];
-                            bool isDeleted = includeDeleted && Convert.ToBoolean(reader["isTaskDeleted"]);
+                            bool isDeleted = Convert.ToBoolean(reader["isTaskDeleted"]);
 
                             AddToDoRow(tblToDoList, activity, isDone, dateAdded, dateCompleted, isDeleted);
                         }
@@ -888,14 +860,15 @@ namespace Cozify//database helper
 
         public void SaveToDoList(TableLayoutPanel tblToDoList)
         {
-            Debug.WriteLine("SaveToDoList called");
+            int savedCount = 0; // Initialize counter for saved tasks
+
             try
             {
                 using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
                     conn.Open();
 
-                    // Get all existing tasks (including deleted ones)
+                    // First get all existing tasks for this user
                     var existingTasks = new List<(string Activity, DateTime DateAdded)>();
                     string getExistingQuery = @"SELECT Activity, TaskDateAdded 
                                       FROM [ToDo List Table] 
@@ -915,7 +888,6 @@ namespace Cozify//database helper
                     }
 
                     // Process all tasks in the UI
-                    int savedCount = 0;
                     foreach (Control control in tblToDoList.Controls)
                     {
                         if (control is CheckBox chkDone)
@@ -943,8 +915,7 @@ namespace Cozify//database helper
                                 // Update existing task
                                 string updateQuery = @"UPDATE [ToDo List Table] 
                                             SET isDone = ?, 
-                                                TaskDateCompleted = ?,
-                                                isTaskDeleted = ?
+                                                TaskDateCompleted = ?
                                             WHERE Username = ? 
                                             AND Activity = ?
                                             AND TaskDateAdded = ?";
@@ -953,16 +924,13 @@ namespace Cozify//database helper
                                 {
                                     cmd.Parameters.Add("@isDone", OleDbType.Boolean).Value = chkDone.Checked;
                                     cmd.Parameters.Add("@dateCompleted", OleDbType.Date).Value =
-                                        meta.TaskDateCompleted.HasValue ?
-                                        (object)meta.TaskDateCompleted.Value :
-                                        DBNull.Value;
-                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
+                                        meta.TaskDateCompleted ?? (object)DBNull.Value;
                                     cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
                                     cmd.Parameters.Add("@activity", OleDbType.VarChar).Value = txtTask.Text;
                                     cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.TaskDateAdded;
 
-                                    cmd.ExecuteNonQuery();
-                                    savedCount++;
+                                    int rowsAffected = cmd.ExecuteNonQuery();
+                                    if (rowsAffected > 0) savedCount++;
                                 }
                             }
                             else
@@ -980,13 +948,11 @@ namespace Cozify//database helper
                                     cmd.Parameters.Add("@isDone", OleDbType.Boolean).Value = chkDone.Checked;
                                     cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.TaskDateAdded;
                                     cmd.Parameters.Add("@dateCompleted", OleDbType.Date).Value =
-                                        meta.TaskDateCompleted.HasValue ?
-                                        (object)meta.TaskDateCompleted.Value :
-                                        DBNull.Value;
-                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
+                                        meta.TaskDateCompleted ?? (object)DBNull.Value;
+                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = false;
 
-                                    cmd.ExecuteNonQuery();
-                                    savedCount++;
+                                    int rowsAffected = cmd.ExecuteNonQuery();
+                                    if (rowsAffected > 0) savedCount++;
                                 }
                             }
                         }
@@ -1025,27 +991,32 @@ namespace Cozify//database helper
                             }
                         }
                     }
-
-                    Debug.WriteLine($"Saved {savedCount} tasks");
-                    MessageBox.Show($"Successfully saved {savedCount} tasks", "Saved",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
+
+                Debug.WriteLine($"Saved {savedCount} tasks");
+                MessageBox.Show($"Successfully saved {savedCount} tasks", "Saved",
+                              MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine($"Save error: {ex}");
                 MessageBox.Show($"Failed to save tasks: {ex.Message}", "Error",
-                               MessageBoxButtons.OK, MessageBoxIcon.Error);
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public void DeleteToDoRow(TableLayoutPanel tblToDoList, int rowIndex)
         {
-            var chkDone = tblToDoList.GetControlFromPosition(2, rowIndex) as CheckBox;
             var txtTask = tblToDoList.GetControlFromPosition(1, rowIndex) as TextBox;
+            var chkDone = tblToDoList.GetControlFromPosition(2, rowIndex) as CheckBox;
 
-            if (chkDone?.Tag is TaskMetaData meta && txtTask != null)
+            if (txtTask != null && chkDone?.Tag is TaskMetaData meta)
             {
+                // Confirm deletion
+                var confirm = MessageBox.Show($"Delete task '{txtTask.Text}'?", "Confirm Delete",
+                                            MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (confirm != DialogResult.Yes) return;
+
                 try
                 {
                     using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -1064,40 +1035,53 @@ namespace Cozify//database helper
                             cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.TaskDateAdded;
 
                             int rowsAffected = cmd.ExecuteNonQuery();
-                            Debug.WriteLine($"Marked {rowsAffected} task(s) as deleted");
-
                             if (rowsAffected > 0)
                             {
                                 // Remove from UI
-                                tblToDoList.Controls.Remove(chkDone);
-                                tblToDoList.Controls.Remove(txtTask);
-                                var btnDelete = tblToDoList.GetControlFromPosition(0, rowIndex);
-                                if (btnDelete != null) tblToDoList.Controls.Remove(btnDelete);
-
-                                // Shift remaining rows up
-                                for (int r = rowIndex + 1; r < tblToDoList.RowCount; r++)
-                                {
-                                    for (int c = 0; c < tblToDoList.ColumnCount; c++)
-                                    {
-                                        var control = tblToDoList.GetControlFromPosition(c, r);
-                                        if (control != null) tblToDoList.SetRow(control, r - 1);
-                                    }
-                                }
-
-                                if (tblToDoList.RowCount > 0)
-                                {
-                                    tblToDoList.RowCount--;
-                                }
+                                RemoveHabitRowTable(tblToDoList, rowIndex);
+                                MessageBox.Show("Task moved to trash", "Deleted",
+                                              MessageBoxButtons.OK, MessageBoxIcon.Information);
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Delete error: {ex}");
-                    MessageBox.Show($"Failed to delete task: {ex.Message}", "Error",
+                    MessageBox.Show($"Error deleting task: {ex.Message}", "Error",
                                   MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void RemoveHabitRowTable(TableLayoutPanel table, int rowIndex)
+        {
+            // Remove all controls from the row
+            for (int col = 0; col < table.ColumnCount; col++)
+            {
+                var control = table.GetControlFromPosition(col, rowIndex);
+                if (control != null)
+                {
+                    table.Controls.Remove(control);
+                    control.Dispose();
+                }
+            }
+
+            // Shift rows up
+            for (int r = rowIndex + 1; r < table.RowCount; r++)
+            {
+                for (int c = 0; c < table.ColumnCount; c++)
+                {
+                    var control = table.GetControlFromPosition(c, r);
+                    if (control != null)
+                    {
+                        table.SetRow(control, r - 1);
+                    }
+                }
+            }
+
+            if (table.RowCount > 0)
+            {
+                table.RowCount--;
             }
         }
 

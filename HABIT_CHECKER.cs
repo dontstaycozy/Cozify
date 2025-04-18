@@ -61,31 +61,7 @@ namespace finals
         // delete the row and rebind the delete button event for the remaining rows
         private void DeleteHabitRow(int rowIndex)
         {
-            for (int col = 0; col < tblHabitChecker.ColumnCount; col++)
-            {
-                var control = tblHabitChecker.GetControlFromPosition(col, rowIndex);
-                if (control != null)
-                {
-                    tblHabitChecker.Controls.Remove(control);
-                    control.Dispose();
-                }
-            }
-
-            for (int i = rowIndex + 1; i < tblHabitChecker.RowCount; i++)
-            {
-                for (int col = 0; col < tblHabitChecker.ColumnCount; col++)
-                {
-                    Control c = tblHabitChecker.GetControlFromPosition(col, i);
-                    if (c != null)
-                    {
-                        tblHabitChecker.SetRow(c, i - 1);
-                    }
-                }
-            }
-
-            tblHabitChecker.RowCount--;
-            if (tblHabitChecker.RowStyles.Count > rowIndex)
-                tblHabitChecker.RowStyles.RemoveAt(rowIndex);
+            db.DeleteHabitRow(tblHabitChecker, rowIndex);
         }
 
         private void btnSaveHabits_Click(object sender, EventArgs e)
