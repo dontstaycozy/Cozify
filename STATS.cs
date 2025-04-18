@@ -71,7 +71,7 @@ public partial class STATS : BaseForm
 
             int totalToDoCount = db.ToDoCount(true);
             int totalCompletedToDoCount = db.CompleteToDoCount(true, true);
-            int journalCount = db.JournalCount();
+            int journalCount = db.JournalCount(true);
             int habitcount = db.HabitCount();
 
             lblNoOfJournalEntries.Text = $"Journal Entries Written: {journalCount}";

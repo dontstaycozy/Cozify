@@ -248,42 +248,64 @@ namespace Cozify//database helper
 
         //journal stuff
 
-        public void LoadJournal(ListView journalListView)
+        public void LoadJournal(ListView journalListView, bool showDeleted = false)
         {
             journalListView.Items.Clear();
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT Title FROM [Journal Table] WHERE Username = ? ORDER BY EntryDate DESC;";
+                string query = @"SELECT Title, EntryDate, isJournalDeleted 
+                        FROM [Journal Table] 
+                        WHERE Username = ?";
+
+                if (!showDeleted)
+                {
+                    query += " AND isJournalDeleted = False";
+                }
+
+                query += " ORDER BY EntryDate DESC";
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
 
                     using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
                             string title = reader["Title"].ToString();
-                            journalListView.Items.Add(new ListViewItem(title));
+                            bool isDeleted = Convert.ToBoolean(reader["isJournalDeleted"]);
+
+                            if (!isDeleted || showDeleted)
+                            {
+                                var item = new ListViewItem(title);
+                                item.Tag = isDeleted; // Store deletion status in Tag
+                                if (isDeleted) item.ForeColor = Color.Gray; // Visual indicator for deleted items
+                                journalListView.Items.Add(item);
+                            }
                         }
                     }
                 }
             }
         }
 
-        public int JournalCount()
+        public int JournalCount(bool includeDeleted = false)
         {
-            int count = 0;
-
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string query = "SELECT COUNT(*) FROM [Journal Table] WHERE Username = ?";
+                string query = @"SELECT COUNT(*) 
+                        FROM [Journal Table] 
+                        WHERE Username = ?";
+
+                if (!includeDeleted)
+                {
+                    query += " AND isJournalDeleted = False";
+                }
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
                     return Convert.ToInt32(cmd.ExecuteScalar());
                 }
             }
@@ -311,16 +333,17 @@ namespace Cozify//database helper
 
                 if (originalTitle != null && originalTitle != newTitle)
                 {
-                    string checkQuery = "SELECT COUNT(*) FROM [Journal Table] WHERE Username = ? AND Title = ?";
+                    string checkQuery = "SELECT COUNT(*) FROM [Journal Table] WHERE Username = ? AND Title = ? AND isJournalDeleted = False";
                     using (OleDbCommand checkCmd = new OleDbCommand(checkQuery, conn))
                     {
-                        checkCmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                        checkCmd.Parameters.AddWithValue("?", newTitle);
+                        checkCmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                        checkCmd.Parameters.Add("@title", OleDbType.VarChar).Value = newTitle;
                         int count = (int)checkCmd.ExecuteScalar();
 
                         if (count > 0)
                         {
-                            MessageBox.Show("An entry with this title already exists. Please use a different title.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("An entry with this title already exists. Please use a different title.",
+                                          "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                             return;
                         }
                     }
@@ -329,23 +352,31 @@ namespace Cozify//database helper
                 string query;
                 if (originalTitle != null)
                 {
-                    query = "UPDATE [Journal Table] SET Title = ?, Content = ?, EntryDate = ? WHERE Username = ? AND Title = ?";
+                    query = @"UPDATE [Journal Table] 
+                     SET Title = ?, Content = ?, EntryDate = ?, isJournalDeleted = False 
+                     WHERE Username = ? AND Title = ?";
                 }
                 else
                 {
-                    query = "INSERT INTO [Journal Table] (Title, Content, EntryDate, Username) VALUES (?, ?, ?, ?)";
+                    query = @"INSERT INTO [Journal Table] 
+                     (Title, Content, EntryDate, Username, isJournalDeleted) 
+                     VALUES (?, ?, ?, ?, False)";
                 }
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", newTitle);
-                    cmd.Parameters.AddWithValue("?", newContent);
-                    cmd.Parameters.AddWithValue("?", entryDate.ToString("MM/dd/yyyy"));
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
+                    cmd.Parameters.Add("@title", OleDbType.VarChar).Value = newTitle;
+                    cmd.Parameters.Add("@content", OleDbType.VarChar).Value = newContent;
+                    cmd.Parameters.Add("@entryDate", OleDbType.Date).Value = entryDate;
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
 
-                    if (originalTitle != null) cmd.Parameters.AddWithValue("?", originalTitle);
+                    if (originalTitle != null)
+                    {
+                        cmd.Parameters.Add("@originalTitle", OleDbType.VarChar).Value = originalTitle;
+                    }
 
-                    cmd.ExecuteNonQuery();
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    Debug.WriteLine($"Saved journal entry. Rows affected: {rowsAffected}");
                 }
             }
         }
@@ -355,17 +386,28 @@ namespace Cozify//database helper
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
-                string deleteQuery = "DELETE FROM [Journal Table] WHERE Username = ? AND Title = ?";
+                string deleteQuery = @"UPDATE [Journal Table] 
+                             SET isJournalDeleted = True 
+                             WHERE Username = ? AND Title = ?";
 
                 using (OleDbCommand cmd = new OleDbCommand(deleteQuery, conn))
                 {
-                    cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                    cmd.Parameters.AddWithValue("?", entryTitle);
-                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                    cmd.Parameters.Add("@title", OleDbType.VarChar).Value = entryTitle;
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        MessageBox.Show("Journal entry moved to trash.", "Deleted",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Journal entry not found.", "Error",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
                 }
             }
-
-            MessageBox.Show("Journal entry deleted!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         public void lvview(ListView journalListView, TextBox tbxTitle, TextBox tbxContent, AntdUI.Label tbxDate)
@@ -378,17 +420,27 @@ namespace Cozify//database helper
                 using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
                     conn.Open();
-                    string query = "SELECT EntryDate, Content FROM [Journal Table] WHERE Username = ? AND Title = ?;";
+                    string query = @"SELECT EntryDate, Content, isJournalDeleted 
+                           FROM [Journal Table] 
+                           WHERE Username = ? AND Title = ?";
 
                     using (OleDbCommand cmd = new OleDbCommand(query, conn))
                     {
-                        cmd.Parameters.AddWithValue("?", GlobalUser.LoggedInUsername);
-                        cmd.Parameters.AddWithValue("?", selectedTitle);
+                        cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                        cmd.Parameters.Add("@title", OleDbType.VarChar).Value = selectedTitle;
 
                         using (OleDbDataReader reader = cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
+                                bool isDeleted = Convert.ToBoolean(reader["isJournalDeleted"]);
+                                if (isDeleted)
+                                {
+                                    MessageBox.Show("This entry has been deleted. Restore it to edit.",
+                                                  "Deleted Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    return;
+                                }
+
                                 DateTime entryDate = Convert.ToDateTime(reader["EntryDate"]);
                                 tbxDate.Text = entryDate.ToString("MM/dd/yyyy");
                                 tbxTitle.Text = selectedTitle;
