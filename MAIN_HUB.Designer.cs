@@ -35,44 +35,44 @@
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.lblDate = new System.Windows.Forms.Label();
             this.toolTip_ToDo = new System.Windows.Forms.ToolTip(this.components);
+            this.btnToDoMain = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnJournal = new System.Windows.Forms.Button();
+            this.btnPomo = new System.Windows.Forms.Button();
+            this.btnHabitChecker = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.btnLogOut = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnMiniMainHub = new System.Windows.Forms.Button();
+            this.btnMaxMainHub = new System.Windows.Forms.Button();
+            this.btnExitMainHub = new System.Windows.Forms.Button();
             this.panel4 = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.btnHelpMainHub = new System.Windows.Forms.Button();
             this.pnlPicContainer = new System.Windows.Forms.Panel();
+            this.PicBox1 = new System.Windows.Forms.PictureBox();
             this.panel6 = new System.Windows.Forms.Panel();
+            this.btnZenMode = new System.Windows.Forms.Button();
             this.panel7 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.lblClock = new System.Windows.Forms.Label();
             this.panel8 = new System.Windows.Forms.Panel();
+            this.btnStatistics = new System.Windows.Forms.Button();
             this.pnlMusicDock = new System.Windows.Forms.Panel();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.lblSongAndArtist = new AntdUI.Label();
             this.lblMusicPlaylist = new AntdUI.Label();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.trkBarVolumeSlider = new System.Windows.Forms.TrackBar();
-            this.btnMusicLib = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.trkBarVolumeSlider = new System.Windows.Forms.TrackBar();
             this.btnPrevTrack = new System.Windows.Forms.Button();
             this.btnPlayORStopTrack = new System.Windows.Forms.Button();
             this.btnNextTrack = new System.Windows.Forms.Button();
             this.btnLoopTracks = new System.Windows.Forms.Button();
-            this.btnStatistics = new System.Windows.Forms.Button();
-            this.btnZenMode = new System.Windows.Forms.Button();
-            this.PicBox1 = new System.Windows.Forms.PictureBox();
-            this.btnHelpMainHub = new System.Windows.Forms.Button();
-            this.btnMiniMainHub = new System.Windows.Forms.Button();
-            this.btnMaxMainHub = new System.Windows.Forms.Button();
-            this.btnExitMainHub = new System.Windows.Forms.Button();
-            this.btnLogOut = new System.Windows.Forms.Button();
-            this.btnJournal = new System.Windows.Forms.Button();
-            this.btnToDoMain = new System.Windows.Forms.Button();
-            this.btnPomo = new System.Windows.Forms.Button();
-            this.btnHabitChecker = new System.Windows.Forms.Button();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.btnMusicLib = new System.Windows.Forms.Button();
             this.pnlTime.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -82,6 +82,7 @@
             this.panel4.SuspendLayout();
             this.panel5.SuspendLayout();
             this.pnlPicContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.PicBox1)).BeginInit();
             this.panel6.SuspendLayout();
             this.panel7.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
@@ -89,10 +90,9 @@
             this.pnlMusicDock.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.panel9.SuspendLayout();
-            this.panel10.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).BeginInit();
+            this.panel10.SuspendLayout();
             this.SuspendLayout();
             // 
             // WelcomeLabel
@@ -154,6 +154,23 @@
             this.lblDate.Text = "date";
             this.lblDate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
+            // btnToDoMain
+            // 
+            this.btnToDoMain.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnToDoMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnToDoMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnToDoMain.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnToDoMain.Image = global::Cozify.Properties.Resources.Checked_Checkbox2;
+            this.btnToDoMain.Location = new System.Drawing.Point(1, 1);
+            this.btnToDoMain.Margin = new System.Windows.Forms.Padding(1);
+            this.btnToDoMain.Name = "btnToDoMain";
+            this.btnToDoMain.Size = new System.Drawing.Size(66, 58);
+            this.btnToDoMain.TabIndex = 4;
+            this.toolTip_ToDo.SetToolTip(this.btnToDoMain, "To Do List for your tasks");
+            this.btnToDoMain.UseVisualStyleBackColor = false;
+            this.btnToDoMain.Click += new System.EventHandler(this.btnToDoMain_Click);
+            this.btnToDoMain.MouseHover += new System.EventHandler(this.ChecklistToolTip_Show);
+            // 
             // panel1
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -184,6 +201,53 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(68, 244);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // btnJournal
+            // 
+            this.btnJournal.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnJournal.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnJournal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnJournal.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnJournal.Image = global::Cozify.Properties.Resources.Journal;
+            this.btnJournal.Location = new System.Drawing.Point(1, 121);
+            this.btnJournal.Margin = new System.Windows.Forms.Padding(1);
+            this.btnJournal.Name = "btnJournal";
+            this.btnJournal.Size = new System.Drawing.Size(66, 58);
+            this.btnJournal.TabIndex = 7;
+            this.btnJournal.Text = " ";
+            this.btnJournal.UseVisualStyleBackColor = false;
+            this.btnJournal.Click += new System.EventHandler(this.btnJournal_Click);
+            // 
+            // btnPomo
+            // 
+            this.btnPomo.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPomo.BackgroundImage = global::Cozify.Properties.Resources.Tomato;
+            this.btnPomo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnPomo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnPomo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPomo.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnPomo.Location = new System.Drawing.Point(1, 61);
+            this.btnPomo.Margin = new System.Windows.Forms.Padding(1);
+            this.btnPomo.Name = "btnPomo";
+            this.btnPomo.Size = new System.Drawing.Size(66, 58);
+            this.btnPomo.TabIndex = 15;
+            this.btnPomo.UseVisualStyleBackColor = false;
+            this.btnPomo.Click += new System.EventHandler(this.btnPomo_Click);
+            // 
+            // btnHabitChecker
+            // 
+            this.btnHabitChecker.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnHabitChecker.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnHabitChecker.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHabitChecker.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnHabitChecker.Image = global::Cozify.Properties.Resources.Clipboard;
+            this.btnHabitChecker.Location = new System.Drawing.Point(1, 181);
+            this.btnHabitChecker.Margin = new System.Windows.Forms.Padding(1);
+            this.btnHabitChecker.Name = "btnHabitChecker";
+            this.btnHabitChecker.Size = new System.Drawing.Size(66, 62);
+            this.btnHabitChecker.TabIndex = 6;
+            this.btnHabitChecker.UseVisualStyleBackColor = false;
+            this.btnHabitChecker.Click += new System.EventHandler(this.btnHabitChecker_Click);
+            // 
             // panel2
             // 
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -194,6 +258,21 @@
             this.panel2.Padding = new System.Windows.Forms.Padding(5);
             this.panel2.Size = new System.Drawing.Size(68, 72);
             this.panel2.TabIndex = 20;
+            // 
+            // btnLogOut
+            // 
+            this.btnLogOut.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnLogOut.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnLogOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLogOut.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnLogOut.Image = global::Cozify.Properties.Resources.Logout;
+            this.btnLogOut.Location = new System.Drawing.Point(5, 5);
+            this.btnLogOut.Margin = new System.Windows.Forms.Padding(1);
+            this.btnLogOut.Name = "btnLogOut";
+            this.btnLogOut.Size = new System.Drawing.Size(58, 62);
+            this.btnLogOut.TabIndex = 12;
+            this.btnLogOut.UseVisualStyleBackColor = false;
+            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
             // 
             // panel3
             // 
@@ -220,6 +299,50 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(182, 58);
             this.tableLayoutPanel2.TabIndex = 0;
             // 
+            // btnMiniMainHub
+            // 
+            this.btnMiniMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMiniMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMiniMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnMiniMainHub.Image = global::Cozify.Properties.Resources.Minimize_Window_1;
+            this.btnMiniMainHub.Location = new System.Drawing.Point(1, 1);
+            this.btnMiniMainHub.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMiniMainHub.Name = "btnMiniMainHub";
+            this.btnMiniMainHub.Size = new System.Drawing.Size(58, 56);
+            this.btnMiniMainHub.TabIndex = 2;
+            this.btnMiniMainHub.UseVisualStyleBackColor = true;
+            this.btnMiniMainHub.Click += new System.EventHandler(this.btnMiniMainHub_Click);
+            // 
+            // btnMaxMainHub
+            // 
+            this.btnMaxMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMaxMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMaxMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnMaxMainHub.Image = global::Cozify.Properties.Resources.Maximize_Window_2;
+            this.btnMaxMainHub.Location = new System.Drawing.Point(61, 1);
+            this.btnMaxMainHub.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMaxMainHub.Name = "btnMaxMainHub";
+            this.btnMaxMainHub.Size = new System.Drawing.Size(58, 56);
+            this.btnMaxMainHub.TabIndex = 17;
+            this.btnMaxMainHub.UseVisualStyleBackColor = true;
+            this.btnMaxMainHub.Click += new System.EventHandler(this.btnMaxMainHub_Click);
+            // 
+            // btnExitMainHub
+            // 
+            this.btnExitMainHub.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnExitMainHub.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnExitMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnExitMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnExitMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnExitMainHub.Image = global::Cozify.Properties.Resources.Close_1;
+            this.btnExitMainHub.Location = new System.Drawing.Point(121, 1);
+            this.btnExitMainHub.Margin = new System.Windows.Forms.Padding(1);
+            this.btnExitMainHub.Name = "btnExitMainHub";
+            this.btnExitMainHub.Size = new System.Drawing.Size(60, 56);
+            this.btnExitMainHub.TabIndex = 3;
+            this.btnExitMainHub.UseVisualStyleBackColor = false;
+            this.btnExitMainHub.Click += new System.EventHandler(this.btnExitMainHub_Click);
+            // 
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.ActiveCaption;
@@ -239,6 +362,21 @@
             this.panel5.Size = new System.Drawing.Size(70, 65);
             this.panel5.TabIndex = 23;
             // 
+            // btnHelpMainHub
+            // 
+            this.btnHelpMainHub.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnHelpMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnHelpMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHelpMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnHelpMainHub.Image = global::Cozify.Properties.Resources.Help;
+            this.btnHelpMainHub.Location = new System.Drawing.Point(0, 0);
+            this.btnHelpMainHub.Margin = new System.Windows.Forms.Padding(1);
+            this.btnHelpMainHub.Name = "btnHelpMainHub";
+            this.btnHelpMainHub.Size = new System.Drawing.Size(70, 65);
+            this.btnHelpMainHub.TabIndex = 18;
+            this.btnHelpMainHub.UseVisualStyleBackColor = false;
+            this.btnHelpMainHub.Click += new System.EventHandler(this.btnHelpMainHub_Click);
+            // 
             // pnlPicContainer
             // 
             this.pnlPicContainer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -250,6 +388,19 @@
             this.pnlPicContainer.Size = new System.Drawing.Size(1226, 693);
             this.pnlPicContainer.TabIndex = 24;
             // 
+            // PicBox1
+            // 
+            this.PicBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PicBox1.Image = global::Cozify.Properties.Resources.rainy_shop;
+            this.PicBox1.Location = new System.Drawing.Point(0, 0);
+            this.PicBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.PicBox1.Name = "PicBox1";
+            this.PicBox1.Size = new System.Drawing.Size(1226, 693);
+            this.PicBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.PicBox1.TabIndex = 9;
+            this.PicBox1.TabStop = false;
+            this.PicBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MAIN_HUB_MouseDown);
+            // 
             // panel6
             // 
             this.panel6.Controls.Add(this.btnZenMode);
@@ -257,6 +408,21 @@
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(69, 58);
             this.panel6.TabIndex = 25;
+            // 
+            // btnZenMode
+            // 
+            this.btnZenMode.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnZenMode.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnZenMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnZenMode.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnZenMode.Image = global::Cozify.Properties.Resources.Lotus;
+            this.btnZenMode.Location = new System.Drawing.Point(0, 0);
+            this.btnZenMode.Margin = new System.Windows.Forms.Padding(1);
+            this.btnZenMode.Name = "btnZenMode";
+            this.btnZenMode.Size = new System.Drawing.Size(69, 58);
+            this.btnZenMode.TabIndex = 10;
+            this.btnZenMode.UseVisualStyleBackColor = false;
+            this.btnZenMode.Click += new System.EventHandler(this.btnZenMode_Click);
             // 
             // panel7
             // 
@@ -304,6 +470,21 @@
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(69, 58);
             this.panel8.TabIndex = 27;
+            // 
+            // btnStatistics
+            // 
+            this.btnStatistics.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnStatistics.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnStatistics.Image = global::Cozify.Properties.Resources.Cat_Profile;
+            this.btnStatistics.Location = new System.Drawing.Point(0, 0);
+            this.btnStatistics.Margin = new System.Windows.Forms.Padding(1);
+            this.btnStatistics.Name = "btnStatistics";
+            this.btnStatistics.Size = new System.Drawing.Size(69, 58);
+            this.btnStatistics.TabIndex = 10;
+            this.btnStatistics.UseVisualStyleBackColor = false;
+            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
             // 
             // pnlMusicDock
             // 
@@ -367,13 +548,15 @@
             this.panel9.Size = new System.Drawing.Size(408, 80);
             this.panel9.TabIndex = 42;
             // 
-            // panel10
+            // pictureBox1
             // 
-            this.panel10.Controls.Add(this.btnMusicLib);
-            this.panel10.Location = new System.Drawing.Point(7, 274);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(69, 58);
-            this.panel10.TabIndex = 48;
+            this.pictureBox1.Image = global::Cozify.Properties.Resources.Voice;
+            this.pictureBox1.Location = new System.Drawing.Point(98, 58);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(31, 27);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 49;
+            this.pictureBox1.TabStop = false;
             // 
             // trkBarVolumeSlider
             // 
@@ -384,31 +567,6 @@
             this.trkBarVolumeSlider.TabIndex = 48;
             this.trkBarVolumeSlider.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trkBarVolumeSlider.Scroll += new System.EventHandler(this.trkBarVolumeSlider_Scroll);
-            // 
-            // btnMusicLib
-            // 
-            this.btnMusicLib.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnMusicLib.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMusicLib.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMusicLib.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnMusicLib.Image = global::Cozify.Properties.Resources.Music_Library1;
-            this.btnMusicLib.Location = new System.Drawing.Point(0, 0);
-            this.btnMusicLib.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMusicLib.Name = "btnMusicLib";
-            this.btnMusicLib.Size = new System.Drawing.Size(69, 58);
-            this.btnMusicLib.TabIndex = 47;
-            this.btnMusicLib.UseVisualStyleBackColor = false;
-            this.btnMusicLib.Click += new System.EventHandler(this.btnMusicLib_Click_1);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = global::Cozify.Properties.Resources.Voice;
-            this.pictureBox1.Location = new System.Drawing.Point(98, 58);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(31, 27);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 49;
-            this.pictureBox1.TabStop = false;
             // 
             // btnPrevTrack
             // 
@@ -466,186 +624,28 @@
             this.btnLoopTracks.UseVisualStyleBackColor = false;
             this.btnLoopTracks.Click += new System.EventHandler(this.btnLoopTracks_Click);
             // 
-            // btnStatistics
+            // panel10
             // 
-            this.btnStatistics.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnStatistics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStatistics.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnStatistics.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnStatistics.Image = global::Cozify.Properties.Resources.Cat_Profile;
-            this.btnStatistics.Location = new System.Drawing.Point(0, 0);
-            this.btnStatistics.Margin = new System.Windows.Forms.Padding(1);
-            this.btnStatistics.Name = "btnStatistics";
-            this.btnStatistics.Size = new System.Drawing.Size(69, 58);
-            this.btnStatistics.TabIndex = 10;
-            this.btnStatistics.UseVisualStyleBackColor = false;
-            this.btnStatistics.Click += new System.EventHandler(this.btnStatistics_Click);
+            this.panel10.Controls.Add(this.btnMusicLib);
+            this.panel10.Location = new System.Drawing.Point(7, 274);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(69, 58);
+            this.panel10.TabIndex = 48;
             // 
-            // btnZenMode
+            // btnMusicLib
             // 
-            this.btnZenMode.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnZenMode.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnZenMode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnZenMode.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnZenMode.Image = global::Cozify.Properties.Resources.Lotus;
-            this.btnZenMode.Location = new System.Drawing.Point(0, 0);
-            this.btnZenMode.Margin = new System.Windows.Forms.Padding(1);
-            this.btnZenMode.Name = "btnZenMode";
-            this.btnZenMode.Size = new System.Drawing.Size(69, 58);
-            this.btnZenMode.TabIndex = 10;
-            this.btnZenMode.UseVisualStyleBackColor = false;
-            this.btnZenMode.Click += new System.EventHandler(this.btnZenMode_Click);
-            // 
-            // PicBox1
-            // 
-            this.PicBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PicBox1.Image = global::Cozify.Properties.Resources.rainy_shop;
-            this.PicBox1.Location = new System.Drawing.Point(0, 0);
-            this.PicBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.PicBox1.Name = "PicBox1";
-            this.PicBox1.Size = new System.Drawing.Size(1226, 693);
-            this.PicBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PicBox1.TabIndex = 9;
-            this.PicBox1.TabStop = false;
-            this.PicBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MAIN_HUB_MouseDown);
-            // 
-            // btnHelpMainHub
-            // 
-            this.btnHelpMainHub.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnHelpMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnHelpMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHelpMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnHelpMainHub.Image = global::Cozify.Properties.Resources.Help;
-            this.btnHelpMainHub.Location = new System.Drawing.Point(0, 0);
-            this.btnHelpMainHub.Margin = new System.Windows.Forms.Padding(1);
-            this.btnHelpMainHub.Name = "btnHelpMainHub";
-            this.btnHelpMainHub.Size = new System.Drawing.Size(70, 65);
-            this.btnHelpMainHub.TabIndex = 18;
-            this.btnHelpMainHub.UseVisualStyleBackColor = false;
-            this.btnHelpMainHub.Click += new System.EventHandler(this.btnHelpMainHub_Click);
-            // 
-            // btnMiniMainHub
-            // 
-            this.btnMiniMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMiniMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMiniMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnMiniMainHub.Image = global::Cozify.Properties.Resources.Minimize_Window_1;
-            this.btnMiniMainHub.Location = new System.Drawing.Point(1, 1);
-            this.btnMiniMainHub.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMiniMainHub.Name = "btnMiniMainHub";
-            this.btnMiniMainHub.Size = new System.Drawing.Size(58, 56);
-            this.btnMiniMainHub.TabIndex = 2;
-            this.btnMiniMainHub.UseVisualStyleBackColor = true;
-            this.btnMiniMainHub.Click += new System.EventHandler(this.btnMiniMainHub_Click);
-            // 
-            // btnMaxMainHub
-            // 
-            this.btnMaxMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMaxMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMaxMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnMaxMainHub.Image = global::Cozify.Properties.Resources.Maximize_Window_2;
-            this.btnMaxMainHub.Location = new System.Drawing.Point(61, 1);
-            this.btnMaxMainHub.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMaxMainHub.Name = "btnMaxMainHub";
-            this.btnMaxMainHub.Size = new System.Drawing.Size(58, 56);
-            this.btnMaxMainHub.TabIndex = 17;
-            this.btnMaxMainHub.UseVisualStyleBackColor = true;
-            this.btnMaxMainHub.Click += new System.EventHandler(this.btnMaxMainHub_Click);
-            // 
-            // btnExitMainHub
-            // 
-            this.btnExitMainHub.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnExitMainHub.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnExitMainHub.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnExitMainHub.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnExitMainHub.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnExitMainHub.Image = global::Cozify.Properties.Resources.Close_1;
-            this.btnExitMainHub.Location = new System.Drawing.Point(121, 1);
-            this.btnExitMainHub.Margin = new System.Windows.Forms.Padding(1);
-            this.btnExitMainHub.Name = "btnExitMainHub";
-            this.btnExitMainHub.Size = new System.Drawing.Size(60, 56);
-            this.btnExitMainHub.TabIndex = 3;
-            this.btnExitMainHub.UseVisualStyleBackColor = false;
-            this.btnExitMainHub.Click += new System.EventHandler(this.btnExitMainHub_Click);
-            // 
-            // btnLogOut
-            // 
-            this.btnLogOut.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnLogOut.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnLogOut.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLogOut.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnLogOut.Image = global::Cozify.Properties.Resources.Logout;
-            this.btnLogOut.Location = new System.Drawing.Point(5, 5);
-            this.btnLogOut.Margin = new System.Windows.Forms.Padding(1);
-            this.btnLogOut.Name = "btnLogOut";
-            this.btnLogOut.Size = new System.Drawing.Size(58, 62);
-            this.btnLogOut.TabIndex = 12;
-            this.btnLogOut.UseVisualStyleBackColor = false;
-            this.btnLogOut.Click += new System.EventHandler(this.btnLogOut_Click);
-            // 
-            // btnJournal
-            // 
-            this.btnJournal.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnJournal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnJournal.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnJournal.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnJournal.Image = global::Cozify.Properties.Resources.Journal;
-            this.btnJournal.Location = new System.Drawing.Point(1, 121);
-            this.btnJournal.Margin = new System.Windows.Forms.Padding(1);
-            this.btnJournal.Name = "btnJournal";
-            this.btnJournal.Size = new System.Drawing.Size(66, 58);
-            this.btnJournal.TabIndex = 7;
-            this.btnJournal.Text = " ";
-            this.btnJournal.UseVisualStyleBackColor = false;
-            this.btnJournal.Click += new System.EventHandler(this.btnJournal_Click);
-            // 
-            // btnToDoMain
-            // 
-            this.btnToDoMain.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnToDoMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnToDoMain.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnToDoMain.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnToDoMain.Image = global::Cozify.Properties.Resources.Checked_Checkbox2;
-            this.btnToDoMain.Location = new System.Drawing.Point(1, 1);
-            this.btnToDoMain.Margin = new System.Windows.Forms.Padding(1);
-            this.btnToDoMain.Name = "btnToDoMain";
-            this.btnToDoMain.Size = new System.Drawing.Size(66, 58);
-            this.btnToDoMain.TabIndex = 4;
-            this.toolTip_ToDo.SetToolTip(this.btnToDoMain, "To Do List for your tasks");
-            this.btnToDoMain.UseVisualStyleBackColor = false;
-            this.btnToDoMain.Click += new System.EventHandler(this.btnToDoMain_Click);
-            this.btnToDoMain.MouseHover += new System.EventHandler(this.ChecklistToolTip_Show);
-            // 
-            // btnPomo
-            // 
-            this.btnPomo.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPomo.BackgroundImage = global::Cozify.Properties.Resources.Tomato;
-            this.btnPomo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnPomo.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnPomo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnPomo.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnPomo.Location = new System.Drawing.Point(1, 61);
-            this.btnPomo.Margin = new System.Windows.Forms.Padding(1);
-            this.btnPomo.Name = "btnPomo";
-            this.btnPomo.Size = new System.Drawing.Size(66, 58);
-            this.btnPomo.TabIndex = 15;
-            this.btnPomo.UseVisualStyleBackColor = false;
-            this.btnPomo.Click += new System.EventHandler(this.btnPomo_Click);
-            // 
-            // btnHabitChecker
-            // 
-            this.btnHabitChecker.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnHabitChecker.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnHabitChecker.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnHabitChecker.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnHabitChecker.Image = global::Cozify.Properties.Resources.Clipboard;
-            this.btnHabitChecker.Location = new System.Drawing.Point(1, 181);
-            this.btnHabitChecker.Margin = new System.Windows.Forms.Padding(1);
-            this.btnHabitChecker.Name = "btnHabitChecker";
-            this.btnHabitChecker.Size = new System.Drawing.Size(66, 62);
-            this.btnHabitChecker.TabIndex = 6;
-            this.btnHabitChecker.UseVisualStyleBackColor = false;
-            this.btnHabitChecker.Click += new System.EventHandler(this.btnHabitChecker_Click);
+            this.btnMusicLib.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnMusicLib.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnMusicLib.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMusicLib.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnMusicLib.Image = global::Cozify.Properties.Resources.Music_Library1;
+            this.btnMusicLib.Location = new System.Drawing.Point(0, 0);
+            this.btnMusicLib.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMusicLib.Name = "btnMusicLib";
+            this.btnMusicLib.Size = new System.Drawing.Size(69, 58);
+            this.btnMusicLib.TabIndex = 47;
+            this.btnMusicLib.UseVisualStyleBackColor = false;
+            this.btnMusicLib.Click += new System.EventHandler(this.btnMusicLib_Click_1);
             // 
             // MAIN_HUB
             // 
@@ -673,6 +673,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
+            this.Load += new System.EventHandler(this.MAIN_HUB_Load);
             this.Resize += new System.EventHandler(this.MAIN_HUB_Resize);
             this.pnlTime.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -685,6 +686,7 @@
             this.panel4.PerformLayout();
             this.panel5.ResumeLayout(false);
             this.pnlPicContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.PicBox1)).EndInit();
             this.panel6.ResumeLayout(false);
             this.panel7.ResumeLayout(false);
             this.tableLayoutPanel4.ResumeLayout(false);
@@ -693,10 +695,9 @@
             this.pnlMusicDock.ResumeLayout(false);
             this.tableLayoutPanel5.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
-            this.panel10.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PicBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).EndInit();
+            this.panel10.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 

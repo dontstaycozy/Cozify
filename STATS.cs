@@ -67,7 +67,7 @@ public partial class STATS : BaseForm
 
     private void STATS_Load(object sender, EventArgs e)
     {
-            db.LoadUserStats(lblTimeSpentCozify, lblTimesLaunchedCozify, lblLastActive);
+            db.LoadUserStats(lblTimeSpentCozify, lblTimesLaunchedCozify);
 
             int totalToDoCount = db.ToDoCount(true);
             int totalCompletedToDoCount = db.CompleteToDoCount(true, true);

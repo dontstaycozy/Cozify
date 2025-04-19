@@ -147,6 +147,12 @@
     <Compile Include="HABIT_CHECKER.Designer.cs">
       <DependentUpon>HABIT_CHECKER.cs</DependentUpon>
     </Compile>
+    <Compile Include="MusicPlayer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MusicPlayer.Designer.cs">
+      <DependentUpon>MusicPlayer.cs</DependentUpon>
+    </Compile>
     <Compile Include="POMODORO.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrackAdder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackAdder.Designer.cs">
+      <DependentUpon>TrackAdder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TrackEditor.Designer.cs">
+      <DependentUpon>TrackEditor.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Admin.resx">
       <DependentUpon>Admin.cs</DependentUpon>
     </EmbeddedResource>
@@ -193,6 +211,9 @@
     <EmbeddedResource Include="MAIN_HUB.resx">
       <DependentUpon>MAIN_HUB.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MusicPlayer.resx">
+      <DependentUpon>MusicPlayer.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="POMODORO.resx">
       <DependentUpon>POMODORO.cs</DependentUpon>
     </EmbeddedResource>
@@ -206,6 +227,12 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackAdder.resx">
+      <DependentUpon>TrackAdder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TrackEditor.resx">
+      <DependentUpon>TrackEditor.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
@@ -410,6 +437,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Voice.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Back Arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

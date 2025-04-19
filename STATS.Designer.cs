@@ -32,7 +32,6 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTotalTimeSpentPomo = new System.Windows.Forms.Label();
             this.lblTotalHabitsAdded = new System.Windows.Forms.Label();
-            this.lblLastActive = new System.Windows.Forms.Label();
             this.lblTimesLaunchedCozify = new System.Windows.Forms.Label();
             this.lblTracksNumber = new System.Windows.Forms.Label();
             this.lblTimeSpentCozify = new System.Windows.Forms.Label();
@@ -62,16 +61,15 @@
             this.tableLayoutPanel1.ColumnCount = 2;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalTimeSpentPomo, 1, 2);
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalHabitsAdded, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblLastActive, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.lblTimesLaunchedCozify, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lblTracksNumber, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.lblTimeSpentCozify, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.lblNoOfJournalEntries, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 1, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 7);
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 8);
+            this.tableLayoutPanel1.Controls.Add(this.lblNoOfJournalEntries, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.lblTracksNumber, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalHabitsAdded, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTimeSpentPomo, 0, 7);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -96,7 +94,7 @@
             this.lblTotalTimeSpentPomo.AutoSize = true;
             this.lblTotalTimeSpentPomo.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTotalTimeSpentPomo.ForeColor = System.Drawing.Color.White;
-            this.lblTotalTimeSpentPomo.Location = new System.Drawing.Point(414, 80);
+            this.lblTotalTimeSpentPomo.Location = new System.Drawing.Point(3, 280);
             this.lblTotalTimeSpentPomo.Name = "lblTotalTimeSpentPomo";
             this.lblTotalTimeSpentPomo.Size = new System.Drawing.Size(304, 21);
             this.lblTotalTimeSpentPomo.TabIndex = 36;
@@ -107,22 +105,11 @@
             this.lblTotalHabitsAdded.AutoSize = true;
             this.lblTotalHabitsAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTotalHabitsAdded.ForeColor = System.Drawing.Color.White;
-            this.lblTotalHabitsAdded.Location = new System.Drawing.Point(414, 0);
+            this.lblTotalHabitsAdded.Location = new System.Drawing.Point(414, 80);
             this.lblTotalHabitsAdded.Name = "lblTotalHabitsAdded";
             this.lblTotalHabitsAdded.Size = new System.Drawing.Size(213, 21);
             this.lblTotalHabitsAdded.TabIndex = 34;
             this.lblTotalHabitsAdded.Text = "Total Habits added: ";
-            // 
-            // lblLastActive
-            // 
-            this.lblLastActive.AutoSize = true;
-            this.lblLastActive.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblLastActive.ForeColor = System.Drawing.Color.White;
-            this.lblLastActive.Location = new System.Drawing.Point(3, 120);
-            this.lblLastActive.Name = "lblLastActive";
-            this.lblLastActive.Size = new System.Drawing.Size(136, 21);
-            this.lblLastActive.TabIndex = 32;
-            this.lblLastActive.Text = "Last active:";
             // 
             // lblTimesLaunchedCozify
             // 
@@ -162,7 +149,7 @@
             this.lblNoOfJournalEntries.AutoSize = true;
             this.lblNoOfJournalEntries.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblNoOfJournalEntries.ForeColor = System.Drawing.Color.White;
-            this.lblNoOfJournalEntries.Location = new System.Drawing.Point(3, 200);
+            this.lblNoOfJournalEntries.Location = new System.Drawing.Point(3, 160);
             this.lblNoOfJournalEntries.Name = "lblNoOfJournalEntries";
             this.lblNoOfJournalEntries.Size = new System.Drawing.Size(261, 21);
             this.lblNoOfJournalEntries.TabIndex = 24;
@@ -173,7 +160,7 @@
             this.lblPomoSessionsCompelted.AutoSize = true;
             this.lblPomoSessionsCompelted.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblPomoSessionsCompelted.ForeColor = System.Drawing.Color.White;
-            this.lblPomoSessionsCompelted.Location = new System.Drawing.Point(414, 120);
+            this.lblPomoSessionsCompelted.Location = new System.Drawing.Point(3, 240);
             this.lblPomoSessionsCompelted.Name = "lblPomoSessionsCompelted";
             this.lblPomoSessionsCompelted.Size = new System.Drawing.Size(222, 21);
             this.lblPomoSessionsCompelted.TabIndex = 35;
@@ -184,7 +171,7 @@
             this.lblTasksAdded.AutoSize = true;
             this.lblTasksAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTasksAdded.ForeColor = System.Drawing.Color.White;
-            this.lblTasksAdded.Location = new System.Drawing.Point(3, 280);
+            this.lblTasksAdded.Location = new System.Drawing.Point(414, 0);
             this.lblTasksAdded.Name = "lblTasksAdded";
             this.lblTasksAdded.Size = new System.Drawing.Size(203, 21);
             this.lblTasksAdded.TabIndex = 29;
@@ -195,7 +182,7 @@
             this.lblTotalTasksCompleted.AutoSize = true;
             this.lblTotalTasksCompleted.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTotalTasksCompleted.ForeColor = System.Drawing.Color.White;
-            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(3, 320);
+            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(414, 40);
             this.lblTotalTasksCompleted.Name = "lblTotalTasksCompleted";
             this.lblTotalTasksCompleted.Size = new System.Drawing.Size(246, 21);
             this.lblTotalTasksCompleted.TabIndex = 30;
@@ -291,7 +278,6 @@
         private System.Windows.Forms.Label lblTotalTasksCompleted;
         private System.Windows.Forms.Label lblTasksAdded;
         private System.Windows.Forms.Label lblNoOfJournalEntries;
-        private System.Windows.Forms.Label lblLastActive;
         private System.Windows.Forms.Label lblTotalTimeSpentPomo;
         private System.Windows.Forms.Label lblTotalHabitsAdded;
         private System.Windows.Forms.Label lblPomoSessionsCompelted;

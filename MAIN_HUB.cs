@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -24,6 +25,7 @@ namespace finals
         private STATS sTAT;
         private bool isFocused = false;
         private Form activeFeature = null;
+        private bool sessionActive = false;
 
 
         [DllImport("user32.dll")]
@@ -35,6 +37,14 @@ namespace finals
         {
             InitializeComponent();
             this.MouseDown += MAIN_HUB_MouseDown;
+            Application.ApplicationExit += (sender, e) =>
+            {
+                if (sessionActive)
+                {
+                    db.StopSessionTimer();
+                    sessionActive = false;
+                }
+            };
         }
         private void MAIN_HUB_MouseDown(object sender, MouseEventArgs e)
         {
@@ -68,16 +78,32 @@ namespace finals
 
         private void btnLogOut_Click(object sender, EventArgs e)
         {
-            if (habitChecker != null && !habitChecker.IsDisposed) habitChecker.Close();
-            if (toDo != null && !toDo.IsDisposed) toDo.Close();
-            if (journal != null && !journal.IsDisposed) journal.Close();
-            if (guide != null && !guide.IsDisposed) guide.Close();
-            if (pomo != null && !pomo.IsDisposed) pomo.Close();
-            if (sTAT != null && !sTAT.IsDisposed) sTAT.Close();
-            db.StopSessionTimer();
-            this.Close();
-            LOGIN lOGIN = new LOGIN();
-            lOGIN.Show();
+            try
+            {
+                // Close all child forms
+                if (habitChecker != null && !habitChecker.IsDisposed) habitChecker.Close();
+                if (toDo != null && !toDo.IsDisposed) toDo.Close();
+                if (journal != null && !journal.IsDisposed) journal.Close();
+                if (guide != null && !guide.IsDisposed) guide.Close();
+                if (pomo != null && !pomo.IsDisposed) pomo.Close();
+                if (sTAT != null && !sTAT.IsDisposed) sTAT.Close();
+
+                // Stop session timer
+                if (sessionActive)
+                {
+                    db.StopSessionTimer();
+                    sessionActive = false;
+                }
+
+                this.Hide();
+                LOGIN lOGIN = new LOGIN();
+                lOGIN.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during logout: {ex.Message}");
+                Debug.WriteLine($"Logout error: {ex}");
+            }
         }
 
         private void MAIN_HUB_Load(object sender, EventArgs e)
@@ -86,19 +112,39 @@ namespace finals
             {
                 WelcomeLabel.Text = $"{GlobalUser.LoggedInUsername}'s space";
                 this.Resize += MAIN_HUB_Resize;
-                this.FormClosing += MAIN_HUB_FormClosing;
-                db.SessionStartTime();
 
+                // Only start session if not already active
+                if (!sessionActive)
+                {
+                    db.SessionStartTime();
+                    sessionActive = true;
+                    Debug.WriteLine("Session timer started");
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error initializing session: {ex.Message}");
+                Debug.WriteLine($"Session start error: {ex}");
             }
         }
 
         private void MAIN_HUB_FormClosing(object sender, FormClosingEventArgs e)//fix TIMESPENT PLEASE
         {
-            db.StopSessionTimer();
+            try
+            {
+                // Only stop session if active
+                if (sessionActive)
+                {
+                    db.StopSessionTimer();
+                    sessionActive = false;
+                    Debug.WriteLine("Session timer stopped");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error stopping session timer: {ex}");
+                // Don't prevent closing if there's an error
+            }
         }
 
         private void MAIN_HUB_Resize(object sender, EventArgs e)
