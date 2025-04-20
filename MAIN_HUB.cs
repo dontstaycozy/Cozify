@@ -252,7 +252,11 @@ namespace finals
             if (pomo == null || pomo.IsDisposed)
             {
                 pomo = new POMODORO();
-                pomo.FormClosed += Pomo_FormClosed;
+                pomo.FormClosed += (s, args) =>
+                {
+                    pomo = null;
+                    activeFeature = null;
+                };
                 pomo.Show();
                 pomo.TopMost = true;
                 activeFeature = pomo;

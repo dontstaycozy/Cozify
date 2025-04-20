@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using System.Data.OleDb;
 using Cozify;
+using static Cozify.dbHelper;
 
 namespace finals
 {
@@ -20,14 +21,29 @@ namespace finals
         private int elapsedWorkTime = 0;  // Tracks total work time
         private int elapsedBreakTime = 0; // Tracks total break time
 
+        private PomodoroStats pomodoroStats = new PomodoroStats();
+        public static class PomodoroSettings
+        {
+            public static int LastWorkTime { get; set; } = 25; //default
+            public static int LastBreakTime { get; set; } = 5;
+            public static PomodoroStats Stats { get; set; } = new PomodoroStats();
+        }
+
         public POMODORO()
         {
             InitializeComponent();
+
+            numSession.Value = PomodoroSettings.LastWorkTime;
+            numBreak.Value = PomodoroSettings.LastBreakTime;
+            pomodoroStats = PomodoroSettings.Stats ?? new PomodoroStats();
+
             pomoTimer = new Timer();
             pomoTimer.Interval = 1000;
             pomoTimer.Tick += Timer_Tick;
             alarm = new SoundPlayer(Cozify.Properties.Resources.alarmsound);
         }
+
+        
         private void Centering()
         {
             int formWidth = this.ClientSize.Width;
@@ -45,7 +61,7 @@ namespace finals
 
         private void SavePomodoroSession(bool completed, int workTime, int breakTime)
         {
-            db.SavePomodoroSession(completed, workTime, breakTime);
+            db.SavePomodoroSession(completed, workTime, breakTime, ref pomodoroStats);
         }
 
         private void btnStartPomo_Click(object sender, EventArgs e)
@@ -139,6 +155,14 @@ namespace finals
             timeLeft = (int)numSession.Value * 60;
             lblTimer.Text = $"{timeLeft / 60:D2}:{timeLeft % 60:D2}";
             titlePomo.Text = "Pomodoro Timer";
+        }
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            PomodoroSettings.LastWorkTime = (int)numSession.Value;
+            PomodoroSettings.LastBreakTime = (int)numBreak.Value;
+            PomodoroSettings.Stats = pomodoroStats;
+
+            base.OnFormClosing(e);
         }
     }
 }

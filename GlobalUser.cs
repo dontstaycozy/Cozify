@@ -1137,8 +1137,51 @@ namespace Cozify//database helper
         }
 
         // pomodoro
+        public class PomodoroStats
+        {
+            public int TotalCompletedSessions { get; set; }
+            public int TotalTimeSpentSeconds { get; set; } // in seconds
 
-        public void SavePomodoroSession(bool completed, int workTime, int breakTime)
+            // Optional: Add methods to format time nicely
+            public string GetFormattedTotalTime()
+            {
+                TimeSpan time = TimeSpan.FromSeconds(TotalTimeSpentSeconds);
+                return $"{time.Hours}h {time.Minutes}m {time.Seconds}s";
+            }
+        }
+
+        public int GetTotalCompletedSessions(string username)
+        {
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT COUNT(*) FROM [Pomodoro Table] WHERE Username = ? AND Completed = true;";
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = username;
+                    return (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public int GetTotalTimeSpent(string username)
+        {
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT SUM(TimeSpent) FROM [Pomodoro Table] WHERE Username = ?;";
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = username;
+                    object result = cmd.ExecuteScalar();
+                    return result != DBNull.Value ? Convert.ToInt32(result) : 0;
+                }
+            }
+        }
+
+        public void SavePomodoroSession(bool completed, int workTime, int breakTime, ref PomodoroStats stats)
         {
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
@@ -1147,13 +1190,17 @@ namespace Cozify//database helper
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
-                    int totalTimeSpent = (workTime + breakTime);
+                    int totalTimeSpent = (workTime + breakTime) * 60;
+
+                    // Update stats
+                    if (completed) stats.TotalCompletedSessions++;
+                    stats.TotalTimeSpentSeconds += totalTimeSpent;
 
                     cmd.Parameters.Add("?", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
                     cmd.Parameters.Add("?", OleDbType.Integer).Value = workTime * 60;
                     cmd.Parameters.Add("?", OleDbType.Integer).Value = breakTime * 60;
                     cmd.Parameters.Add("?", OleDbType.Boolean).Value = completed;
-                    cmd.Parameters.Add("?", OleDbType.Integer).Value = totalTimeSpent * 60;
+                    cmd.Parameters.Add("?", OleDbType.Integer).Value = totalTimeSpent;
                     cmd.Parameters.Add("?", OleDbType.Date).Value = DateTime.Now;
 
                     cmd.ExecuteNonQuery();

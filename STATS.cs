@@ -73,12 +73,16 @@ public partial class STATS : BaseForm
             int totalCompletedToDoCount = db.CompleteToDoCount(true, true);
             int journalCount = db.JournalCount(true);
             int habitcount = db.HabitCount();
+            int completedSessions = db.GetTotalCompletedSessions(GlobalUser.LoggedInUsername);
+            int totalSeconds = db.GetTotalTimeSpent(GlobalUser.LoggedInUsername);
 
             lblNoOfJournalEntries.Text = $"Journal Entries Written: {journalCount}";
             lblTasksAdded.Text = $"To-Do List Entries: {totalToDoCount}";
             lblTotalTasksCompleted.Text = $"Total Completed Tasks: {totalCompletedToDoCount}";
             lblTotalHabitsAdded.Text = $"Total Habits Added: {habitcount}";
             lblStatUser.Text = $"{GlobalUser.LoggedInUsername}'s Activity";
+            lblPomoSessionsCompelted.Text = $"Pomodoro Sessions Completed: {completedSessions}";
+            lblTotalTimeSpentPomo.Text = $"Total Time Spent Using Pomodoro: {totalSeconds / 60} minutes";
         }
 
     private void btnShowStats_Click(object sender, EventArgs e)
