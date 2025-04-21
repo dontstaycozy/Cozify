@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Collections;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
+using System.Globalization;
 
 namespace Cozify//database helper
 {
@@ -456,13 +457,17 @@ namespace Cozify//database helper
         public class HabitMetaData
         {
             public DateTime HabitDateAdded { get; set; }
+            public DateTime WeekStartDate { get; set; }
             public bool IsDeleted { get; set; }
         }
 
-        public void AddHabitRow(TableLayoutPanel tblHabitChecker, string habitText, bool sun, bool mon, bool tues, bool wed, bool thurs, bool fri, bool sat, DateTime? dateAdded = null)
+        public void AddHabitRow(TableLayoutPanel tblHabitChecker, string habitText, bool sun, bool mon, bool tues, bool wed, bool thurs, bool fri, bool sat, DateTime selectedWeekStart, DateTime? dateAdded = null)
         {
             tblHabitChecker.RowCount++;
             int rowIndex = tblHabitChecker.RowCount - 1;
+
+            // Calculate the start of the current week (Sunday)
+            DateTime currentWeekStart = GetStartOfWeek(DateTime.Now);
 
             TextBox txtHabit = new TextBox
             {
@@ -476,6 +481,7 @@ namespace Cozify//database helper
                 Tag = new HabitMetaData
                 {
                     HabitDateAdded = dateAdded ?? DateTime.Now,
+                    WeekStartDate = selectedWeekStart, // Use the passed parameter
                     IsDeleted = false
                 }
             };
@@ -509,45 +515,70 @@ namespace Cozify//database helper
             tblHabitChecker.Controls.Add(btnDelete, 0, rowIndex);
         }
 
-        public void LoadHabits(TableLayoutPanel tblHabitChecker)
+        private DateTime GetStartOfWeek(DateTime date)
         {
-            tblHabitChecker.Controls.Clear();
-            tblHabitChecker.RowStyles.Clear();
-            tblHabitChecker.RowCount = 0;
+            int diff = (7 + (date.DayOfWeek - DayOfWeek.Sunday)) % 7;
+            return date.AddDays(-1 * diff).Date;
+        }
 
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+
+        public void LoadHabits(TableLayoutPanel tblHabitChecker, DateTime weekStartDate)
+        {
+            try
             {
-                conn.Open();
-                string query = @"SELECT HabitName, Sunday, Monday, Tuesday, Wednesday, 
-                        Thursday, Friday, Saturday, HabitDateAdded
-                        FROM [Habit Checker Table] 
-                        WHERE Username = ? 
-                        AND isHabitDeleted = False
-                        ORDER BY HabitDateAdded DESC";
+                // Clear existing controls safely
+                tblHabitChecker.SuspendLayout();
+                tblHabitChecker.Controls.Clear();
+                tblHabitChecker.RowStyles.Clear();
+                tblHabitChecker.RowCount = 0;
 
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                    conn.Open();
+                    string query = @"SELECT HabitName, Sunday, Monday, Tuesday, Wednesday, 
+                          Thursday, Friday, Saturday, HabitDateAdded, WeekStartDate
+                          FROM [Habit Checker Table] 
+                          WHERE Username = ? 
+                          AND isHabitDeleted = False
+                          AND WeekStartDate = ?
+                          ORDER BY HabitDateAdded DESC";
 
-                    using (OleDbDataReader reader = cmd.ExecuteReader())
+                    using (OleDbCommand cmd = new OleDbCommand(query, conn))
                     {
-                        while (reader.Read())
-                        {
-                            string name = reader["HabitName"].ToString();
-                            bool[] days = new bool[7];
-                            for (int i = 0; i < 7; i++)
-                            {
-                                days[i] = Convert.ToBoolean(reader[i + 1]);
-                            }
-                            DateTime dateAdded = Convert.ToDateTime(reader["HabitDateAdded"]);
+                        cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                        cmd.Parameters.Add("@weekStart", OleDbType.Date).Value = weekStartDate;
 
-                            AddHabitRow(tblHabitChecker, name, days[0], days[1], days[2],
-                                       days[3], days[4], days[5], days[6], dateAdded);
+                        using (OleDbDataReader reader = cmd.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                string name = reader["HabitName"].ToString().Trim();
+                                bool[] days = new bool[7];
+                                for (int i = 0; i < 7; i++)
+                                {
+                                    days[i] = Convert.ToBoolean(reader[i + 1]);
+                                }
+                                DateTime dateAdded = Convert.ToDateTime(reader["HabitDateAdded"]);
+                                DateTime weekStart = Convert.ToDateTime(reader["WeekStartDate"]);
+
+                                AddHabitRow(tblHabitChecker, name, days[0], days[1], days[2],
+                                           days[3], days[4], days[5], days[6], dateAdded, weekStart);
+                            }
                         }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading habits: {ex.Message}", "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                tblHabitChecker.ResumeLayout(true);
+            }
         }
+
 
         public int HabitCount()
         {
@@ -566,8 +597,8 @@ namespace Cozify//database helper
                 }
             }
         }
-        
-        public void SaveHabitChecker(TableLayoutPanel tblHabitChecker)
+
+        public void SaveHabitChecker(TableLayoutPanel tblHabitChecker, DateTime weekStartDate)
         {
             Debug.WriteLine("SaveHabitChecker called");
             try
@@ -576,21 +607,29 @@ namespace Cozify//database helper
                 {
                     conn.Open();
 
-                    // Get all existing habits for this user
-                    var existingHabits = new List<(string Name, DateTime DateAdded)>();
-                    string getExistingQuery = @"SELECT HabitName, HabitDateAdded 
-                                      FROM [Habit Checker Table] 
-                                      WHERE Username = ?";
+                    // Get all existing habits for this user and week
+                    var existingHabits = new List<(string Name, DateTime DateAdded, DateTime WeekStart)>();
+
+                    string getExistingQuery = @"SELECT HabitName, HabitDateAdded, WeekStartDate 
+                  FROM [Habit Checker Table] 
+                  WHERE Username = ?
+                  AND WeekStartDate = ?
+                  AND isHabitDeleted = False";
 
                     using (OleDbCommand cmd = new OleDbCommand(getExistingQuery, conn))
                     {
                         cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                        cmd.Parameters.Add("@weekStart", OleDbType.Date).Value = weekStartDate;
+
                         using (OleDbDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
                             {
-                                existingHabits.Add((reader["HabitName"].ToString(),
-                                Convert.ToDateTime(reader["HabitDateAdded"])));
+                                existingHabits.Add((
+                                    reader["HabitName"].ToString(),
+                                    Convert.ToDateTime(reader["HabitDateAdded"]),
+                                    Convert.ToDateTime(reader["WeekStartDate"])
+                                ));
                             }
                         }
                     }
@@ -602,7 +641,7 @@ namespace Cozify//database helper
                         if (control is TextBox txtHabit && tblHabitChecker.GetColumn(txtHabit) == 1)
                         {
                             int rowIndex = tblHabitChecker.GetRow(txtHabit);
-                            string habit = txtHabit.Text;
+                            string habit = txtHabit.Text.Trim();
                             var meta = txtHabit.Tag as HabitMetaData;
                             if (meta == null) continue;
 
@@ -613,21 +652,22 @@ namespace Cozify//database helper
                                 checkedDays[i] = chk is CheckBox box && box.Checked;
                             }
 
-                            // Check if this habit exists in database
+                            // Improved existence check
                             bool existsInDb = existingHabits.Any(h =>
-                                h.Name.Equals(habit, StringComparison.OrdinalIgnoreCase) &&
-                                h.DateAdded == meta.HabitDateAdded);
+                                string.Equals(h.Name, habit, StringComparison.OrdinalIgnoreCase) &&
+                                h.WeekStart == weekStartDate);
+
 
                             if (existsInDb)
                             {
                                 // Update existing habit
-                                string updateQuery = @"UPDATE [Habit Checker Table] 
-                                            SET Sunday = ?, Monday = ?, Tuesday = ?,
-                                                Wednesday = ?, Thursday = ?, Friday = ?,
-                                                Saturday = ?, isHabitDeleted = ?
-                                            WHERE Username = ? 
-                                            AND HabitName = ?
-                                            AND HabitDateAdded = ?";
+                                string updateQuery = @"UPDATE [Habit Checker Table]
+                                                        SET Sunday = ?, Monday = ?, Tuesday = ?,
+                                                            Wednesday = ?, Thursday = ?, Friday = ?,
+                                                            Saturday = ?
+                                                        WHERE Username = ?
+                                                        AND HabitName = ?
+                                                        AND WeekStartDate = ?";
 
                                 using (OleDbCommand cmd = new OleDbCommand(updateQuery, conn))
                                 {
@@ -637,82 +677,54 @@ namespace Cozify//database helper
                                         cmd.Parameters.Add($"@day{i}", OleDbType.Boolean).Value = checkedDays[i];
                                     }
 
-                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
                                     cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
                                     cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit;
-                                    cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.HabitDateAdded;
+                                    cmd.Parameters.Add("@weekStart", OleDbType.Date).Value = weekStartDate;
 
-                                    cmd.ExecuteNonQuery();
-                                    savedCount++;
+                                    int rowsAffected = cmd.ExecuteNonQuery();
+                                    if (rowsAffected > 0) savedCount++;
                                 }
                             }
                             else
                             {
-                                // Insert new habit
-                                string insertQuery = @"INSERT INTO [Habit Checker Table] 
-                                            (Username, HabitName, Sunday, Monday, Tuesday,
-                                             Wednesday, Thursday, Friday, Saturday, 
-                                             HabitDateAdded, isHabitDeleted)
-                                            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-                                using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
+                                // Insert new habit only if it doesn't exist
+                                if (!string.IsNullOrWhiteSpace(habit))
                                 {
-                                    cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
-                                    cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit;
+                                    string insertQuery = @"INSERT INTO [Habit Checker Table] 
+                                (Username, HabitName, Sunday, Monday, Tuesday,
+                                 Wednesday, Thursday, Friday, Saturday, 
+                                 HabitDateAdded, WeekStartDate, isHabitDeleted)
+                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-                                    // Add day parameters
-                                    for (int i = 0; i < 7; i++)
+                                    using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
                                     {
-                                        cmd.Parameters.Add($"@day{i}", OleDbType.Boolean).Value = checkedDays[i];
+                                        cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                                        cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit;
+
+                                        // Add day parameters
+                                        for (int i = 0; i < 7; i++)
+                                        {
+                                            cmd.Parameters.Add($"@day{i}", OleDbType.Boolean).Value = checkedDays[i];
+                                        }
+
+                                        cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.HabitDateAdded;
+                                        cmd.Parameters.Add("@weekStart", OleDbType.Date).Value = weekStartDate;
+                                        cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = false;
+
+                                        cmd.ExecuteNonQuery();
+                                        savedCount++;
                                     }
-
-                                    cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = meta.HabitDateAdded;
-                                    cmd.Parameters.Add("@isDeleted", OleDbType.Boolean).Value = meta.IsDeleted;
-
-                                    cmd.ExecuteNonQuery();
-                                    savedCount++;
                                 }
-                            }
-                        }
-                    }
-
-                    // Mark habits not in UI as deleted
-                    foreach (var habit in existingHabits)
-                    {
-                        bool existsInUI = false;
-                        foreach (Control control in tblHabitChecker.Controls)
-                        {
-                            if (control is TextBox txtHabit &&
-                                tblHabitChecker.GetColumn(txtHabit) == 1 &&
-                                txtHabit.Text.Equals(habit.Name, StringComparison.OrdinalIgnoreCase) &&
-                                (txtHabit.Tag as HabitMetaData)?.HabitDateAdded == habit.DateAdded)
-                            {
-                                existsInUI = true;
-                                break;
-                            }
-                        }
-
-                        if (!existsInUI)
-                        {
-                            string markDeletedQuery = @"UPDATE [Habit Checker Table] 
-                                              SET isHabitDeleted = True
-                                              WHERE Username = ? 
-                                              AND HabitName = ?
-                                              AND HabitDateAdded = ?";
-
-                            using (OleDbCommand cmd = new OleDbCommand(markDeletedQuery, conn))
-                            {
-                                cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
-                                cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habit.Name;
-                                cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = habit.DateAdded;
-                                cmd.ExecuteNonQuery();
                             }
                         }
                     }
 
                     Debug.WriteLine($"Saved {savedCount} habits");
-                    MessageBox.Show($"Successfully saved {savedCount} habits", "Saved",
-                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (savedCount > 0)
+                    {
+                        MessageBox.Show($"Successfully saved {savedCount} habits", "Saved",
+                                      MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                 }
             }
             catch (Exception ex)
@@ -728,18 +740,76 @@ namespace Cozify//database helper
             var txtHabit = tblHabitChecker.GetControlFromPosition(1, rowIndex) as TextBox;
             if (txtHabit?.Tag is HabitMetaData meta)
             {
-                // Mark as deleted in the metadata
-                meta.IsDeleted = true;
+                try
+                {
+                    // Get the exact habit details before deletion
+                    string habitName = txtHabit.Text.Trim();
+                    DateTime dateAdded = meta.HabitDateAdded;
+                    DateTime weekStart = meta.WeekStartDate;
 
-                // Remove from UI
+                    // Mark as deleted in database
+                    using (OleDbConnection conn = new OleDbConnection(connectionString))
+                    {
+                        conn.Open();
+                        string deleteQuery = @"UPDATE [Habit Checker Table] 
+                                    SET isHabitDeleted = True
+                                    WHERE Username = ? 
+                                    AND TRIM(HabitName) = ?
+                                    AND HabitDateAdded = ?
+                                    AND WeekStartDate = ?";
+
+                        using (OleDbCommand cmd = new OleDbCommand(deleteQuery, conn))
+                        {
+                            cmd.Parameters.Add("@username", OleDbType.VarChar).Value = GlobalUser.LoggedInUsername;
+                            cmd.Parameters.Add("@habitName", OleDbType.VarChar).Value = habitName;
+                            cmd.Parameters.Add("@dateAdded", OleDbType.Date).Value = dateAdded;
+                            cmd.Parameters.Add("@weekStart", OleDbType.Date).Value = weekStart;
+
+                            int rowsAffected = cmd.ExecuteNonQuery();
+
+                            if (rowsAffected == 0)
+                            {
+                                MessageBox.Show("Habit not found in database. It may have already been deleted.",
+                                              "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                return;
+                            }
+                        }
+                    }
+
+                    // Remove from UI
+                    RemoveHabitRowFromUI(tblHabitChecker, rowIndex);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting habit: {ex.Message}\n\nPlease try again.",
+                                  "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void RemoveHabitRowFromUI(TableLayoutPanel tblHabitChecker, int rowIndex)
+        {
+            try
+            {
+                // Suspend layout to prevent flickering
+                tblHabitChecker.SuspendLayout();
+
+                // Collect all controls in the row
+                var controlsToRemove = new List<Control>();
                 for (int col = 0; col < tblHabitChecker.ColumnCount; col++)
                 {
                     var control = tblHabitChecker.GetControlFromPosition(col, rowIndex);
                     if (control != null)
                     {
-                        tblHabitChecker.Controls.Remove(control);
-                        control.Dispose();
+                        controlsToRemove.Add(control);
                     }
+                }
+
+                // Remove controls from table
+                foreach (var control in controlsToRemove)
+                {
+                    tblHabitChecker.Controls.Remove(control);
                 }
 
                 // Shift remaining rows up
@@ -748,20 +818,31 @@ namespace Cozify//database helper
                     for (int c = 0; c < tblHabitChecker.ColumnCount; c++)
                     {
                         var control = tblHabitChecker.GetControlFromPosition(c, r);
-                        if (control != null) tblHabitChecker.SetRow(control, r - 1);
+                        if (control != null)
+                        {
+                            tblHabitChecker.SetRow(control, r - 1);
+                        }
                     }
                 }
 
-                if (tblHabitChecker.RowCount > 0)
+                // Adjust row count and styles
+                tblHabitChecker.RowCount--;
+                if (tblHabitChecker.RowStyles.Count > rowIndex)
                 {
-                    tblHabitChecker.RowCount--;
+                    tblHabitChecker.RowStyles.RemoveAt(rowIndex);
                 }
 
-                if (tblHabitChecker.RowStyles.Count > rowIndex)
-                    tblHabitChecker.RowStyles.RemoveAt(rowIndex);
-
-                // Save changes to database
-                SaveHabitChecker(tblHabitChecker);
+                // Dispose controls after we're done with them
+                foreach (var control in controlsToRemove)
+                {
+                    control.Dispose();
+                }
+            }
+            finally
+            {
+                // Always resume layout
+                tblHabitChecker.ResumeLayout(true);
+                tblHabitChecker.PerformLayout();
             }
         }
 
@@ -1142,12 +1223,16 @@ namespace Cozify//database helper
             public int TotalCompletedSessions { get; set; }
             public int TotalTimeSpentSeconds { get; set; } // in seconds
 
-            // Optional: Add methods to format time nicely
-            public string GetFormattedTotalTime()
-            {
-                TimeSpan time = TimeSpan.FromSeconds(TotalTimeSpentSeconds);
-                return $"{time.Hours}h {time.Minutes}m {time.Seconds}s";
-            }
+        }
+
+        public class WeeklyPomodoroData
+        {
+            public DateTime WeekStart { get; set; }
+            public int CompletedSessions { get; set; }
+            public int WorkMinutes { get; set; }
+            public int BreakMinutes { get; set; }
+
+            public string WeekLabel => $"{WeekStart:MMM dd} - {WeekStart.AddDays(6):MMM dd}";
         }
 
         public int GetTotalCompletedSessions(string username)
@@ -1208,8 +1293,67 @@ namespace Cozify//database helper
             }
         }
 
+
+        //POMODORO ANALYTICS
+
+        public List<WeeklyPomodoroData> GetWeeklyPomodoroData(string username)
+        {
+            List<WeeklyPomodoroData> weeklyData = new List<WeeklyPomodoroData>();
+
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+            SELECT 
+                SessionDate, 
+                Completed, 
+                WorkTime, 
+                BreakTime 
+            FROM [Pomodoro Table] 
+            WHERE Username = ?";
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.Add("?", OleDbType.VarChar).Value = username;
+
+                    using (OleDbDataReader reader = cmd.ExecuteReader())
+                    {
+                        var tempData = new Dictionary<DateTime, WeeklyPomodoroData>();
+
+                        while (reader.Read())
+                        {
+                            DateTime date = Convert.ToDateTime(reader["SessionDate"]);
+                            int work = Convert.ToInt32(reader["WorkTime"]) / 60;
+                            int brk = Convert.ToInt32(reader["BreakTime"]) / 60;
+                            bool completed = Convert.ToBoolean(reader["Completed"]);
+
+                            DateTime weekStart = date.AddDays(-(int)date.DayOfWeek); // Sunday as start
+
+                            if (!tempData.ContainsKey(weekStart))
+                            {
+                                tempData[weekStart] = new WeeklyPomodoroData
+                                {
+                                    WeekStart = weekStart,
+                                    CompletedSessions = 0,
+                                    WorkMinutes = 0,
+                                    BreakMinutes = 0
+                                };
+                            }
+
+                            if (completed) tempData[weekStart].CompletedSessions++;
+                            tempData[weekStart].WorkMinutes += work;
+                            tempData[weekStart].BreakMinutes += brk;
+                        }
+
+                        weeklyData = tempData.Values.OrderBy(w => w.WeekStart).ToList();
+                    }
+                }
+            }
+
+            return weeklyData;
+        }
+
         // Stats/Activity of user
-        //note: doesnt pass data to database like it runs but no data is in the tables
         public void InitializeUserStats(string username)
         {
             try
@@ -1365,6 +1509,5 @@ namespace Cozify//database helper
                                MessageBoxIcon.Error);
             }
         }
-
     }
 }

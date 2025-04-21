@@ -87,7 +87,9 @@ public partial class STATS : BaseForm
 
     private void btnShowStats_Click(object sender, EventArgs e)
     {
-
-    }
+            this.Hide();
+            ANALYTICS aNALYTICS = new ANALYTICS();
+            aNALYTICS.Show();
+        }
 }
 }

@@ -43,8 +43,12 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.btnAddHabit = new AntdUI.Button();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.btnSaveHabits = new System.Windows.Forms.Button();
             this.btnClearHabits = new System.Windows.Forms.Button();
+            this.btnSaveHabits = new System.Windows.Forms.Button();
+            this.lblWeekDisplay = new System.Windows.Forms.Label();
+            this.btnPreviousWeek = new AntdUI.Button();
+            this.btnNextWeek = new AntdUI.Button();
+            this.btnCurrentWeek = new AntdUI.Button();
             this.panel1.SuspendLayout();
             this.tblHabitChecker.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -229,13 +233,16 @@
             this.btnAddHabit.Icon = global::Cozify.Properties.Resources.Plus;
             this.btnAddHabit.Location = new System.Drawing.Point(0, 0);
             this.btnAddHabit.Name = "btnAddHabit";
-            this.btnAddHabit.Size = new System.Drawing.Size(944, 63);
+            this.btnAddHabit.Size = new System.Drawing.Size(451, 63);
             this.btnAddHabit.TabIndex = 2;
             this.btnAddHabit.Text = "Add Habit";
             this.btnAddHabit.Click += new System.EventHandler(this.btnAddHabit_Click);
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.btnCurrentWeek);
+            this.panel2.Controls.Add(this.btnNextWeek);
+            this.panel2.Controls.Add(this.btnPreviousWeek);
             this.panel2.Controls.Add(this.btnClearHabits);
             this.panel2.Controls.Add(this.btnSaveHabits);
             this.panel2.Controls.Add(this.btnAddHabit);
@@ -243,19 +250,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1068, 63);
             this.panel2.TabIndex = 2;
-            // 
-            // btnSaveHabits
-            // 
-            this.btnSaveHabits.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSaveHabits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveHabits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.btnSaveHabits.Image = global::Cozify.Properties.Resources.Save2;
-            this.btnSaveHabits.Location = new System.Drawing.Point(1006, 0);
-            this.btnSaveHabits.Name = "btnSaveHabits";
-            this.btnSaveHabits.Size = new System.Drawing.Size(62, 63);
-            this.btnSaveHabits.TabIndex = 8;
-            this.btnSaveHabits.UseVisualStyleBackColor = true;
-            this.btnSaveHabits.Click += new System.EventHandler(this.btnSaveHabits_Click);
             // 
             // btnClearHabits
             // 
@@ -270,12 +264,77 @@
             this.btnClearHabits.UseVisualStyleBackColor = true;
             this.btnClearHabits.Click += new System.EventHandler(this.btnClearHabits_Click);
             // 
+            // btnSaveHabits
+            // 
+            this.btnSaveHabits.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnSaveHabits.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSaveHabits.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnSaveHabits.Image = global::Cozify.Properties.Resources.Save2;
+            this.btnSaveHabits.Location = new System.Drawing.Point(1006, 0);
+            this.btnSaveHabits.Name = "btnSaveHabits";
+            this.btnSaveHabits.Size = new System.Drawing.Size(62, 63);
+            this.btnSaveHabits.TabIndex = 8;
+            this.btnSaveHabits.UseVisualStyleBackColor = true;
+            this.btnSaveHabits.Click += new System.EventHandler(this.btnSaveHabits_Click);
+            // 
+            // lblWeekDisplay
+            // 
+            this.lblWeekDisplay.AutoSize = true;
+            this.lblWeekDisplay.Font = new System.Drawing.Font("Pixeltype", 23F);
+            this.lblWeekDisplay.ForeColor = System.Drawing.Color.White;
+            this.lblWeekDisplay.Location = new System.Drawing.Point(18, 70);
+            this.lblWeekDisplay.Name = "lblWeekDisplay";
+            this.lblWeekDisplay.Size = new System.Drawing.Size(67, 24);
+            this.lblWeekDisplay.TabIndex = 8;
+            this.lblWeekDisplay.Text = "week";
+            this.lblWeekDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // btnPreviousWeek
+            // 
+            this.btnPreviousWeek.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnPreviousWeek.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnPreviousWeek.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.btnPreviousWeek.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnPreviousWeek.Location = new System.Drawing.Point(451, 0);
+            this.btnPreviousWeek.Name = "btnPreviousWeek";
+            this.btnPreviousWeek.Size = new System.Drawing.Size(164, 63);
+            this.btnPreviousWeek.TabIndex = 10;
+            this.btnPreviousWeek.Text = "Previous Week";
+            this.btnPreviousWeek.Click += new System.EventHandler(this.btnPreviousWeek_Click);
+            // 
+            // btnNextWeek
+            // 
+            this.btnNextWeek.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnNextWeek.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnNextWeek.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.btnNextWeek.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnNextWeek.Location = new System.Drawing.Point(615, 0);
+            this.btnNextWeek.Name = "btnNextWeek";
+            this.btnNextWeek.Size = new System.Drawing.Size(164, 63);
+            this.btnNextWeek.TabIndex = 15;
+            this.btnNextWeek.Text = "Next Week";
+            this.btnNextWeek.Click += new System.EventHandler(this.btnNextWeek_Click);
+            // 
+            // btnCurrentWeek
+            // 
+            this.btnCurrentWeek.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnCurrentWeek.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnCurrentWeek.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.btnCurrentWeek.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnCurrentWeek.Location = new System.Drawing.Point(779, 0);
+            this.btnCurrentWeek.Name = "btnCurrentWeek";
+            this.btnCurrentWeek.Size = new System.Drawing.Size(164, 63);
+            this.btnCurrentWeek.TabIndex = 16;
+            this.btnCurrentWeek.Text = "Current Week";
+            this.btnCurrentWeek.Click += new System.EventHandler(this.btnCurrentWeek_Click);
+            // 
             // HABIT_CHECKER
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(1110, 797);
+            this.Controls.Add(this.lblWeekDisplay);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label7);
@@ -324,5 +383,9 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button btnSaveHabits;
         private System.Windows.Forms.Button btnClearHabits;
+        private AntdUI.Button btnPreviousWeek;
+        private System.Windows.Forms.Label lblWeekDisplay;
+        private AntdUI.Button btnCurrentWeek;
+        private AntdUI.Button btnNextWeek;
     }
 }
