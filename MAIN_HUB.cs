@@ -23,6 +23,7 @@ namespace finals
         private Guide guide;
         private POMODORO pomo;
         private STATS sTAT;
+        private MailToAdmin mailToAdmin;
         private bool isFocused = false;
         private Form activeFeature = null;
         private bool sessionActive = false;
@@ -372,6 +373,30 @@ namespace finals
         private void trkBarVolumeSlider_Scroll(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSendMessageToAdmin_Click(object sender, EventArgs e)
+        {
+            if (mailToAdmin == null || mailToAdmin.IsDisposed)
+            {
+                mailToAdmin = new MailToAdmin();
+                mailToAdmin.FormClosed += MailToAdmin_Closed;
+                mailToAdmin.Show();
+                mailToAdmin.TopMost = true;
+                activeFeature = mailToAdmin;
+            }
+            else
+            {
+                mailToAdmin.Close();
+                activeFeature = null;
+            }
+        }
+
+        
+        private void MailToAdmin_Closed(object sender, FormClosedEventArgs e)
+        {
+            mailToAdmin = null;
+            activeFeature = null;
         }
     }
 }

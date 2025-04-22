@@ -13,6 +13,9 @@ using System.Collections;
 using System.Diagnostics;
 using System.Net.NetworkInformation;
 using System.Globalization;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
+using System.Net;
+using System.Net.Mail;
 
 namespace Cozify//database helper
 {
@@ -144,6 +147,150 @@ namespace Cozify//database helper
                 MessageBox.Show("An error occurred while clearing the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        //admin
+        public void LoadUserInfos(DataGridView dgv) //idk what to do here for now
+        {
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "SELECT Username, Password, CreatedAt FROM [Users Table]";
+                using (OleDbDataAdapter adapter = new OleDbDataAdapter(query, conn))
+                {
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+                    dgv.DataSource = table;
+                }
+            }
+        }
+        public void AdminDeleteAcc(string username)
+        {
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+
+                    // Delete related data first
+                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
+                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
+                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
+                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
+                    string deleteUserQuery = "DELETE FROM [Users Table] WHERE Username = ?";
+
+                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
+                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
+                    using (OleDbCommand cmd3 = new OleDbCommand(deleteHabitsQuery, conn))
+                    using (OleDbCommand cmd4 = new OleDbCommand(deleteToDoQuery, conn))
+                    using (OleDbCommand cmd5 = new OleDbCommand(deleteUserQuery, conn))
+                    {
+                        cmd1.Parameters.AddWithValue("?", username);
+                        cmd2.Parameters.AddWithValue("?", username);
+                        cmd3.Parameters.AddWithValue("?", username);
+                        cmd4.Parameters.AddWithValue("?", username);
+                        cmd5.Parameters.AddWithValue("?", username);
+
+                        cmd1.ExecuteNonQuery();
+                        cmd2.ExecuteNonQuery();
+                        cmd3.ExecuteNonQuery();
+                        cmd4.ExecuteNonQuery();
+                        cmd5.ExecuteNonQuery();
+                    }
+                }
+
+                MessageBox.Show($"Account '{username}' and its data were deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting user:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public void AdminClearData(List<string> usernames)
+        {
+            try
+            {
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
+                {
+                    conn.Open();
+
+                    foreach (string username in usernames)
+                    {
+                        string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
+                        string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
+                        string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
+                        string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
+
+                        using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
+                        using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
+                        using (OleDbCommand cmd3 = new OleDbCommand(deleteHabitsQuery, conn))
+                        using (OleDbCommand cmd4 = new OleDbCommand(deleteToDoQuery, conn))
+                        {
+                            cmd1.Parameters.AddWithValue("?", username);
+                            cmd2.Parameters.AddWithValue("?", username);
+                            cmd3.Parameters.AddWithValue("?", username);
+                            cmd4.Parameters.AddWithValue("?", username);
+
+                            cmd1.ExecuteNonQuery();
+                            cmd2.ExecuteNonQuery();
+                            cmd3.ExecuteNonQuery();
+                            cmd4.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                MessageBox.Show("Selected accounts' data were cleared successfully.", "Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error clearing selected account data:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+        public void UpdateAccountData(string username, string newPassword)// update account data
+        {
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = "UPDATE [Users Table] SET [Password] = ? WHERE [Username] = ?";
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", newPassword);
+                    cmd.Parameters.AddWithValue("?", username);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        //send email to admin stuyff
+
+        public void SendMailToAdmin(string clientEmail, string message)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.From = new MailAddress(clientEmail);
+                mail.To.Add("totallycomfy.6969@gmail.com");  // Your admin email
+                mail.Subject = "Message from client: " + clientEmail;
+                mail.Body = message;
+
+                // Configure SMTP client for Gmail
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
+                smtpClient.Port = 587;
+                smtpClient.Credentials = new NetworkCredential("totallycomfy.6969@gmail.com", "emmh etxp rvtw aram");
+                smtpClient.EnableSsl = true;
+
+                // Send the email
+                smtpClient.Send(mail);
+            }
+            catch (Exception ex)
+            {
+                // You might want to log this error or handle it differently
+                throw new Exception("Failed to send email: " + ex.Message);
+            }
+        }
+
         //login and register stuff
         public void Register(string username, string password)
         {
@@ -460,7 +607,7 @@ namespace Cozify//database helper
             public DateTime WeekStartDate { get; set; }
             public bool IsDeleted { get; set; }
         }
-
+        
         public void AddHabitRow(TableLayoutPanel tblHabitChecker, string habitText, bool sun, bool mon, bool tues, bool wed, bool thurs, bool fri, bool sat, DateTime selectedWeekStart, DateTime? dateAdded = null)
         {
             tblHabitChecker.RowCount++;
@@ -845,7 +992,108 @@ namespace Cozify//database helper
                 tblHabitChecker.PerformLayout();
             }
         }
+        // Habit Streak analytics:
 
+        public class HabitStreak
+        {
+            public string HabitName { get; set; }
+            public int CurrentStreak { get; set; }
+            public int LongestStreak { get; set; }
+            public DateTime? LastCompletedDate { get; set; }
+            public Dictionary<DateTime, bool> CompletionHistory { get; set; } = new Dictionary<DateTime, bool>();
+        }
+
+        public class StreakAnalyticsData
+        {
+            public List<HabitStreak> HabitStreaks { get; set; } = new List<HabitStreak>();
+            public int TotalCurrentStreak { get; set; }
+            public int TotalLongestStreak { get; set; }
+        }
+
+        public StreakAnalyticsData GetHabitStreakData(string username)
+        {
+            var streakData = new StreakAnalyticsData();
+            var allHabits = new List<(string Name, DateTime Date, bool Completed)>();
+
+            // Get all habit completion data from database
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+                string query = @"
+            SELECT HabitName, WeekStartDate, 
+                   Sunday, Monday, Tuesday, Wednesday, 
+                   Thursday, Friday, Saturday
+            FROM [Habit Checker Table] 
+            WHERE Username = ? 
+            AND isHabitDeleted = False
+            ORDER BY WeekStartDate";
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", username);
+
+                    using (OleDbDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            string habitName = reader["HabitName"].ToString();
+                            DateTime weekStart = Convert.ToDateTime(reader["WeekStartDate"]);
+
+                            // Add each day's completion status
+                            for (int i = 0; i < 7; i++)
+                            {
+                                DateTime dayDate = weekStart.AddDays(i);
+                                bool completed = Convert.ToBoolean(reader[i + 2]); // Sunday is column 2
+                                allHabits.Add((habitName, dayDate, completed));
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Group by habit and calculate streaks
+            var habitsGrouped = allHabits.GroupBy(h => h.Name);
+
+            foreach (var habitGroup in habitsGrouped)
+            {
+                var habitStreak = new HabitStreak { HabitName = habitGroup.Key };
+                var orderedDates = habitGroup.OrderBy(h => h.Date).ToList();
+
+                int currentStreak = 0;
+                int longestStreak = 0;
+                DateTime? lastCompletedDate = null;
+
+                foreach (var entry in orderedDates)
+                {
+                    if (entry.Completed)
+                    {
+                        currentStreak++;
+                        longestStreak = Math.Max(longestStreak, currentStreak);
+                        lastCompletedDate = entry.Date;
+                        habitStreak.CompletionHistory[entry.Date] = true;
+                    }
+                    else
+                    {
+                        currentStreak = 0;
+                        habitStreak.CompletionHistory[entry.Date] = false;
+                    }
+                }
+
+                habitStreak.CurrentStreak = currentStreak;
+                habitStreak.LongestStreak = longestStreak;
+                habitStreak.LastCompletedDate = lastCompletedDate;
+                streakData.HabitStreaks.Add(habitStreak);
+            }
+
+            // Calculate totals
+            if (streakData.HabitStreaks.Any())
+            {
+                streakData.TotalCurrentStreak = streakData.HabitStreaks.Min(h => h.CurrentStreak);
+                streakData.TotalLongestStreak = streakData.HabitStreaks.Max(h => h.LongestStreak);
+            }
+
+            return streakData;
+        }
         //To DO List
         public class TaskMetaData
         {
@@ -1185,6 +1433,94 @@ namespace Cozify//database helper
             }
         }
 
+        //TO-DO LIST ANALYUTICS:
+        public class DailyTaskData
+        {
+            public DateTime Date { get; set; }
+            public int TotalTasks { get; set; }       // Total tasks created that day
+            public int CompletedTasks { get; set; }   // Tasks marked done that day
+            public int PendingTasks => TotalTasks - CompletedTasks;
+        }
+        public List<DailyTaskData> GetThisWeeksTaskData(string username)
+        {
+            var weeklyData = new List<DailyTaskData>();
+
+            // Calculate week range (Sunday to Saturday)
+            DateTime weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+            DateTime weekEnd = weekStart.AddDays(6);
+
+            // Debug output to verify date range
+            Console.WriteLine($"Querying tasks between {weekStart:yyyy-MM-dd} and {weekEnd:yyyy-MM-dd}");
+
+            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            {
+                conn.Open();
+
+                // Alternative query that works better with Access
+                string query = @"
+            SELECT 
+                TaskDateAdded,
+                isDone
+            FROM [ToDo List Table] 
+            WHERE Username = ?
+            AND isTaskDeleted = False
+            AND TaskDateAdded BETWEEN ? AND ?";
+
+                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                {
+                    cmd.Parameters.AddWithValue("?", username);
+                    cmd.Parameters.AddWithValue("?", weekStart);
+                    cmd.Parameters.AddWithValue("?", weekEnd);
+
+                    var rawData = new List<(DateTime Date, bool IsDone)>();
+
+                    using (OleDbDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            rawData.Add((
+                                Convert.ToDateTime(reader["TaskDateAdded"]),
+                                Convert.ToBoolean(reader["isDone"])
+                            ));
+                        }
+                    }
+
+                    // Group by date and calculate counts
+                    weeklyData = rawData
+                        .GroupBy(x => x.Date.Date)
+                        .Select(g => new DailyTaskData
+                        {
+                            Date = g.Key,
+                            TotalTasks = g.Count(),
+                            CompletedTasks = g.Count(x => x.IsDone)
+                        })
+                        .ToList();
+                }
+            }
+
+            // Ensure all days of the week are represented
+            for (DateTime date = weekStart; date <= weekEnd; date = date.AddDays(1))
+            {
+                if (!weeklyData.Any(d => d.Date.Date == date.Date))
+                {
+                    weeklyData.Add(new DailyTaskData
+                    {
+                        Date = date,
+                        TotalTasks = 0,
+                        CompletedTasks = 0
+                    });
+                }
+            }
+
+            // Debug output to verify retrieved data
+            Console.WriteLine("Retrieved data:");
+            foreach (var day in weeklyData.OrderBy(d => d.Date))
+            {
+                Console.WriteLine($"{day.Date:yyyy-MM-dd (ddd)}: {day.CompletedTasks} completed");
+            }
+
+            return weeklyData.OrderBy(d => d.Date).ToList();
+        }
         private void RemoveHabitRowTable(TableLayoutPanel table, int rowIndex)
         {
             // Remove all controls from the row
@@ -1225,16 +1561,6 @@ namespace Cozify//database helper
 
         }
 
-        public class WeeklyPomodoroData
-        {
-            public DateTime WeekStart { get; set; }
-            public int CompletedSessions { get; set; }
-            public int WorkMinutes { get; set; }
-            public int BreakMinutes { get; set; }
-
-            public string WeekLabel => $"{WeekStart:MMM dd} - {WeekStart.AddDays(6):MMM dd}";
-        }
-
         public int GetTotalCompletedSessions(string username)
         {
             using (OleDbConnection conn = new OleDbConnection(connectionString))
@@ -1251,8 +1577,7 @@ namespace Cozify//database helper
         }
 
         public int GetTotalTimeSpent(string username)
-        {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+        {using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
                 string query = "SELECT SUM(TimeSpent) FROM [Pomodoro Table] WHERE Username = ?;";
@@ -1296,21 +1621,22 @@ namespace Cozify//database helper
 
         //POMODORO ANALYTICS
 
-        public List<WeeklyPomodoroData> GetWeeklyPomodoroData(string username)
+        public List<DailyPomodoroData> GetDailyPomodoroData(string username)
         {
-            List<WeeklyPomodoroData> weeklyData = new List<WeeklyPomodoroData>();
+            List<DailyPomodoroData> dailyData = new List<DailyPomodoroData>();
 
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
                 string query = @"
-            SELECT 
-                SessionDate, 
-                Completed, 
-                WorkTime, 
-                BreakTime 
-            FROM [Pomodoro Table] 
-            WHERE Username = ?";
+        SELECT 
+            SessionDate, 
+            Completed, 
+            WorkTime, 
+            BreakTime 
+        FROM [Pomodoro Table] 
+        WHERE Username = ?
+        ORDER BY SessionDate";
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
@@ -1318,39 +1644,45 @@ namespace Cozify//database helper
 
                     using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
-                        var tempData = new Dictionary<DateTime, WeeklyPomodoroData>();
+                        var tempData = new Dictionary<DateTime, DailyPomodoroData>();
 
                         while (reader.Read())
                         {
-                            DateTime date = Convert.ToDateTime(reader["SessionDate"]);
+                            DateTime date = Convert.ToDateTime(reader["SessionDate"]).Date; // Get just the date part
                             int work = Convert.ToInt32(reader["WorkTime"]) / 60;
                             int brk = Convert.ToInt32(reader["BreakTime"]) / 60;
                             bool completed = Convert.ToBoolean(reader["Completed"]);
 
-                            DateTime weekStart = date.AddDays(-(int)date.DayOfWeek); // Sunday as start
-
-                            if (!tempData.ContainsKey(weekStart))
+                            if (!tempData.ContainsKey(date))
                             {
-                                tempData[weekStart] = new WeeklyPomodoroData
+                                tempData[date] = new DailyPomodoroData
                                 {
-                                    WeekStart = weekStart,
+                                    Date = date,
                                     CompletedSessions = 0,
                                     WorkMinutes = 0,
                                     BreakMinutes = 0
                                 };
                             }
 
-                            if (completed) tempData[weekStart].CompletedSessions++;
-                            tempData[weekStart].WorkMinutes += work;
-                            tempData[weekStart].BreakMinutes += brk;
+                            if (completed) tempData[date].CompletedSessions++;
+                            tempData[date].WorkMinutes += work;
+                            tempData[date].BreakMinutes += brk;
                         }
 
-                        weeklyData = tempData.Values.OrderBy(w => w.WeekStart).ToList();
+                        dailyData = tempData.Values.OrderBy(d => d.Date).ToList();
                     }
                 }
             }
 
-            return weeklyData;
+            return dailyData;
+        }
+
+        public class DailyPomodoroData
+        {
+            public DateTime Date { get; set; }
+            public int CompletedSessions { get; set; }
+            public int WorkMinutes { get; set; }
+            public int BreakMinutes { get; set; }
         }
 
         // Stats/Activity of user

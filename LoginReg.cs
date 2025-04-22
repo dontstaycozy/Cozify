@@ -28,12 +28,24 @@ namespace Cozify
             string usernameLogin = tbxUsernameLogin.Text.Trim();
             string passwordLogin = tbxPasswordLogin.Text.Trim();
 
+            // Check if input fields are filled
             if (string.IsNullOrWhiteSpace(usernameLogin) || string.IsNullOrWhiteSpace(passwordLogin))
             {
                 MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            // Admin login shortcut
+            if (usernameLogin == "admin" && passwordLogin == "admin123")
+            {
+                Admin adminForm = new Admin();
+                adminForm.Show();
+                this.Hide();
+                return;
+            }
+
             db.Login(usernameLogin, passwordLogin);
+
             this.Hide();
         }
 

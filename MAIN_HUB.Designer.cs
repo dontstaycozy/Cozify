@@ -72,7 +72,9 @@
             this.btnNextTrack = new System.Windows.Forms.Button();
             this.btnLoopTracks = new System.Windows.Forms.Button();
             this.panel10 = new System.Windows.Forms.Panel();
-            this.btnMusicLib = new System.Windows.Forms.Button();
+            this.btnOpenMusicLibrary = new System.Windows.Forms.Button();
+            this.panel11 = new System.Windows.Forms.Panel();
+            this.btnSendMessageToAdmin = new System.Windows.Forms.Button();
             this.pnlTime.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -93,6 +95,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).BeginInit();
             this.panel10.SuspendLayout();
+            this.panel11.SuspendLayout();
             this.SuspendLayout();
             // 
             // WelcomeLabel
@@ -626,26 +629,49 @@
             // 
             // panel10
             // 
-            this.panel10.Controls.Add(this.btnMusicLib);
+            this.panel10.Controls.Add(this.btnOpenMusicLibrary);
             this.panel10.Location = new System.Drawing.Point(7, 274);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(69, 58);
             this.panel10.TabIndex = 48;
             // 
-            // btnMusicLib
+            // btnOpenMusicLibrary
             // 
-            this.btnMusicLib.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnMusicLib.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnMusicLib.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnMusicLib.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnMusicLib.Image = global::Cozify.Properties.Resources.Music_Library1;
-            this.btnMusicLib.Location = new System.Drawing.Point(0, 0);
-            this.btnMusicLib.Margin = new System.Windows.Forms.Padding(1);
-            this.btnMusicLib.Name = "btnMusicLib";
-            this.btnMusicLib.Size = new System.Drawing.Size(69, 58);
-            this.btnMusicLib.TabIndex = 47;
-            this.btnMusicLib.UseVisualStyleBackColor = false;
-            this.btnMusicLib.Click += new System.EventHandler(this.btnMusicLib_Click_1);
+            this.btnOpenMusicLibrary.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnOpenMusicLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOpenMusicLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenMusicLibrary.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnOpenMusicLibrary.Image = global::Cozify.Properties.Resources.Music_Library1;
+            this.btnOpenMusicLibrary.Location = new System.Drawing.Point(0, 0);
+            this.btnOpenMusicLibrary.Margin = new System.Windows.Forms.Padding(1);
+            this.btnOpenMusicLibrary.Name = "btnOpenMusicLibrary";
+            this.btnOpenMusicLibrary.Size = new System.Drawing.Size(69, 58);
+            this.btnOpenMusicLibrary.TabIndex = 47;
+            this.btnOpenMusicLibrary.UseVisualStyleBackColor = false;
+            this.btnOpenMusicLibrary.Click += new System.EventHandler(this.btnMusicLib_Click_1);
+            // 
+            // panel11
+            // 
+            this.panel11.Controls.Add(this.btnSendMessageToAdmin);
+            this.panel11.Location = new System.Drawing.Point(7, 336);
+            this.panel11.Name = "panel11";
+            this.panel11.Size = new System.Drawing.Size(69, 58);
+            this.panel11.TabIndex = 49;
+            // 
+            // btnSendMessageToAdmin
+            // 
+            this.btnSendMessageToAdmin.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSendMessageToAdmin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSendMessageToAdmin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnSendMessageToAdmin.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnSendMessageToAdmin.Image = global::Cozify.Properties.Resources.Popular;
+            this.btnSendMessageToAdmin.Location = new System.Drawing.Point(0, 0);
+            this.btnSendMessageToAdmin.Margin = new System.Windows.Forms.Padding(1);
+            this.btnSendMessageToAdmin.Name = "btnSendMessageToAdmin";
+            this.btnSendMessageToAdmin.Size = new System.Drawing.Size(69, 58);
+            this.btnSendMessageToAdmin.TabIndex = 47;
+            this.btnSendMessageToAdmin.UseVisualStyleBackColor = false;
+            this.btnSendMessageToAdmin.Click += new System.EventHandler(this.btnSendMessageToAdmin_Click);
             // 
             // MAIN_HUB
             // 
@@ -653,6 +679,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1399, 889);
+            this.Controls.Add(this.panel11);
             this.Controls.Add(this.panel10);
             this.Controls.Add(this.pnlMusicDock);
             this.Controls.Add(this.panel8);
@@ -698,6 +725,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).EndInit();
             this.panel10.ResumeLayout(false);
+            this.panel11.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -745,9 +773,11 @@
         private System.Windows.Forms.Button btnNextTrack;
         private System.Windows.Forms.Button btnLoopTracks;
         private System.Windows.Forms.Button btnPrevTrack;
-        private System.Windows.Forms.Button btnMusicLib;
+        private System.Windows.Forms.Button btnOpenMusicLibrary;
         private System.Windows.Forms.Panel panel10;
         private System.Windows.Forms.TrackBar trkBarVolumeSlider;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Panel panel11;
+        private System.Windows.Forms.Button btnSendMessageToAdmin;
     }
 }

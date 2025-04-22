@@ -29,23 +29,41 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dgvAdminView = new System.Windows.Forms.DataGridView();
             this.btnAdminClearAccData = new AntdUI.Button();
             this.btnAdminDeleteAcc = new AntdUI.Button();
             this.btnAdminUpdateAcc = new AntdUI.Button();
-            this.btnSaveList = new System.Windows.Forms.Button();
-            this.dgvAdmin = new System.Windows.Forms.DataGridView();
+            this.btnGoBackToLogin = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAdmin)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdminView)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.panel1.Controls.Add(this.dgvAdmin);
+            this.panel1.Controls.Add(this.dgvAdminView);
             this.panel1.Location = new System.Drawing.Point(166, 66);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(677, 457);
             this.panel1.TabIndex = 1;
+            // 
+            // dgvAdminView
+            // 
+            this.dgvAdminView.AllowUserToAddRows = false;
+            this.dgvAdminView.AllowUserToResizeColumns = false;
+            this.dgvAdminView.AllowUserToResizeRows = false;
+            this.dgvAdminView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvAdminView.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.dgvAdminView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.None;
+            this.dgvAdminView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvAdminView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvAdminView.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.dgvAdminView.Location = new System.Drawing.Point(0, 0);
+            this.dgvAdminView.Name = "dgvAdminView";
+            this.dgvAdminView.RowHeadersWidth = 51;
+            this.dgvAdminView.RowTemplate.Height = 24;
+            this.dgvAdminView.Size = new System.Drawing.Size(677, 457);
+            this.dgvAdminView.TabIndex = 0;
             // 
             // btnAdminClearAccData
             // 
@@ -86,29 +104,19 @@
             this.btnAdminUpdateAcc.Text = "Update";
             this.btnAdminUpdateAcc.Click += new System.EventHandler(this.btnAdminUpdateAcc_Click);
             // 
-            // btnSaveList
+            // btnGoBackToLogin
             // 
-            this.btnSaveList.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSaveList.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.btnSaveList.Image = global::Cozify.Properties.Resources.Mail;
-            this.btnSaveList.Location = new System.Drawing.Point(51, 463);
-            this.btnSaveList.Name = "btnSaveList";
-            this.btnSaveList.Size = new System.Drawing.Size(62, 60);
-            this.btnSaveList.TabIndex = 15;
-            this.btnSaveList.UseVisualStyleBackColor = true;
-            this.btnSaveList.Click += new System.EventHandler(this.btnSaveList_Click);
-            // 
-            // dgvAdmin
-            // 
-            this.dgvAdmin.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.dgvAdmin.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAdmin.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvAdmin.Location = new System.Drawing.Point(0, 0);
-            this.dgvAdmin.Name = "dgvAdmin";
-            this.dgvAdmin.RowHeadersWidth = 51;
-            this.dgvAdmin.RowTemplate.Height = 24;
-            this.dgvAdmin.Size = new System.Drawing.Size(677, 457);
-            this.dgvAdmin.TabIndex = 0;
+            this.btnGoBackToLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnGoBackToLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGoBackToLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnGoBackToLogin.Image = global::Cozify.Properties.Resources.Open_Door1;
+            this.btnGoBackToLogin.Location = new System.Drawing.Point(54, 461);
+            this.btnGoBackToLogin.Margin = new System.Windows.Forms.Padding(1);
+            this.btnGoBackToLogin.Name = "btnGoBackToLogin";
+            this.btnGoBackToLogin.Size = new System.Drawing.Size(58, 62);
+            this.btnGoBackToLogin.TabIndex = 29;
+            this.btnGoBackToLogin.UseVisualStyleBackColor = false;
+            this.btnGoBackToLogin.Click += new System.EventHandler(this.btnGoBackToLogin_Click);
             // 
             // Admin
             // 
@@ -116,7 +124,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(862, 553);
-            this.Controls.Add(this.btnSaveList);
+            this.Controls.Add(this.btnGoBackToLogin);
             this.Controls.Add(this.btnAdminUpdateAcc);
             this.Controls.Add(this.btnAdminClearAccData);
             this.Controls.Add(this.btnAdminDeleteAcc);
@@ -125,8 +133,9 @@
             this.Name = "Admin";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Admin";
+            this.Load += new System.EventHandler(this.Admin_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvAdmin)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvAdminView)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -137,7 +146,7 @@
         private AntdUI.Button btnAdminClearAccData;
         private AntdUI.Button btnAdminDeleteAcc;
         private AntdUI.Button btnAdminUpdateAcc;
-        private System.Windows.Forms.Button btnSaveList;
-        private System.Windows.Forms.DataGridView dgvAdmin;
+        private System.Windows.Forms.DataGridView dgvAdminView;
+        private System.Windows.Forms.Button btnGoBackToLogin;
     }
 }
