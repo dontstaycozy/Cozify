@@ -61,20 +61,20 @@
             this.panel8 = new System.Windows.Forms.Panel();
             this.btnStatistics = new System.Windows.Forms.Button();
             this.pnlMusicDock = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.lblSongAndArtist = new AntdUI.Label();
-            this.lblMusicPlaylist = new AntdUI.Label();
-            this.panel9 = new System.Windows.Forms.Panel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.trkBarVolumeSlider = new System.Windows.Forms.TrackBar();
+            this.lblSongAndArtist = new System.Windows.Forms.Label();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.btnLoopTracks = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btnPrevTrack = new System.Windows.Forms.Button();
             this.btnPlayORStopTrack = new System.Windows.Forms.Button();
             this.btnNextTrack = new System.Windows.Forms.Button();
-            this.btnLoopTracks = new System.Windows.Forms.Button();
-            this.panel10 = new System.Windows.Forms.Panel();
-            this.btnOpenMusicLibrary = new System.Windows.Forms.Button();
+            this.btnMusicLib = new System.Windows.Forms.Button();
             this.panel11 = new System.Windows.Forms.Panel();
             this.btnSendMessageToAdmin = new System.Windows.Forms.Button();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.btnOpenMusicLibrary = new System.Windows.Forms.Button();
             this.pnlTime.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -90,12 +90,11 @@
             this.tableLayoutPanel4.SuspendLayout();
             this.panel8.SuspendLayout();
             this.pnlMusicDock.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).BeginInit();
             this.panel9.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).BeginInit();
-            this.panel10.SuspendLayout();
             this.panel11.SuspendLayout();
+            this.panel10.SuspendLayout();
             this.SuspendLayout();
             // 
             // WelcomeLabel
@@ -494,65 +493,77 @@
             this.pnlMusicDock.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.pnlMusicDock.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
             this.pnlMusicDock.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMusicDock.Controls.Add(this.tableLayoutPanel5);
+            this.pnlMusicDock.Controls.Add(this.label1);
+            this.pnlMusicDock.Controls.Add(this.trkBarVolumeSlider);
+            this.pnlMusicDock.Controls.Add(this.lblSongAndArtist);
             this.pnlMusicDock.Controls.Add(this.panel9);
             this.pnlMusicDock.Location = new System.Drawing.Point(126, 783);
             this.pnlMusicDock.Name = "pnlMusicDock";
-            this.pnlMusicDock.Size = new System.Drawing.Size(799, 90);
+            this.pnlMusicDock.Size = new System.Drawing.Size(839, 90);
             this.pnlMusicDock.TabIndex = 28;
             // 
-            // tableLayoutPanel5
+            // label1
             // 
-            this.tableLayoutPanel5.ColumnCount = 1;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel5.Controls.Add(this.lblSongAndArtist, 0, 1);
-            this.tableLayoutPanel5.Controls.Add(this.lblMusicPlaylist, 0, 0);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(16, 3);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 2;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 34F));
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(347, 78);
-            this.tableLayoutPanel5.TabIndex = 41;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Pixeltype", 18F);
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(24, 14);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(117, 19);
+            this.label1.TabIndex = 51;
+            this.label1.Text = "Now Playing:";
+            // 
+            // trkBarVolumeSlider
+            // 
+            this.trkBarVolumeSlider.Location = new System.Drawing.Point(555, 59);
+            this.trkBarVolumeSlider.Name = "trkBarVolumeSlider";
+            this.trkBarVolumeSlider.Size = new System.Drawing.Size(179, 56);
+            this.trkBarVolumeSlider.TabIndex = 50;
+            this.trkBarVolumeSlider.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trkBarVolumeSlider.Scroll += new System.EventHandler(this.trkBarVolumeSlider_Scroll);
             // 
             // lblSongAndArtist
             // 
-            this.lblSongAndArtist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblSongAndArtist.Font = new System.Drawing.Font("Pixeltype", 19F);
-            this.lblSongAndArtist.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.lblSongAndArtist.Location = new System.Drawing.Point(3, 37);
+            this.lblSongAndArtist.AutoSize = true;
+            this.lblSongAndArtist.Font = new System.Drawing.Font("Pixeltype", 20F);
+            this.lblSongAndArtist.ForeColor = System.Drawing.Color.White;
+            this.lblSongAndArtist.Location = new System.Drawing.Point(24, 46);
             this.lblSongAndArtist.Name = "lblSongAndArtist";
-            this.lblSongAndArtist.Size = new System.Drawing.Size(341, 38);
-            this.lblSongAndArtist.TabIndex = 43;
-            this.lblSongAndArtist.Text = "Purple Cat - Swingin\'";
-            // 
-            // lblMusicPlaylist
-            // 
-            this.lblMusicPlaylist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lblMusicPlaylist.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.lblMusicPlaylist.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.lblMusicPlaylist.Location = new System.Drawing.Point(3, 3);
-            this.lblMusicPlaylist.Name = "lblMusicPlaylist";
-            this.lblMusicPlaylist.Size = new System.Drawing.Size(341, 28);
-            this.lblMusicPlaylist.TabIndex = 42;
-            this.lblMusicPlaylist.Text = "Cozify Study Music Vol. 1";
-            this.lblMusicPlaylist.TextAlign = System.Drawing.ContentAlignment.BottomLeft;
+            this.lblSongAndArtist.Size = new System.Drawing.Size(62, 21);
+            this.lblSongAndArtist.TabIndex = 45;
+            this.lblSongAndArtist.Text = "None";
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.btnLoopTracks);
             this.panel9.Controls.Add(this.pictureBox1);
-            this.panel9.Controls.Add(this.trkBarVolumeSlider);
             this.panel9.Controls.Add(this.btnPrevTrack);
             this.panel9.Controls.Add(this.btnPlayORStopTrack);
             this.panel9.Controls.Add(this.btnNextTrack);
-            this.panel9.Controls.Add(this.btnLoopTracks);
-            this.panel9.Location = new System.Drawing.Point(379, 0);
+            this.panel9.Controls.Add(this.btnMusicLib);
+            this.panel9.Location = new System.Drawing.Point(420, 1);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(408, 80);
             this.panel9.TabIndex = 42;
             // 
+            // btnLoopTracks
+            // 
+            this.btnLoopTracks.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnLoopTracks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.btnLoopTracks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnLoopTracks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.btnLoopTracks.Image = global::Cozify.Properties.Resources.Repeat1;
+            this.btnLoopTracks.Location = new System.Drawing.Point(42, 5);
+            this.btnLoopTracks.Margin = new System.Windows.Forms.Padding(1);
+            this.btnLoopTracks.Name = "btnLoopTracks";
+            this.btnLoopTracks.Size = new System.Drawing.Size(64, 52);
+            this.btnLoopTracks.TabIndex = 50;
+            this.btnLoopTracks.UseVisualStyleBackColor = false;
+            this.btnLoopTracks.Click += new System.EventHandler(this.btnLoopTracks_Click);
+            // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.Image = global::Cozify.Properties.Resources.Voice;
             this.pictureBox1.Location = new System.Drawing.Point(98, 58);
             this.pictureBox1.Name = "pictureBox1";
@@ -561,18 +572,9 @@
             this.pictureBox1.TabIndex = 49;
             this.pictureBox1.TabStop = false;
             // 
-            // trkBarVolumeSlider
-            // 
-            this.trkBarVolumeSlider.AutoSize = false;
-            this.trkBarVolumeSlider.Location = new System.Drawing.Point(125, 60);
-            this.trkBarVolumeSlider.Name = "trkBarVolumeSlider";
-            this.trkBarVolumeSlider.Size = new System.Drawing.Size(190, 25);
-            this.trkBarVolumeSlider.TabIndex = 48;
-            this.trkBarVolumeSlider.TickStyle = System.Windows.Forms.TickStyle.None;
-            this.trkBarVolumeSlider.Scroll += new System.EventHandler(this.trkBarVolumeSlider_Scroll);
-            // 
             // btnPrevTrack
             // 
+            this.btnPrevTrack.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnPrevTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
             this.btnPrevTrack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPrevTrack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
@@ -587,6 +589,7 @@
             // 
             // btnPlayORStopTrack
             // 
+            this.btnPlayORStopTrack.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnPlayORStopTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
             this.btnPlayORStopTrack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnPlayORStopTrack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
@@ -601,6 +604,7 @@
             // 
             // btnNextTrack
             // 
+            this.btnNextTrack.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btnNextTrack.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
             this.btnNextTrack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnNextTrack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
@@ -613,47 +617,25 @@
             this.btnNextTrack.UseVisualStyleBackColor = false;
             this.btnNextTrack.Click += new System.EventHandler(this.btnNextTrack_Click);
             // 
-            // btnLoopTracks
+            // btnMusicLib
             // 
-            this.btnLoopTracks.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.btnLoopTracks.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnLoopTracks.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.btnLoopTracks.Image = global::Cozify.Properties.Resources.Repeat;
-            this.btnLoopTracks.Location = new System.Drawing.Point(336, 6);
-            this.btnLoopTracks.Margin = new System.Windows.Forms.Padding(1);
-            this.btnLoopTracks.Name = "btnLoopTracks";
-            this.btnLoopTracks.Size = new System.Drawing.Size(61, 37);
-            this.btnLoopTracks.TabIndex = 42;
-            this.btnLoopTracks.UseVisualStyleBackColor = false;
-            this.btnLoopTracks.Click += new System.EventHandler(this.btnLoopTracks_Click);
-            // 
-            // panel10
-            // 
-            this.panel10.Controls.Add(this.btnOpenMusicLibrary);
-            this.panel10.Location = new System.Drawing.Point(7, 274);
-            this.panel10.Name = "panel10";
-            this.panel10.Size = new System.Drawing.Size(69, 58);
-            this.panel10.TabIndex = 48;
-            // 
-            // btnOpenMusicLibrary
-            // 
-            this.btnOpenMusicLibrary.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnOpenMusicLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnOpenMusicLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOpenMusicLibrary.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.btnOpenMusicLibrary.Image = global::Cozify.Properties.Resources.Music_Library1;
-            this.btnOpenMusicLibrary.Location = new System.Drawing.Point(0, 0);
-            this.btnOpenMusicLibrary.Margin = new System.Windows.Forms.Padding(1);
-            this.btnOpenMusicLibrary.Name = "btnOpenMusicLibrary";
-            this.btnOpenMusicLibrary.Size = new System.Drawing.Size(69, 58);
-            this.btnOpenMusicLibrary.TabIndex = 47;
-            this.btnOpenMusicLibrary.UseVisualStyleBackColor = false;
-            this.btnOpenMusicLibrary.Click += new System.EventHandler(this.btnMusicLib_Click_1);
+            this.btnMusicLib.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btnMusicLib.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.btnMusicLib.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnMusicLib.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.btnMusicLib.Image = global::Cozify.Properties.Resources.smol_lib;
+            this.btnMusicLib.Location = new System.Drawing.Point(337, 5);
+            this.btnMusicLib.Margin = new System.Windows.Forms.Padding(1);
+            this.btnMusicLib.Name = "btnMusicLib";
+            this.btnMusicLib.Size = new System.Drawing.Size(61, 74);
+            this.btnMusicLib.TabIndex = 42;
+            this.btnMusicLib.UseVisualStyleBackColor = false;
+            this.btnMusicLib.Click += new System.EventHandler(this.btnMusicLib_Click);
             // 
             // panel11
             // 
             this.panel11.Controls.Add(this.btnSendMessageToAdmin);
-            this.panel11.Location = new System.Drawing.Point(7, 336);
+            this.panel11.Location = new System.Drawing.Point(7, 272);
             this.panel11.Name = "panel11";
             this.panel11.Size = new System.Drawing.Size(69, 58);
             this.panel11.TabIndex = 49;
@@ -673,14 +655,37 @@
             this.btnSendMessageToAdmin.UseVisualStyleBackColor = false;
             this.btnSendMessageToAdmin.Click += new System.EventHandler(this.btnSendMessageToAdmin_Click);
             // 
+            // panel10
+            // 
+            this.panel10.Controls.Add(this.btnOpenMusicLibrary);
+            this.panel10.Location = new System.Drawing.Point(8, 336);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(69, 58);
+            this.panel10.TabIndex = 50;
+            // 
+            // btnOpenMusicLibrary
+            // 
+            this.btnOpenMusicLibrary.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnOpenMusicLibrary.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnOpenMusicLibrary.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnOpenMusicLibrary.ForeColor = System.Drawing.SystemColors.ActiveCaption;
+            this.btnOpenMusicLibrary.Image = global::Cozify.Properties.Resources.Music_Library1;
+            this.btnOpenMusicLibrary.Location = new System.Drawing.Point(0, 0);
+            this.btnOpenMusicLibrary.Margin = new System.Windows.Forms.Padding(1);
+            this.btnOpenMusicLibrary.Name = "btnOpenMusicLibrary";
+            this.btnOpenMusicLibrary.Size = new System.Drawing.Size(69, 58);
+            this.btnOpenMusicLibrary.TabIndex = 47;
+            this.btnOpenMusicLibrary.UseVisualStyleBackColor = false;
+            this.btnOpenMusicLibrary.Visible = false;
+            // 
             // MAIN_HUB
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(1399, 889);
-            this.Controls.Add(this.panel11);
             this.Controls.Add(this.panel10);
+            this.Controls.Add(this.panel11);
             this.Controls.Add(this.pnlMusicDock);
             this.Controls.Add(this.panel8);
             this.Controls.Add(this.panel7);
@@ -720,12 +725,12 @@
             this.tableLayoutPanel4.PerformLayout();
             this.panel8.ResumeLayout(false);
             this.pnlMusicDock.ResumeLayout(false);
-            this.tableLayoutPanel5.ResumeLayout(false);
+            this.pnlMusicDock.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).EndInit();
             this.panel9.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.trkBarVolumeSlider)).EndInit();
-            this.panel10.ResumeLayout(false);
             this.panel11.ResumeLayout(false);
+            this.panel10.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -765,19 +770,19 @@
         private System.Windows.Forms.Button btnHelpMainHub;
         private System.Windows.Forms.Button btnStatistics;
         private System.Windows.Forms.Panel pnlMusicDock;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private AntdUI.Label lblSongAndArtist;
-        private AntdUI.Label lblMusicPlaylist;
         private System.Windows.Forms.Panel panel9;
         private System.Windows.Forms.Button btnPlayORStopTrack;
         private System.Windows.Forms.Button btnNextTrack;
-        private System.Windows.Forms.Button btnLoopTracks;
+        private System.Windows.Forms.Button btnMusicLib;
         private System.Windows.Forms.Button btnPrevTrack;
-        private System.Windows.Forms.Button btnOpenMusicLibrary;
-        private System.Windows.Forms.Panel panel10;
-        private System.Windows.Forms.TrackBar trkBarVolumeSlider;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel panel11;
         private System.Windows.Forms.Button btnSendMessageToAdmin;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Button btnOpenMusicLibrary;
+        private System.Windows.Forms.Label lblSongAndArtist;
+        private System.Windows.Forms.TrackBar trkBarVolumeSlider;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button btnLoopTracks;
     }
 }

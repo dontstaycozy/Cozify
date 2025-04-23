@@ -16,7 +16,8 @@ using System.Globalization;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 using System.Net;
 using System.Net.Mail;
-
+using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.VisualBasic;
 namespace Cozify//database helper
 {
     public static class GlobalUser
@@ -40,6 +41,202 @@ namespace Cozify//database helper
             MessageBox.Show("Connected successfully!");
             myConn.Close();
         }
+    //    public bool ExecuteNonQuery(string query, Dictionary<string, object> parameters = null)
+    //    {
+    //        using (myConn = new OleDbConnection(connectionString))
+    //        {
+    //            using (cmd = new OleDbCommand(query, myConn))
+    //            {
+    //                if (parameters != null)
+    //                {
+    //                    foreach (var param in parameters)
+    //                    {
+    //                        cmd.Parameters.AddWithValue(param.Key, param.Value);
+    //                    }
+    //                }
+    //                try
+    //                {
+    //                    myConn.Open();
+    //                    int rowsAffected = cmd.ExecuteNonQuery();
+    //                    return rowsAffected > 0;
+    //                }
+    //                catch (OleDbException ex)
+    //                {
+    //                    MessageBox.Show("Error executing query: " + ex.Message);
+    //                    return false; // Or throw the exception if you want the caller to handle it
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //    // Method to execute queries and return a DataTable
+    //    public DataTable ExecuteQuery(string query, Dictionary<string, object> parameters = null)
+    //    {
+    //        using (myConn = new OleDbConnection(connectionString))
+    //        {
+    //            using (cmd = new OleDbCommand(query, myConn))
+    //            {
+    //                if (parameters != null)
+    //                {
+    //                    foreach (var param in parameters)
+    //                    {
+    //                        cmd.Parameters.AddWithValue(param.Key, param.Value);
+    //                    }
+    //                }
+    //                using (da = new OleDbDataAdapter(cmd))
+    //                {
+    //                    DataTable dt = new DataTable();
+    //                    try
+    //                    {
+    //                        myConn.Open();
+    //                        da.Fill(dt);
+    //                    }
+    //                    catch (OleDbException ex)
+    //                    {
+    //                        MessageBox.Show("Error executing query: " + ex.Message);
+    //                        return null; // Or throw the exception
+    //                    }
+    //                    return dt;
+    //                }
+    //            }
+    //        }
+    //    }
+
+    //    public int GetLastInsertId()
+    //    {
+    //        string query = "SELECT @@IDENTITY";
+    //        DataTable result = ExecuteQuery(query);
+    //        if (result != null && result.Rows.Count > 0)
+    //        {
+    //            return Convert.ToInt32(result.Rows[0][0]);
+    //        }
+    //        return -1;
+    //    }
+
+    //    // Method to add a new track to the MusicTracks table
+    //    public bool AddTrack(string username, string title, string artist, string filePath)
+    //    {
+    //        string query = "INSERT INTO MusicTracks (Username, Title, Artist, FilePath) VALUES (@Username, @Title, @Artist, @FilePath)";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@Username", username },
+    //            { "@Title", title },
+    //            { "@Artist", artist },
+    //            { "@FilePath", filePath }
+    //        };
+    //        return ExecuteNonQuery(query, parameters);
+    //    }
+
+    //    // Method to get all tracks for a specific user
+    //    public DataTable GetUserTracks(string username)
+    //    {
+    //        string query = "SELECT TrackID, Title, Artist, FilePath FROM MusicTracks WHERE Username = @Username";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@Username", username }
+    //        };
+    //        return ExecuteQuery(query, parameters);
+    //    }
+
+    //    // Method to add a new playlist
+    //    public int AddPlaylist(string username, string playlistName)
+    //    {
+    //        string query = "INSERT INTO Playlists (Username, PlaylistName) VALUES (@Username, @PlaylistName)";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //{
+    //    { "@Username", username },
+    //    { "@PlaylistName", playlistName }
+    //};
+
+    //        if (ExecuteNonQuery(query, parameters))
+    //        {
+    //            return GetLastInsertId();
+    //        }
+    //        return -1;
+    //    }
+
+    //    // Method to add a track to a playlist
+    //    public bool AddTrackToPlaylist(int playlistId, int trackId)
+    //    {
+    //         string query = "INSERT INTO PlaylistTracks (PlaylistID, TrackID) VALUES (@PlaylistID, @TrackID)";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@PlaylistID", playlistId },
+    //            { "@TrackID", trackId }
+    //        };
+    //        return ExecuteNonQuery(query, parameters);
+    //    }
+
+    //    // Method to get all playlists for a user.
+    //    public DataTable GetUserPlaylists(string username)
+    //    {
+    //        string query = "SELECT PlaylistID, PlaylistName FROM Playlists WHERE Username = @Username";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@Username", username }
+    //        };
+    //        return ExecuteQuery(query, parameters);
+    //    }
+
+    //    // Method to get tracks in a playlist
+    //    public DataTable GetTracksInPlaylist(int playlistId)
+    //    {
+    //        string query = @"SELECT mt.TrackID, mt.Title, mt.Artist, mt.FilePath
+    //                FROM MusicTracks AS mt
+    //                INNER JOIN PlaylistTracks AS pt ON mt.TrackID = pt.TrackID
+    //                WHERE pt.PlaylistID = @PlaylistID";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@PlaylistID", playlistId }
+    //        };
+    //        return ExecuteQuery(query, parameters);
+    //    }
+
+    //    // Method to delete a playlist
+    //    public bool DeletePlaylist(int playlistId)
+    //    {
+    //        //  Consider deleting related tracks in PlaylistTracks first (ON DELETE CASCADE would be better in the database, but we'll handle it here)
+    //        string deletePlaylistTracksQuery = "DELETE FROM PlaylistTracks WHERE PlaylistID = @PlaylistID";
+    //        Dictionary<string, object> deletePlaylistTracksParams = new Dictionary<string, object>
+    //        {
+    //            { "@PlaylistID", playlistId }
+    //        };
+
+    //        ExecuteNonQuery(deletePlaylistTracksQuery, deletePlaylistTracksParams); // Delete tracks from join table
+
+    //        // Now delete the playlist itself
+    //        string deletePlaylistQuery = "DELETE FROM Playlists WHERE PlaylistID = @PlaylistID";
+    //        Dictionary<string, object> deletePlaylistParams = new Dictionary<string, object>
+    //        {
+    //            { "@PlaylistID", playlistId }
+    //        };
+    //        return ExecuteNonQuery(deletePlaylistQuery, deletePlaylistParams);
+    //    }
+
+    //    // Method to delete a track from a playlist
+    //    public bool DeleteTrackFromPlaylist(int playlistId, int trackId)
+    //    {
+    //        string query = "DELETE FROM PlaylistTracks WHERE PlaylistID = @PlaylistID AND TrackID = @TrackID";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@PlaylistID", playlistId },
+    //            { "@TrackID", trackId }
+    //        };
+    //        return ExecuteNonQuery(query, parameters);
+    //    }
+
+    //    // Method to edit track details
+    //    public bool EditTrack(int trackId, string title, string artist)
+    //    {
+    //        string query = "UPDATE MusicTracks SET Title = @Title, Artist = @Artist WHERE TrackID = @TrackID";
+    //        Dictionary<string, object> parameters = new Dictionary<string, object>
+    //        {
+    //            { "@TrackID", trackId },
+    //            { "@Title", title },
+    //            { "@Artist", artist }
+    //        };
+    //        return ExecuteNonQuery(query, parameters);
+    //    }
 
         public void DeleteAcc()
         {

@@ -29,14 +29,15 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnTrackAdd = new AntdUI.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tbxTrackAddFile = new System.Windows.Forms.TextBox();
             this.tbxTrackAddArtist = new System.Windows.Forms.TextBox();
             this.tbxTrackAddTitle = new System.Windows.Forms.TextBox();
+            this.btnTrackAdd = new AntdUI.Button();
             this.btnCloseAdd = new System.Windows.Forms.Button();
+            this.btnBrowse = new AntdUI.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,18 +54,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(540, 209);
             this.panel1.TabIndex = 3;
-            // 
-            // btnTrackAdd
-            // 
-            this.btnTrackAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnTrackAdd.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.btnTrackAdd.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.btnTrackAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnTrackAdd.Location = new System.Drawing.Point(435, 257);
-            this.btnTrackAdd.Name = "btnTrackAdd";
-            this.btnTrackAdd.Size = new System.Drawing.Size(141, 65);
-            this.btnTrackAdd.TabIndex = 20;
-            this.btnTrackAdd.Text = "Add";
             // 
             // label3
             // 
@@ -132,6 +121,19 @@
             this.tbxTrackAddTitle.Size = new System.Drawing.Size(392, 30);
             this.tbxTrackAddTitle.TabIndex = 9;
             // 
+            // btnTrackAdd
+            // 
+            this.btnTrackAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnTrackAdd.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnTrackAdd.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnTrackAdd.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnTrackAdd.Location = new System.Drawing.Point(435, 257);
+            this.btnTrackAdd.Name = "btnTrackAdd";
+            this.btnTrackAdd.Size = new System.Drawing.Size(141, 65);
+            this.btnTrackAdd.TabIndex = 20;
+            this.btnTrackAdd.Text = "Add";
+            this.btnTrackAdd.Click += new System.EventHandler(this.btnTrackAdd_Click);
+            // 
             // btnCloseAdd
             // 
             this.btnCloseAdd.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
@@ -144,6 +146,20 @@
             this.btnCloseAdd.Size = new System.Drawing.Size(66, 58);
             this.btnCloseAdd.TabIndex = 23;
             this.btnCloseAdd.UseVisualStyleBackColor = false;
+            this.btnCloseAdd.Click += new System.EventHandler(this.btnCloseAdd_Click);
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnBrowse.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBrowse.Location = new System.Drawing.Point(288, 257);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(141, 65);
+            this.btnBrowse.TabIndex = 24;
+            this.btnBrowse.Text = "Browse";
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // TrackAdder
             // 
@@ -151,11 +167,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(611, 334);
+            this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnCloseAdd);
             this.Controls.Add(this.btnTrackAdd);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "TrackAdder";
+            this.Opacity = 0.9D;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "TrackAdder";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -174,5 +193,6 @@
         private System.Windows.Forms.TextBox tbxTrackAddArtist;
         private System.Windows.Forms.TextBox tbxTrackAddTitle;
         private System.Windows.Forms.Button btnCloseAdd;
+        private AntdUI.Button btnBrowse;
     }
 }

@@ -5,17 +5,22 @@ using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Media;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NAudio.Wave; // Use NAudio for audio playback
+using NAudio.CoreAudioApi;
 
 //add music player, add analytics and monitoring, add admin account
 namespace finals
 {
-    public partial class MAIN_HUB: BaseForm
+    public partial class MAIN_HUB : BaseForm
     {
         private HABIT_CHECKER habitChecker;
         private TO_DO_LIST toDo;
@@ -27,6 +32,15 @@ namespace finals
         private bool isFocused = false;
         private Form activeFeature = null;
         private bool sessionActive = false;
+        private string _currentPlaylistDirectory;
+        private List<string> _currentPlaylistTracks = new List<string>();
+        private int _currentTrackIndex = 0;
+        private IWavePlayer _wavePlayer; // Use IWavePlayer
+        private AudioFileReader _audioFileReader;
+        private bool _isPlaying = false;
+        private float _volume = 1.0f; // Volume is a float (0.0 to 1.0) with NAudio
+        private bool _isLooping = false;
+
 
 
         [DllImport("user32.dll")]
@@ -46,6 +60,12 @@ namespace finals
                     sessionActive = false;
                 }
             };
+            trkBarVolumeSlider.Minimum = 0;
+            trkBarVolumeSlider.Maximum = 100;
+            trkBarVolumeSlider.Value = (int)(_volume * 100);
+            trkBarVolumeSlider.TickFrequency = 10;
+            trkBarVolumeSlider.LargeChange = 10;
+            trkBarVolumeSlider.SmallChange = 1;
         }
         private void MAIN_HUB_MouseDown(object sender, MouseEventArgs e)
         {
@@ -74,6 +94,7 @@ namespace finals
         private void btnExitMainHub_Click(object sender, EventArgs e)
         {
             this.btnExitMainHub.FlatAppearance.MouseOverBackColor = Color.Transparent;
+            StopPlayback();
             Application.Exit();
         }
 
@@ -99,6 +120,7 @@ namespace finals
                 this.Hide();
                 LOGIN lOGIN = new LOGIN();
                 lOGIN.Show();
+                StopPlayback();
             }
             catch (Exception ex)
             {
@@ -139,6 +161,7 @@ namespace finals
                     db.StopSessionTimer();
                     sessionActive = false;
                     Debug.WriteLine("Session timer stopped");
+                    StopPlayback();
                 }
             }
             catch (Exception ex)
@@ -146,6 +169,7 @@ namespace finals
                 Debug.WriteLine($"Error stopping session timer: {ex}");
                 // Don't prevent closing if there's an error
             }
+
         }
 
         private void MAIN_HUB_Resize(object sender, EventArgs e)
@@ -190,7 +214,7 @@ namespace finals
                 habitChecker.Close();
                 activeFeature = null;
             }
-            
+
         }
 
         private void HabitChecker_FormClosed(object sender, FormClosedEventArgs e)
@@ -282,7 +306,7 @@ namespace finals
             btnHabitChecker.Visible = !isFocused;
             btnJournal.Visible = !isFocused;
             btnPomo.Visible = !isFocused;
-            btnToDoMain.Visible = !isFocused;   
+            btnToDoMain.Visible = !isFocused;
             btnPomo.Visible = !isFocused;
             btnHelpMainHub.Visible = !isFocused;
             btnMiniMainHub.Visible = !isFocused;
@@ -346,33 +370,221 @@ namespace finals
             activeFeature = null;
         }
 
-        private void btnMusicLib_Click_1(object sender, EventArgs e)
-        {
-
-        }
         private void btnPlayORStopTrack_Click(object sender, EventArgs e)
         {
+            if (_currentPlaylistTracks.Count == 0)
+                return;
 
+            if (!_isPlaying)
+            {
+                if (_wavePlayer == null) //create on first play
+                    PlayTrack(_currentTrackIndex);
+                else
+                    _wavePlayer.Play(); //resume
+                _isPlaying = true;
+                using (var ms = new MemoryStream(Cozify.Properties.Resources.Pause_Button))
+                {
+                    btnPlayORStopTrack.Image = Image.FromStream(ms);
+                } // Corrected button text
+            }
+            else
+            {
+                _wavePlayer?.Pause(); // Use the null-conditional operator
+                _isPlaying = false;
+                using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
+                {
+                    btnPlayORStopTrack.Image = Image.FromStream(ms);
+                }
+            }
+        }
+        private void PlayTrack(int index)
+        {
+            if (index < 0 || index >= _currentPlaylistTracks.Count)
+            {
+                MessageBox.Show("Invalid track index.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                // Dispose of any existing player and reader
+                _wavePlayer?.Dispose();
+                _audioFileReader?.Dispose();
+
+                _audioFileReader = new AudioFileReader(_currentPlaylistTracks[index]);
+                _wavePlayer = new WaveOut(); // You can choose a different output if needed
+                _wavePlayer.Init(_audioFileReader);
+                _wavePlayer.PlaybackStopped += OnPlaybackStopped; // Subscribe to the PlaybackStopped event
+                _wavePlayer.Play();
+                _isPlaying = true;
+                using (var ms = new MemoryStream(Cozify.Properties.Resources.Pause_Button))
+                {
+                    btnPlayORStopTrack.Image = Image.FromStream(ms);
+                }
+                UpdateNowPlaying(index);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error playing track: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _isPlaying = false;
+                using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
+                {
+                    btnPlayORStopTrack.Image = Image.FromStream(ms);
+                }
+            }
         }
 
-        private void btnPrevTrack_Click(object sender, EventArgs e)
+        private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
+            if (e.Exception == null)
+            {
+                _isPlaying = false;
+                _wavePlayer?.Dispose();
+                _audioFileReader?.Dispose();
 
+                _currentTrackIndex++;
+
+                if (_currentTrackIndex < _currentPlaylistTracks.Count)
+                {
+                    PlayTrack(_currentTrackIndex);
+                }
+                else if (_isLooping && _currentPlaylistTracks.Count > 0)
+                {
+                    // Loop back to first track if looping is enabled
+                    _currentTrackIndex = 0;
+                    PlayTrack(_currentTrackIndex);
+                }
+                else
+                {
+                    // Playback ended normally
+                    UpdateNowPlaying(-1);
+                    using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
+                    {
+                        btnPlayORStopTrack.Image = Image.FromStream(ms);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show($"Error during playback: {e.Exception.Message}",
+                               "Error",
+                               MessageBoxButtons.OK,
+                               MessageBoxIcon.Error);
+            }
         }
 
         private void btnNextTrack_Click(object sender, EventArgs e)
         {
+            if (_currentPlaylistTracks.Count == 0)
+                return;
 
+            StopPlayback(); //use stop playback
+            _currentTrackIndex++;
+            if (_currentTrackIndex >= _currentPlaylistTracks.Count)
+            {
+                _currentTrackIndex = 0;
+            }
+            PlayTrack(_currentTrackIndex);
         }
 
-        private void btnLoopTracks_Click(object sender, EventArgs e)
+        private void btnPrevTrack_Click(object sender, EventArgs e)
         {
+            if (_currentPlaylistTracks.Count == 0)
+                return;
+            StopPlayback();
+            _currentTrackIndex--;
+            if (_currentTrackIndex < 0)
+            {
+                _currentTrackIndex = _currentPlaylistTracks.Count - 1;
+            }
+            PlayTrack(_currentTrackIndex);
+        }
 
+        private void btnMusicLib_Click(object sender, EventArgs e)//promps you to pick a file folder that has mpr or wav in it and use it as youre "playtlist"
+        {
+            FolderBrowserDialog folderDialog = new FolderBrowserDialog();
+            folderDialog.Description = "Select the folder containing your music files (mp3, wav).";
+            if (folderDialog.ShowDialog() == DialogResult.OK)
+            {
+                _currentPlaylistDirectory = folderDialog.SelectedPath;
+                LoadPlaylist();
+            }
+        }
+        private void LoadPlaylist()
+        {
+            _currentPlaylistTracks.Clear();
+            _currentTrackIndex = 0;
+
+            string[] supportedExtensions = { ".mp3", ".wav" };
+            string[] files = Directory.GetFiles(_currentPlaylistDirectory)
+                                      .Where(file => supportedExtensions.Contains(Path.GetExtension(file).ToLower()))
+                                      .ToArray();
+
+            if (files.Length > 0)
+            {
+                _currentPlaylistTracks = files.OrderBy(f => Path.GetFileName(f)).ToList();
+                // You might want to update a ListBox or other control here to display the playlist
+                // instead of the commented-out ListView code.
+                UpdateNowPlaying(_currentTrackIndex); //show the first song
+            }
+            else
+            {
+                MessageBox.Show("No mp3 or wav files found in the selected folder.", "No Music Found", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private void trkBarVolumeSlider_Scroll(object sender, EventArgs e)
         {
+            _volume = trkBarVolumeSlider.Value / 100.0f; // Convert to 0.0 to 1.0 range
+            if (_wavePlayer != null)
+                _wavePlayer.Volume = _volume;
+            this.Text = "Volume: " + (int)(_volume * 100);
+        }
 
+        private void UpdateNowPlaying(int index)
+        {
+            if (index >= 0 && index < _currentPlaylistTracks.Count)
+            {
+                string fileName = Path.GetFileNameWithoutExtension(_currentPlaylistTracks[index]);
+                lblSongAndArtist.Text = fileName;
+            }
+            else
+            {
+                lblSongAndArtist.Text = "None";
+            }
+        }
+        private void btnLoopTracks_Click(object sender, EventArgs e)
+        {
+
+            if (!_isLooping)
+            {
+                _isLooping = true;
+                using (MemoryStream ms = new MemoryStream(Cozify.Properties.Resources.Repeat))
+                {
+                    btnLoopTracks.Image = Image.FromStream(ms);
+                }
+            }
+            else
+            {
+                _isLooping = false;
+                using (var ms = new MemoryStream(Cozify.Properties.Resources.RepeatActivated))
+                {
+                    btnLoopTracks.Image = Image.FromStream(ms);
+                }
+            }
+        }
+        private void StopPlayback()
+        {
+            _wavePlayer?.Stop();
+            _wavePlayer?.Dispose();
+            _audioFileReader?.Dispose();
+            _wavePlayer = null; //important
+            _audioFileReader = null;
+            _isPlaying = false;
+            using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
+            {
+                btnPlayORStopTrack.Image = Image.FromStream(ms);
+            }
         }
 
         private void btnSendMessageToAdmin_Click(object sender, EventArgs e)
@@ -392,7 +604,6 @@ namespace finals
             }
         }
 
-        
         private void MailToAdmin_Closed(object sender, FormClosedEventArgs e)
         {
             mailToAdmin = null;

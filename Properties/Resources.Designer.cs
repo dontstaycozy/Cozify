@@ -580,12 +580,12 @@ namespace Cozify.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap Repeat {
+        internal static byte[] Repeat {
             get {
                 object obj = ResourceManager.GetObject("Repeat", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                return ((byte[])(obj));
             }
         }
         
@@ -596,6 +596,26 @@ namespace Cozify.Properties {
             get {
                 object obj = ResourceManager.GetObject("Repeat1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] RepeatActivated {
+            get {
+                object obj = ResourceManager.GetObject("RepeatActivated", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] RepeatMusic {
+            get {
+                object obj = ResourceManager.GetObject("RepeatMusic", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         
@@ -635,6 +655,16 @@ namespace Cozify.Properties {
         internal static System.Drawing.Bitmap Save2 {
             get {
                 object obj = ResourceManager.GetObject("Save2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap smol_lib {
+            get {
+                object obj = ResourceManager.GetObject("smol lib", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

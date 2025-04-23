@@ -29,38 +29,51 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dgvTracksInPlaylist = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.lviewPlaylist = new System.Windows.Forms.ListView();
+            this.lvwPlaylists = new System.Windows.Forms.ListView();
             this.panel10 = new System.Windows.Forms.Panel();
             this.label1 = new AntdUI.Label();
             this.panel9 = new System.Windows.Forms.Panel();
-            this.btnSaveEntry = new AntdUI.Button();
-            this.btnDeleteEntry = new AntdUI.Button();
-            this.button2 = new AntdUI.Button();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.button3 = new AntdUI.Button();
-            this.btnAddJournalEntry = new AntdUI.Button();
-            this.button1 = new AntdUI.Button();
+            this.btnDeletePlaylist = new AntdUI.Button();
+            this.btnSavePlaylist = new AntdUI.Button();
+            this.btnEditTrack = new AntdUI.Button();
+            this.btnAddTrack = new AntdUI.Button();
+            this.btnMakePlaylist = new AntdUI.Button();
+            this.btnDeleteTrack = new AntdUI.Button();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTracksInPlaylist)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel10.SuspendLayout();
             this.panel9.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Controls.Add(this.dgvTracksInPlaylist);
             this.panel1.Location = new System.Drawing.Point(330, 41);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(754, 477);
             this.panel1.TabIndex = 1;
             // 
+            // dgvTracksInPlaylist
+            // 
+            this.dgvTracksInPlaylist.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.dgvTracksInPlaylist.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dgvTracksInPlaylist.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvTracksInPlaylist.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvTracksInPlaylist.Location = new System.Drawing.Point(0, 0);
+            this.dgvTracksInPlaylist.Name = "dgvTracksInPlaylist";
+            this.dgvTracksInPlaylist.RowHeadersWidth = 51;
+            this.dgvTracksInPlaylist.RowTemplate.Height = 24;
+            this.dgvTracksInPlaylist.Size = new System.Drawing.Size(754, 477);
+            this.dgvTracksInPlaylist.TabIndex = 0;
+            // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.panel2.Controls.Add(this.lviewPlaylist);
+            this.panel2.Controls.Add(this.lvwPlaylists);
             this.panel2.Controls.Add(this.panel10);
             this.panel2.Controls.Add(this.panel9);
             this.panel2.Location = new System.Drawing.Point(38, 124);
@@ -69,19 +82,19 @@
             this.panel2.Size = new System.Drawing.Size(254, 479);
             this.panel2.TabIndex = 15;
             // 
-            // lviewPlaylist
+            // lvwPlaylists
             // 
-            this.lviewPlaylist.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.lviewPlaylist.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.lviewPlaylist.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lviewPlaylist.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.lviewPlaylist.ForeColor = System.Drawing.Color.White;
-            this.lviewPlaylist.HideSelection = false;
-            this.lviewPlaylist.Location = new System.Drawing.Point(0, 43);
-            this.lviewPlaylist.Name = "lviewPlaylist";
-            this.lviewPlaylist.Size = new System.Drawing.Size(254, 388);
-            this.lviewPlaylist.TabIndex = 10;
-            this.lviewPlaylist.UseCompatibleStateImageBehavior = false;
+            this.lvwPlaylists.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
+            this.lvwPlaylists.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.lvwPlaylists.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lvwPlaylists.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.lvwPlaylists.ForeColor = System.Drawing.Color.White;
+            this.lvwPlaylists.HideSelection = false;
+            this.lvwPlaylists.Location = new System.Drawing.Point(0, 43);
+            this.lvwPlaylists.Name = "lvwPlaylists";
+            this.lvwPlaylists.Size = new System.Drawing.Size(254, 388);
+            this.lvwPlaylists.TabIndex = 10;
+            this.lvwPlaylists.UseCompatibleStateImageBehavior = false;
             // 
             // panel10
             // 
@@ -101,103 +114,96 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(254, 43);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Entries";
+            this.label1.Text = "Playlists";
             this.label1.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             // 
             // panel9
             // 
-            this.panel9.Controls.Add(this.btnSaveEntry);
-            this.panel9.Controls.Add(this.btnDeleteEntry);
+            this.panel9.Controls.Add(this.btnDeletePlaylist);
+            this.panel9.Controls.Add(this.btnSavePlaylist);
             this.panel9.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel9.Location = new System.Drawing.Point(0, 431);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(254, 48);
             this.panel9.TabIndex = 5;
             // 
-            // btnSaveEntry
+            // btnDeletePlaylist
             // 
-            this.btnSaveEntry.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.btnSaveEntry.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnSaveEntry.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.btnSaveEntry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnSaveEntry.Location = new System.Drawing.Point(138, 0);
-            this.btnSaveEntry.Name = "btnSaveEntry";
-            this.btnSaveEntry.Size = new System.Drawing.Size(116, 48);
-            this.btnSaveEntry.TabIndex = 8;
-            this.btnSaveEntry.Text = "Delete";
+            this.btnDeletePlaylist.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnDeletePlaylist.Dock = System.Windows.Forms.DockStyle.Right;
+            this.btnDeletePlaylist.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnDeletePlaylist.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDeletePlaylist.Location = new System.Drawing.Point(138, 0);
+            this.btnDeletePlaylist.Name = "btnDeletePlaylist";
+            this.btnDeletePlaylist.Size = new System.Drawing.Size(116, 48);
+            this.btnDeletePlaylist.TabIndex = 8;
+            this.btnDeletePlaylist.Text = "Delete";
+            this.btnDeletePlaylist.Click += new System.EventHandler(this.btnDeletePlaylist_Click);
             // 
-            // btnDeleteEntry
+            // btnSavePlaylist
             // 
-            this.btnDeleteEntry.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.btnDeleteEntry.Dock = System.Windows.Forms.DockStyle.Left;
-            this.btnDeleteEntry.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.btnDeleteEntry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnDeleteEntry.Location = new System.Drawing.Point(0, 0);
-            this.btnDeleteEntry.Name = "btnDeleteEntry";
-            this.btnDeleteEntry.Size = new System.Drawing.Size(116, 48);
-            this.btnDeleteEntry.TabIndex = 7;
-            this.btnDeleteEntry.Text = "Save";
+            this.btnSavePlaylist.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnSavePlaylist.Dock = System.Windows.Forms.DockStyle.Left;
+            this.btnSavePlaylist.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnSavePlaylist.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnSavePlaylist.Location = new System.Drawing.Point(0, 0);
+            this.btnSavePlaylist.Name = "btnSavePlaylist";
+            this.btnSavePlaylist.Size = new System.Drawing.Size(116, 48);
+            this.btnSavePlaylist.TabIndex = 7;
+            this.btnSavePlaylist.Text = "Save";
+            this.btnSavePlaylist.Click += new System.EventHandler(this.btnSavePlaylist_Click);
             // 
-            // button2
+            // btnEditTrack
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.button2.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.button2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button2.Location = new System.Drawing.Point(796, 538);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(141, 65);
-            this.button2.TabIndex = 16;
-            this.button2.Text = "Edit";
+            this.btnEditTrack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnEditTrack.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnEditTrack.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnEditTrack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnEditTrack.Location = new System.Drawing.Point(796, 538);
+            this.btnEditTrack.Name = "btnEditTrack";
+            this.btnEditTrack.Size = new System.Drawing.Size(141, 65);
+            this.btnEditTrack.TabIndex = 16;
+            this.btnEditTrack.Text = "Edit";
+            this.btnEditTrack.Click += new System.EventHandler(this.btnEditTrack_Click);
             // 
-            // dataGridView1
+            // btnAddTrack
             // 
-            this.dataGridView1.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.dataGridView1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowHeadersWidth = 51;
-            this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(754, 477);
-            this.dataGridView1.TabIndex = 0;
+            this.btnAddTrack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnAddTrack.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnAddTrack.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnAddTrack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnAddTrack.Location = new System.Drawing.Point(943, 538);
+            this.btnAddTrack.Name = "btnAddTrack";
+            this.btnAddTrack.Size = new System.Drawing.Size(141, 65);
+            this.btnAddTrack.TabIndex = 17;
+            this.btnAddTrack.Text = "Add Track";
+            this.btnAddTrack.Click += new System.EventHandler(this.btnAddTrack_Click);
             // 
-            // button3
+            // btnMakePlaylist
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.button3.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button3.Location = new System.Drawing.Point(943, 538);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(141, 65);
-            this.button3.TabIndex = 17;
-            this.button3.Text = "Add Track";
+            this.btnMakePlaylist.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnMakePlaylist.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnMakePlaylist.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnMakePlaylist.Icon = global::Cozify.Properties.Resources.Plus;
+            this.btnMakePlaylist.Location = new System.Drawing.Point(38, 41);
+            this.btnMakePlaylist.Name = "btnMakePlaylist";
+            this.btnMakePlaylist.Size = new System.Drawing.Size(254, 60);
+            this.btnMakePlaylist.TabIndex = 18;
+            this.btnMakePlaylist.Text = "Create Playlist";
+            this.btnMakePlaylist.Click += new System.EventHandler(this.btnMakePlaylist_Click);
             // 
-            // btnAddJournalEntry
+            // btnDeleteTrack
             // 
-            this.btnAddJournalEntry.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.btnAddJournalEntry.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.btnAddJournalEntry.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnAddJournalEntry.Icon = global::Cozify.Properties.Resources.Plus;
-            this.btnAddJournalEntry.Location = new System.Drawing.Point(38, 41);
-            this.btnAddJournalEntry.Name = "btnAddJournalEntry";
-            this.btnAddJournalEntry.Size = new System.Drawing.Size(254, 60);
-            this.btnAddJournalEntry.TabIndex = 18;
-            this.btnAddJournalEntry.Text = "Create Playlist";
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
-            this.button1.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.button1.Location = new System.Drawing.Point(649, 538);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(141, 65);
-            this.button1.TabIndex = 19;
-            this.button1.Text = "Delete";
+            this.btnDeleteTrack.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnDeleteTrack.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnDeleteTrack.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnDeleteTrack.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnDeleteTrack.Location = new System.Drawing.Point(649, 538);
+            this.btnDeleteTrack.Name = "btnDeleteTrack";
+            this.btnDeleteTrack.Size = new System.Drawing.Size(141, 65);
+            this.btnDeleteTrack.TabIndex = 19;
+            this.btnDeleteTrack.Text = "Delete";
+            this.btnDeleteTrack.Click += new System.EventHandler(this.btnDeleteTrack_Click);
             // 
             // MusicPlayer
             // 
@@ -205,21 +211,24 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(1119, 626);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.btnAddJournalEntry);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnDeleteTrack);
+            this.Controls.Add(this.btnMakePlaylist);
+            this.Controls.Add(this.btnAddTrack);
+            this.Controls.Add(this.btnEditTrack);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MinimumSize = new System.Drawing.Size(800, 450);
             this.Name = "MusicPlayer";
+            this.Opacity = 0.9D;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MusicPlayer";
+            this.Load += new System.EventHandler(this.MusicPlayer_Load);
             this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvTracksInPlaylist)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel10.ResumeLayout(false);
             this.panel9.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -228,16 +237,16 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.ListView lviewPlaylist;
+        private System.Windows.Forms.ListView lvwPlaylists;
         private System.Windows.Forms.Panel panel10;
         private AntdUI.Label label1;
         private System.Windows.Forms.Panel panel9;
-        private AntdUI.Button btnSaveEntry;
-        private AntdUI.Button btnDeleteEntry;
-        private System.Windows.Forms.DataGridView dataGridView1;
-        private AntdUI.Button button2;
-        private AntdUI.Button button3;
-        private AntdUI.Button btnAddJournalEntry;
-        private AntdUI.Button button1;
+        private AntdUI.Button btnDeletePlaylist;
+        private AntdUI.Button btnSavePlaylist;
+        private System.Windows.Forms.DataGridView dgvTracksInPlaylist;
+        private AntdUI.Button btnEditTrack;
+        private AntdUI.Button btnAddTrack;
+        private AntdUI.Button btnMakePlaylist;
+        private AntdUI.Button btnDeleteTrack;
     }
 }

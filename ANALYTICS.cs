@@ -223,7 +223,7 @@ namespace Cozify
                         BackColor = GetDayColor(streakData, date),
                         Margin = new Padding(0),
                         Tag = date,
-                        Cursor = Cursors.Hand // Show hand cursor on hover
+                        Cursor = Cursors.Hand
                     };
 
                     var dayLabel = new Label

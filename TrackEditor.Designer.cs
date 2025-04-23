@@ -29,14 +29,15 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tbxTrackEditFile = new System.Windows.Forms.TextBox();
             this.tbxTrackEditArtist = new System.Windows.Forms.TextBox();
             this.tbxTrackEditTitle = new System.Windows.Forms.TextBox();
             this.btnTrackEdit = new AntdUI.Button();
-            this.tbxTrackEditFile = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.btnCloseEdit = new System.Windows.Forms.Button();
+            this.btnBrowse = new AntdUI.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,6 +54,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(540, 209);
             this.panel1.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.label3.ForeColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(52, 127);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(57, 23);
+            this.label3.TabIndex = 8;
+            this.label3.Text = "File:";
             // 
             // label2
             // 
@@ -75,6 +87,17 @@
             this.label1.Size = new System.Drawing.Size(66, 23);
             this.label1.TabIndex = 6;
             this.label1.Text = "Title:";
+            // 
+            // tbxTrackEditFile
+            // 
+            this.tbxTrackEditFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.tbxTrackEditFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbxTrackEditFile.Font = new System.Drawing.Font("Pixeltype", 28F);
+            this.tbxTrackEditFile.ForeColor = System.Drawing.Color.White;
+            this.tbxTrackEditFile.Location = new System.Drawing.Point(116, 127);
+            this.tbxTrackEditFile.Name = "tbxTrackEditFile";
+            this.tbxTrackEditFile.Size = new System.Drawing.Size(392, 30);
+            this.tbxTrackEditFile.TabIndex = 5;
             // 
             // tbxTrackEditArtist
             // 
@@ -109,28 +132,7 @@
             this.btnTrackEdit.Size = new System.Drawing.Size(141, 65);
             this.btnTrackEdit.TabIndex = 21;
             this.btnTrackEdit.Text = "Edit";
-            // 
-            // tbxTrackEditFile
-            // 
-            this.tbxTrackEditFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
-            this.tbxTrackEditFile.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.tbxTrackEditFile.Font = new System.Drawing.Font("Pixeltype", 28F);
-            this.tbxTrackEditFile.ForeColor = System.Drawing.Color.White;
-            this.tbxTrackEditFile.Location = new System.Drawing.Point(116, 127);
-            this.tbxTrackEditFile.Name = "tbxTrackEditFile";
-            this.tbxTrackEditFile.Size = new System.Drawing.Size(392, 30);
-            this.tbxTrackEditFile.TabIndex = 5;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.label3.ForeColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(52, 127);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(57, 23);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "File:";
+            this.btnTrackEdit.Click += new System.EventHandler(this.btnTrackEdit_Click);
             // 
             // btnCloseEdit
             // 
@@ -144,6 +146,20 @@
             this.btnCloseEdit.Size = new System.Drawing.Size(66, 58);
             this.btnCloseEdit.TabIndex = 24;
             this.btnCloseEdit.UseVisualStyleBackColor = false;
+            this.btnCloseEdit.Click += new System.EventHandler(this.btnCloseEdit_Click);
+            // 
+            // btnBrowse
+            // 
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBrowse.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(180)))), ((int)(((byte)(60)))), ((int)(((byte)(85)))), ((int)(((byte)(104)))));
+            this.btnBrowse.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.btnBrowse.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnBrowse.Location = new System.Drawing.Point(288, 257);
+            this.btnBrowse.Name = "btnBrowse";
+            this.btnBrowse.Size = new System.Drawing.Size(141, 65);
+            this.btnBrowse.TabIndex = 25;
+            this.btnBrowse.Text = "Browse";
+            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
             // 
             // TrackEditor
             // 
@@ -151,11 +167,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(611, 334);
+            this.Controls.Add(this.btnBrowse);
             this.Controls.Add(this.btnCloseEdit);
             this.Controls.Add(this.btnTrackEdit);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "TrackEditor";
+            this.Opacity = 0.9D;
             this.Text = "TrackEditor";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
@@ -174,5 +192,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbxTrackEditFile;
         private System.Windows.Forms.Button btnCloseEdit;
+        private AntdUI.Button btnBrowse;
     }
 }
