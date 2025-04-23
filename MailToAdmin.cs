@@ -21,7 +21,7 @@ namespace Cozify
 
         private void MailToAdmin_Load(object sender, EventArgs e)
         {
-            lblUserMailConcern.Text = GlobalUser.LoggedInUsername + "'s Mail to Admin";
+            lblUserMailConcern.Text = "E-mail the admin!";
         }
 
         private void btnSendMail_Click(object sender, EventArgs e)

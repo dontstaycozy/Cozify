@@ -70,7 +70,7 @@
             this.btnLogin.DefaultBack = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(204)))), ((int)(((byte)(219)))));
             this.btnLogin.Font = new System.Drawing.Font("Pixeltype", 22F);
             this.btnLogin.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.btnLogin.Location = new System.Drawing.Point(166, 567);
+            this.btnLogin.Location = new System.Drawing.Point(163, 605);
             this.btnLogin.Name = "btnLogin";
             this.btnLogin.Size = new System.Drawing.Size(262, 60);
             this.btnLogin.TabIndex = 24;
@@ -166,7 +166,7 @@
             this.btnForgetPassword.AutoSize = true;
             this.btnForgetPassword.Font = new System.Drawing.Font("PixelSix10", 14F);
             this.btnForgetPassword.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(175)))), ((int)(((byte)(210)))), ((int)(((byte)(233)))));
-            this.btnForgetPassword.Location = new System.Drawing.Point(350, 527);
+            this.btnForgetPassword.Location = new System.Drawing.Point(361, 527);
             this.btnForgetPassword.Margin = new System.Windows.Forms.Padding(1, 0, 1, 0);
             this.btnForgetPassword.Name = "btnForgetPassword";
             this.btnForgetPassword.Size = new System.Drawing.Size(145, 30);
@@ -179,9 +179,9 @@
             // 
             this.label1.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(112, 531);
+            this.label1.Location = new System.Drawing.Point(75, 517);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(272, 30);
+            this.label1.Size = new System.Drawing.Size(406, 68);
             this.label1.TabIndex = 49;
             this.label1.Text = "Forgot your password?";
             // 
@@ -190,9 +190,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(580, 639);
+            this.ClientSize = new System.Drawing.Size(580, 677);
             this.Controls.Add(this.btnForgetPassword);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnRevealLoginPass);
             this.Controls.Add(this.btnGoBackToRegister);
@@ -201,6 +200,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnLogin);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "LoginReg";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

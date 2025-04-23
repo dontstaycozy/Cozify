@@ -95,7 +95,8 @@ namespace Cozify
 
         private void btnForgetPassword_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-
+            MailToAdmin forgetMail = new MailToAdmin();
+            forgetMail.Show();
         }
     }
 }
