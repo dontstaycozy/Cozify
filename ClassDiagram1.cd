@@ -1,21 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Cozify.BaseForm" Collapsed="true">
-    <Position X="11.25" Y="4.25" Width="1.5" />
+  <Class Name="Cozify.Admin">
+    <Position X="22" Y="0.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAGACAgAAIACAAAACAAAAAAAABAAgAQgAAAk=</HashCode>
+      <FileName>Admin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cozify.ANALYTICS">
+    <Position X="22.75" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAADAAAgQUgQCgAAAOIAAAAAACAAABAAAAAAE=</HashCode>
+      <FileName>ANALYTICS.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cozify.BaseForm">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAQAAAAACCACAACAAAAAAAAAAAAAAAQAAA=</HashCode>
       <FileName>BaseForm.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cozify.GlobalUser" Collapsed="true">
-    <Position X="16.5" Y="2.75" Width="1.5" />
+  <Class Name="Cozify.GlobalUser">
+    <Position X="30.25" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>GlobalUser.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="Cozify.dbHelper" Collapsed="true">
+    <Position X="32" Y="2.25" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Cozify.dbHelper.HabitMetaData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Cozify.dbHelper.HabitStreak" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Cozify.dbHelper.StreakAnalyticsData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Cozify.dbHelper.TaskMetaData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Cozify.dbHelper.DailyTaskData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Cozify.dbHelper.PomodoroStats" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Cozify.dbHelper.DailyPomodoroData" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AgEjAGEEIAKBCRwBQgAQAABBBogBATgAAJAyAAAAjAE=</HashCode>
+      <FileName>GlobalUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
   <Class Name="Cozify.Guide">
-    <Position X="14.75" Y="6.75" Width="1.5" />
+    <Position X="21" Y="4.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -24,48 +91,55 @@
       <FileName>Guide.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cozify.LoginReg">
-    <Position X="12.5" Y="6.75" Width="1.5" />
-    <Compartments>
-      <Compartment Name="Fields" Collapsed="true" />
-    </Compartments>
+  <Class Name="Cozify.LoginReg" Collapsed="true">
+    <Position X="36.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAAAQCAAAJQQAACAAAACAAggCgAAAAABAQBAAAA=</HashCode>
+      <HashCode>AAIAAAAAQCAAAJQQAACAAAACAAggCgAQAAABAQBAAAA=</HashCode>
       <FileName>LoginReg.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Cozify.STATS">
-    <Position X="3.5" Y="6.75" Width="1.5" />
+  <Class Name="Cozify.MailToAdmin">
+    <Position X="23.75" Y="0.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAEKGEAAAAAAACEAAACAAIAgAIGAAhAAQ0BACA=</HashCode>
+      <HashCode>AAAAAAAAAGQAABAEAAiIAAACAACAAAAAAAAAAQAoAAA=</HashCode>
+      <FileName>MailToAdmin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Cozify.STATS">
+    <Position X="24.5" Y="4.75" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEKGAAAAAAAACEAAACAAIAgAIGAAhAAQ0BACQ=</HashCode>
       <FileName>STATS.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.HABIT_CHECKER">
-    <Position X="5.75" Y="6.75" Width="1.5" />
+    <Position X="27" Y="4.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAGAQgAACCAEABABAMCIIEACYAABBAARABBQIQBACCA=</HashCode>
+      <HashCode>AAGAQgAACCAEABABAOCIIEACYAABBAARABBQIQBQCCA=</HashCode>
       <FileName>HABIT_CHECKER.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.JOURNAL">
-    <Position X="17" Y="6.75" Width="1.5" />
+    <Position X="30.5" Y="4.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ACAAAAAAAHAgABAQAwCAAAACQIAACAgAAAIABQUBAAE=</HashCode>
+      <HashCode>ACAAAAAAAHAgABAQAyCABAACQIAACAgAAAIABQURAAE=</HashCode>
       <FileName>JOURNAL.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.LOGIN">
-    <Position X="10.25" Y="6.75" Width="1.5" />
+    <Position X="35" Y="4.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
@@ -74,25 +148,21 @@
       <FileName>LOGIN.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="finals.MAIN_HUB" Collapsed="true">
-    <Position X="8" Y="4.25" Width="1.5" />
-    <InheritanceLine Type="Cozify.BaseForm" FixedToPoint="true">
-      <Path>
-        <Point X="12" Y="4.25" />
-        <Point X="12" Y="3.875" />
-        <Point X="8.438" Y="3.875" />
-        <Point X="8.438" Y="4.25" />
-      </Path>
-    </InheritanceLine>
+  <Class Name="finals.MAIN_HUB">
+    <Position X="19" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
-      <HashCode>IESIuAASrrSEAaEUISDcBqgOkACNCCgEgFJEAQBbhGA=</HashCode>
+      <HashCode>IHSIuAJSrrSEAbEcCSD8JrgKkACNCSgEgFNEiwDbpGA=</HashCode>
       <FileName>MAIN_HUB.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.POMODORO">
-    <Position X="8" Y="6.75" Width="1.5" />
+    <Position X="28.75" Y="4.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
     </Compartments>
     <NestedTypes>
       <Class Name="finals.POMODORO.PomodoroSettings" Collapsed="true">
@@ -107,36 +177,36 @@
     </TypeIdentifier>
   </Class>
   <Class Name="finals.Program" Collapsed="true">
-    <Position X="16.5" Y="4.25" Width="1.5" />
+    <Position X="32" Y="1.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="finals.TO_DO_LIST">
-    <Position X="19.25" Y="6.75" Width="1.5" />
+    <Position X="32.25" Y="4.75" Width="1.5" />
     <Compartments>
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAQQAAACAEGAAAAACAAAEiQAAAAIAAAAAAFQAAUAA=</HashCode>
+      <HashCode>AAAAQQAAACAEGAAAACCAAAEiQAAAAIAAAAAAFQAQUAA=</HashCode>
       <FileName>TO_DO_LIST.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Resources" Collapsed="true">
-    <Position X="16.5" Y="3.5" Width="1.5" />
+    <Position X="32" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QiYAgICAACIIBnxAQACFNMMAAYGwSEUByCYBNSEIQJg=</HashCode>
+      <HashCode>QiYAgICAACIIBnxASACFNMMAAZGwSMUByCYBNSEIQJg=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Settings" Collapsed="true">
-    <Position X="18.5" Y="3" Width="1.5" />
+    <Position X="30.25" Y="3" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="System.Windows.Forms.Form" Collapsed="true">
-    <Position X="9.5" Y="2.25" Width="1.5" />
+    <Position X="26" Y="1.75" Width="1.5" />
     <TypeIdentifier />
   </Class>
   <Font Name="Segoe UI" Size="9" />

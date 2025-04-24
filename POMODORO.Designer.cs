@@ -80,9 +80,9 @@
             this.numBreak.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numBreak.Font = new System.Drawing.Font("Pixeltype", 25F);
             this.numBreak.ForeColor = System.Drawing.SystemColors.Window;
-            this.numBreak.Location = new System.Drawing.Point(117, 71);
+            this.numBreak.Location = new System.Drawing.Point(110, 71);
             this.numBreak.Name = "numBreak";
-            this.numBreak.Size = new System.Drawing.Size(49, 30);
+            this.numBreak.Size = new System.Drawing.Size(53, 30);
             this.numBreak.TabIndex = 10;
             this.numBreak.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -103,9 +103,9 @@
             this.numSession.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.numSession.Font = new System.Drawing.Font("Pixeltype", 25F);
             this.numSession.ForeColor = System.Drawing.SystemColors.Window;
-            this.numSession.Location = new System.Drawing.Point(62, 21);
+            this.numSession.Location = new System.Drawing.Point(56, 21);
             this.numSession.Name = "numSession";
-            this.numSession.Size = new System.Drawing.Size(49, 30);
+            this.numSession.Size = new System.Drawing.Size(55, 30);
             this.numSession.TabIndex = 8;
             this.numSession.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 

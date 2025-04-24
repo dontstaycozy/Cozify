@@ -1458,9 +1458,9 @@ namespace Cozify//database helper
         public class DailyTaskData
         {
             public DateTime Date { get; set; }
-            public int TotalTasks { get; set; }       // Total tasks created that day
-            public int CompletedTasks { get; set; }   // Tasks marked done that day
-            public int PendingTasks => TotalTasks - CompletedTasks;
+            public int TotalTasks { get; set; }       // Total tasks created that day (including deleted)
+            public int CompletedTasks { get; set; }   // Tasks marked done that day (including deleted)
+            public int ActivePendingTasks => TotalTasks - CompletedTasks; // Renamed to be clearer
         }
         public List<DailyTaskData> GetThisWeeksTaskData(string username)
         {
@@ -1470,22 +1470,20 @@ namespace Cozify//database helper
             DateTime weekStart = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
             DateTime weekEnd = weekStart.AddDays(6);
 
-            // Debug output to verify date range
             Console.WriteLine($"Querying tasks between {weekStart:yyyy-MM-dd} and {weekEnd:yyyy-MM-dd}");
 
             using (OleDbConnection conn = new OleDbConnection(connectionString))
             {
                 conn.Open();
 
-                // Alternative query that works better with Access
                 string query = @"
-            SELECT 
-                TaskDateAdded,
-                isDone
-            FROM [ToDo List Table] 
-            WHERE Username = ?
-            AND isTaskDeleted = False
-            AND TaskDateAdded BETWEEN ? AND ?";
+                        SELECT 
+                            TaskDateAdded,
+                            isDone,
+                            isTaskDeleted
+                        FROM [ToDo List Table] 
+                        WHERE Username = ?
+                        AND TaskDateAdded BETWEEN ? AND ?";
 
                 using (OleDbCommand cmd = new OleDbCommand(query, conn))
                 {
@@ -1493,7 +1491,7 @@ namespace Cozify//database helper
                     cmd.Parameters.AddWithValue("?", weekStart);
                     cmd.Parameters.AddWithValue("?", weekEnd);
 
-                    var rawData = new List<(DateTime Date, bool IsDone)>();
+                    var rawData = new List<(DateTime Date, bool IsDone, bool IsDeleted)>();
 
                     using (OleDbDataReader reader = cmd.ExecuteReader())
                     {
@@ -1501,7 +1499,8 @@ namespace Cozify//database helper
                         {
                             rawData.Add((
                                 Convert.ToDateTime(reader["TaskDateAdded"]),
-                                Convert.ToBoolean(reader["isDone"])
+                                Convert.ToBoolean(reader["isDone"]),
+                                Convert.ToBoolean(reader["isTaskDeleted"])
                             ));
                         }
                     }
@@ -1512,8 +1511,8 @@ namespace Cozify//database helper
                         .Select(g => new DailyTaskData
                         {
                             Date = g.Key,
-                            TotalTasks = g.Count(),
-                            CompletedTasks = g.Count(x => x.IsDone)
+                            TotalTasks = g.Count(), // includes all tasks (deleted and not deleted)
+                            CompletedTasks = g.Count(x => x.IsDone) // count ALL completed tasks, including deleted ones
                         })
                         .ToList();
                 }
@@ -1533,11 +1532,10 @@ namespace Cozify//database helper
                 }
             }
 
-            // Debug output to verify retrieved data
             Console.WriteLine("Retrieved data:");
             foreach (var day in weeklyData.OrderBy(d => d.Date))
             {
-                Console.WriteLine($"{day.Date:yyyy-MM-dd (ddd)}: {day.CompletedTasks} completed");
+                Console.WriteLine($"{day.Date:yyyy-MM-dd (ddd)}: {day.CompletedTasks} completed (including deleted) out of {day.TotalTasks} total tasks");
             }
 
             return weeklyData.OrderBy(d => d.Date).ToList();
@@ -1778,13 +1776,13 @@ namespace Cozify//database helper
             totalScore += currentStreakSum;
 
             if (totalScore >= 90)
-                return "🔥 Super Productive!";
+                return "Super Productive!";
             else if (totalScore >= 60)
-                return "💪 Doing Great!";
+                return "Doing Great!";
             else if (totalScore >= 30)
-                return "🙂 Keep Going!";
+                return "Keep Going!";
             else
-                return "😴 Time to Refocus!";
+                return "Time to Refocus!";
         }
 
         public void LoadUserStats(Label UserTimeSpent, Label TimesLaunched)

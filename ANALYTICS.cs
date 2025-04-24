@@ -61,41 +61,58 @@ namespace Cozify
                 return;
             }
 
-            // Clear existing elements
             mainChart.Series.Clear();
             mainChart.ChartAreas.Clear();
             mainChart.Titles.Clear();
             mainChart.Legends.Clear();
+            mainChart.BackColor = Color.FromArgb(34, 40, 49); // Cozy dark background
+            mainChart.BorderlineColor = Color.Transparent;
 
-            // Set up chart area
+            Font pixelFontSmall = new Font("Pixeltype", 18, FontStyle.Regular);
+            Font pixelFontLabel = new Font("Pixeltype", 18, FontStyle.Regular);
+            Font pixelFontTitle = new Font("Pixeltype", 20, FontStyle.Regular);
+
             var area = new ChartArea("MainArea")
             {
+                BackColor = Color.FromArgb(34, 40, 49),
+                BorderColor = Color.Transparent,
                 AxisX =
         {
             Title = "Date",
-            Interval = 1,
-            IntervalType = DateTimeIntervalType.Days,
-            LabelStyle = { Format = "MMM dd" }
+            TitleFont = pixelFontLabel,
+            TitleForeColor = Color.WhiteSmoke,
+            LineColor = Color.LightGray,
+            LabelStyle = { ForeColor = Color.WhiteSmoke, Font = pixelFontSmall, Format = "MMM dd" },
+            MajorGrid = { LineColor = Color.FromArgb(64, 64, 64) }
         },
                 AxisY =
         {
             Title = "Minutes",
+            TitleFont = pixelFontLabel,
+            TitleForeColor = Color.WhiteSmoke,
+            LineColor = Color.LightGray,
+            LabelStyle = { ForeColor = Color.WhiteSmoke, Font = pixelFontSmall },
+            MajorGrid = { LineColor = Color.FromArgb(64, 64, 64) },
             Minimum = 0
         },
                 AxisY2 =
         {
             Title = "Sessions",
+            TitleFont = pixelFontLabel,
+            TitleForeColor = Color.WhiteSmoke,
+            LineColor = Color.LightGray,
+            LabelStyle = { ForeColor = Color.WhiteSmoke, Font = pixelFontSmall },
+            MajorGrid = { LineColor = Color.FromArgb(64, 64, 64) },
             Minimum = 0,
             Enabled = AxisEnabled.True
         }
             };
             mainChart.ChartAreas.Add(area);
 
-            // Create series
             var workSeries = new Series("Work Time")
             {
                 ChartType = SeriesChartType.Column,
-                Color = Color.FromArgb(76, 175, 80),
+                Color = Color.FromArgb(129, 199, 132),
                 XValueType = ChartValueType.Date,
                 YValueType = ChartValueType.Int32
             };
@@ -103,7 +120,7 @@ namespace Cozify
             var breakSeries = new Series("Break Time")
             {
                 ChartType = SeriesChartType.Column,
-                Color = Color.FromArgb(244, 67, 54),
+                Color = Color.FromArgb(239, 154, 154),
                 XValueType = ChartValueType.Date,
                 YValueType = ChartValueType.Int32
             };
@@ -111,7 +128,7 @@ namespace Cozify
             var sessionSeries = new Series("Sessions Completed")
             {
                 ChartType = SeriesChartType.Line,
-                Color = Color.FromArgb(33, 150, 243),
+                Color = Color.FromArgb(144, 202, 249),
                 BorderWidth = 2,
                 MarkerStyle = MarkerStyle.Circle,
                 MarkerSize = 8,
@@ -120,7 +137,6 @@ namespace Cozify
                 YAxisType = AxisType.Secondary
             };
 
-            // Add data points
             foreach (var day in dailyData)
             {
                 workSeries.Points.AddXY(day.Date, day.WorkMinutes);
@@ -128,30 +144,31 @@ namespace Cozify
                 sessionSeries.Points.AddXY(day.Date, day.CompletedSessions);
             }
 
-            // Add series to chart
             mainChart.Series.Add(workSeries);
             mainChart.Series.Add(breakSeries);
             mainChart.Series.Add(sessionSeries);
 
-            // Add title
-            mainChart.Titles.Add(new Title("Weekly Pomodoro Usage",
-                Docking.Top,
-                new Font("Segoe UI", 12, FontStyle.Bold),
-                Color.Black));
+            // Pixeltype title
+            mainChart.Titles.Add(new Title("Weekly Pomodoro Usage", Docking.Top, pixelFontTitle, Color.WhiteSmoke));
 
-            // Add legend
             var legend = new Legend
             {
                 Title = "Metrics",
+                Font = pixelFontSmall,
+                TitleFont = pixelFontLabel,
+                ForeColor = Color.WhiteSmoke,
+                TitleForeColor = Color.WhiteSmoke,
                 Docking = Docking.Right,
-                BackColor = Color.WhiteSmoke,
-                BorderColor = Color.LightGray
+                BackColor = Color.FromArgb(45, 50, 60),
+                BorderColor = Color.Gray
             };
             mainChart.Legends.Add(legend);
+
             mainChart.Invalidate();
             mainChart.Visible = true;
             currentView.Visible = false;
         }
+
 
         private void btnHabitStreak_Click(object sender, EventArgs e)
         {
@@ -177,36 +194,36 @@ namespace Cozify
             {
                 Dock = DockStyle.Fill,
                 Padding = new Padding(10),
-                BackColor = Color.FromArgb(40, 56, 69)
+                BackColor = Color.FromArgb(34, 40, 49)
             };
 
             var table = new TableLayoutPanel
             {
                 ColumnCount = 8,
-                RowCount = 8, // Header row + 7 data rows
+                RowCount = 8,
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
                 BackColor = Color.FromArgb(52, 73, 91),
-                Dock = DockStyle.Fill, // Make the table fill the panel
-                AutoSize = false // Disable auto-sizing, we'll control the size
+                Dock = DockStyle.Fill,
+                AutoSize = false
             };
 
-            // Set equal width columns
             for (int i = 0; i < 8; i++)
-            {
                 table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5f));
-            }
 
-            // Set equal height rows
             for (int i = 0; i < 8; i++)
-            {
-                table.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / 8)); // Divide total height equally
-            }
+                table.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / 8));
 
-            // Add headers
+            // Define fonts
+            Font pixelHeaderFont = new Font("Pixeltype", 23, FontStyle.Bold);
+            Font pixelWeekFont = new Font("Pixeltype", 14, FontStyle.Regular);
+            Font pixelSummaryFont = new Font("Pixeltype", 20, FontStyle.Italic);
+            Font pixelDayFont = new Font("Pixeltype", 13, FontStyle.Regular);
+
+            // Add header
             table.Controls.Add(new Label
             {
                 Text = "Week",
-                Font = new Font("Pixeltype", 23, FontStyle.Bold),
+                Font = pixelHeaderFont,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Dock = DockStyle.Fill,
                 ForeColor = Color.White,
@@ -214,7 +231,6 @@ namespace Cozify
                 BorderStyle = BorderStyle.FixedSingle
             }, 0, 0);
 
-            // Show last 7 weeks
             DateTime today = DateTime.Today;
             DateTime startDate = today.AddDays(-(7 * 6));
 
@@ -222,13 +238,12 @@ namespace Cozify
             {
                 DateTime weekStart = startDate.AddDays(week * 7);
 
-                // Week label
                 var weekLabel = new Label
                 {
                     Text = $"{weekStart:MMM dd}\n{weekStart.AddDays(6):MMM dd}",
                     TextAlign = ContentAlignment.MiddleCenter,
                     Dock = DockStyle.Fill,
-                    Font = new Font("Pixeltype", 14, FontStyle.Regular),
+                    Font = pixelWeekFont,
                     ForeColor = Color.White,
                     BackColor = Color.FromArgb(52, 73, 91),
                     BorderStyle = BorderStyle.FixedSingle
@@ -253,12 +268,12 @@ namespace Cozify
                         Text = date.Day.ToString(),
                         Dock = DockStyle.Fill,
                         TextAlign = ContentAlignment.MiddleCenter,
+                        Font = pixelDayFont,
                         ForeColor = date.Date == today.Date ? Color.Yellow : Color.White,
                         BackColor = Color.Transparent
                     };
                     dayPanel.Controls.Add(dayLabel);
 
-                    // Build detailed tooltip
                     var tooltip = new StringBuilder();
                     tooltip.AppendLine($"{date:yyyy-MM-dd (dddd)}");
 
@@ -273,9 +288,7 @@ namespace Cozify
                     }
 
                     if (streakData.HabitStreaks.Count > 0)
-                    {
                         tooltip.AppendLine($"\nCompletion: {completedCount}/{streakData.HabitStreaks.Count} habits");
-                    }
 
                     new ToolTip().SetToolTip(dayPanel, tooltip.ToString());
 
@@ -291,15 +304,14 @@ namespace Cozify
             panel.Controls.Add(table);
             currentView.Controls.Add(panel);
 
-            // Add summary label below the calendar
             var summaryLabel = new Label
             {
                 Text = $"Showing last 7 weeks of habit completion\n" +
-               $"Current streak: {streakData.TotalCurrentStreak} days | " +
-               $"Longest streak: {streakData.TotalLongestStreak} days",
+                       $"Current streak: {streakData.TotalCurrentStreak} days | " +
+                       $"Longest streak: {streakData.TotalLongestStreak} days",
                 Dock = DockStyle.Bottom,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Pixeltype", 20, FontStyle.Italic),
+                Font = pixelSummaryFont,
                 Height = 40,
                 ForeColor = Color.White,
                 BackColor = Color.FromArgb(40, 56, 69)
@@ -308,6 +320,7 @@ namespace Cozify
             currentView.Visible = true;
             mainChart.Visible = false;
         }
+
 
         private Color GetDayColor(StreakAnalyticsData streakData, DateTime date)
         {
@@ -333,80 +346,122 @@ namespace Cozify
 
         private void btnTasksDoneThisWeek_Click(object sender, EventArgs e)
         {
+            LoadTaskData();
+        }
+        private void LoadTaskData()
+        {
             try
             {
                 var weeklyData = db.GetThisWeeksTaskData(GlobalUser.LoggedInUsername);
 
-                // Clear existing elements
+                // Clear chart
                 mainChart.Series.Clear();
                 mainChart.ChartAreas.Clear();
                 mainChart.Titles.Clear();
                 mainChart.Legends.Clear();
 
+                // Define fonts
+                Font pixelFontSmall = new Font("Pixeltype", 16, FontStyle.Regular);
+                Font pixelFontLabel = new Font("Pixeltype", 18, FontStyle.Regular);
+                Font pixelFontTitle = new Font("Pixeltype", 20, FontStyle.Regular);
+
                 // Set up chart area
-                var area = new ChartArea("TasksArea")
-                {
-                    AxisX =
-            {
-                Title = "Day",
-                Interval = 1,
-                IntervalType = DateTimeIntervalType.Days,
-                LabelStyle =
-                {
-                    Format = "ddd",
-                    Font = new Font("Arial", 8, FontStyle.Bold)
-                }
-            },
-                    AxisY =
-            {
-                Title = "Tasks Completed",
-                Minimum = 0,
-                MajorGrid = { Interval = 1 }
-            }
-                };
+                var area = new ChartArea("TasksArea");
+                area.BackColor = Color.FromArgb(34, 40, 49);
+
+                area.AxisX.Title = "Day";
+                area.AxisX.TitleForeColor = Color.White;
+                area.AxisX.TitleFont = pixelFontLabel;
+                area.AxisX.Interval = 1;
+                area.AxisX.IntervalType = DateTimeIntervalType.Days;
+                area.AxisX.LabelStyle.Format = "ddd";
+                area.AxisX.LabelStyle.Font = pixelFontSmall;
+                area.AxisX.LabelStyle.ForeColor = Color.White;
+                area.AxisX.LineColor = Color.White;
+                area.AxisX.MajorGrid.LineColor = Color.FromArgb(52, 73, 91);
+
+                area.AxisY.Title = "Number of Tasks";
+                area.AxisY.TitleForeColor = Color.White;
+                area.AxisY.TitleFont = pixelFontLabel;
+                area.AxisY.Minimum = 0;
+                area.AxisY.LabelStyle.Font = pixelFontSmall;
+                area.AxisY.LabelStyle.ForeColor = Color.White;
+                area.AxisY.LineColor = Color.White;
+                area.AxisY.MajorGrid.LineColor = Color.FromArgb(52, 73, 91);
+
+                area.AxisX.MajorTickMark.LineColor = Color.White;
+                area.AxisY.MajorTickMark.LineColor = Color.White;
+
                 mainChart.ChartAreas.Add(area);
 
-                // Add completed tasks series
+                // Series for completed tasks
                 var completedSeries = new Series("Completed Tasks")
                 {
-                    ChartType = SeriesChartType.Column,
-                    Color = Color.FromArgb(76, 175, 80),
+                    ChartType = SeriesChartType.StackedColumn,
+                    Color = Color.FromArgb(88, 214, 141), // Green for completed
                     XValueType = ChartValueType.DateTime,
                     YValueType = ChartValueType.Int32,
                     IsValueShownAsLabel = true,
                     LabelFormat = "{0}",
-                    Font = new Font("Arial", 8, FontStyle.Bold),
-                    ToolTip = "Date: #AXISLABEL\nCompleted: #VAL tasks"
+                    Font = pixelFontSmall,
+                    LabelForeColor = Color.White,
+                    ToolTip = "Date: #AXISLABEL\nCompleted: #VAL tasks",
+                    
                 };
-
+                completedSeries.IsValueShownAsLabel = false;
+                
+                // Series for pending tasks
+                var pendingSeries = new Series("Pending Tasks")
+                {
+                    ChartType = SeriesChartType.StackedColumn,
+                    Color = Color.FromArgb(242, 76, 76), // Red for pending
+                    XValueType = ChartValueType.DateTime,
+                    YValueType = ChartValueType.Int32,
+                    IsValueShownAsLabel = true,
+                    LabelFormat = "{0}",
+                    Font = pixelFontSmall,
+                    LabelForeColor = Color.White,
+                    ToolTip = "Date: #AXISLABEL\nIncomplete: #VAL tasks"
+                };
+                pendingSeries.IsValueShownAsLabel = false;
                 // Add data points
                 foreach (var day in weeklyData)
                 {
                     completedSeries.Points.AddXY(day.Date, day.CompletedTasks);
+                    pendingSeries.Points.AddXY(day.Date, day.TotalTasks - day.CompletedTasks);
                 }
 
+                // Add series to chart (order matters for stacking)
+                mainChart.Series.Add(pendingSeries);
                 mainChart.Series.Add(completedSeries);
 
-                // Add title
+                // Title
                 if (weeklyData.Any())
                 {
                     string weekRange = $"{weeklyData.First().Date:MMM dd} - {weeklyData.Last().Date:MMM dd}";
-                    int weeklyTotal = weeklyData.Sum(d => d.CompletedTasks);
+                    int weeklyCompleted = weeklyData.Sum(d => d.CompletedTasks);
+                    int weeklyPending = weeklyData.Sum(d => d.TotalTasks - d.CompletedTasks);
 
-                    mainChart.Titles.Add(new Title($"Tasks Completed This Week\n{weekRange}\nTotal: {weeklyTotal} tasks",
+                    var chartTitle = new Title($"Task Completion This Week\n{weekRange}\nCompleted: {weeklyCompleted} | Incomplete: {weeklyPending}",
                         Docking.Top,
-                        new Font("Segoe UI", 10, FontStyle.Bold),
-                        Color.Black));
+                        pixelFontTitle,
+                        Color.White);
+                    mainChart.Titles.Add(chartTitle);
                 }
 
-                // Add legend
+                // Legend
                 var legend = new Legend
                 {
                     Docking = Docking.Bottom,
                     Alignment = StringAlignment.Center,
-                    Font = new Font("Arial", 9)
+                    Font = pixelFontSmall,
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(40, 56, 69)
                 };
                 mainChart.Legends.Add(legend);
+
+                // Chart background
+                mainChart.BackColor = Color.FromArgb(34, 40, 49);
 
                 mainChart.Invalidate();
                 mainChart.Visible = true;
@@ -417,8 +472,8 @@ namespace Cozify
                 MessageBox.Show($"Error loading task data: {ex.Message}", "Error",
                               MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
+
     }
 }
 

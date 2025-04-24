@@ -24,6 +24,7 @@ namespace Cozify
             int habitcount = db.HabitCount();
             int completedSessions = db.GetTotalCompletedSessions(GlobalUser.LoggedInUsername);
             int totalSeconds = db.GetTotalTimeSpent(GlobalUser.LoggedInUsername);
+            float pomoTimeSpent = totalSeconds/ 3600;
 
             lblStatUser.Text = $"{GlobalUser.LoggedInUsername}'s Activity";
             lblNoOfJournalEntries.Text = $"Journal Entries Written: {journalCount}";
@@ -31,9 +32,9 @@ namespace Cozify
             lblTotalTasksCompleted.Text = $"Total Completed Tasks: {totalCompletedToDoCount}";
             lblTotalHabitsAdded.Text = $"Total Habits Added: {habitcount}";
             lblPomoSessionsCompelted.Text = $"Pomodoro Sessions Completed: {completedSessions}";
-            lblTotalTimeSpentPomo.Text = $"Total Time Spent Using Pomodoro: {totalSeconds / 60} minutes";
+            lblTotalTimeSpentPomo.Text = $"Total Time Spent Using Pomodoro: {pomoTimeSpent} hrs";
             string ProductivityRating = db.GetWeeklyProductivityRating(GlobalUser.LoggedInUsername);
-            lblRating.Text = $"Weekly Productivity Rating: {ProductivityRating}";
+            lblRating.Text = $"{ProductivityRating}";
         }
 
         private void btnDeleteAcc_Click(object sender, EventArgs e)

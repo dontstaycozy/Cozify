@@ -29,6 +29,11 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.lblRating = new AntdUI.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.pbxRating = new System.Windows.Forms.PictureBox();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.lblTimesLaunchedCozify = new System.Windows.Forms.Label();
             this.lblTimeSpentCozify = new System.Windows.Forms.Label();
@@ -42,21 +47,73 @@
             this.btnDeleteAcc = new AntdUI.Button();
             this.btnClearAcc = new AntdUI.Button();
             this.btnShowStats = new AntdUI.Button();
-            this.lblRating = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
+            this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbxRating)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(73)))), ((int)(((byte)(91)))));
-            this.panel1.Controls.Add(this.lblRating);
+            this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.ForeColor = System.Drawing.Color.White;
             this.panel1.Location = new System.Drawing.Point(27, 64);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(823, 446);
             this.panel1.TabIndex = 0;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.panel4);
+            this.panel2.Controls.Add(this.panel3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel2.Location = new System.Drawing.Point(474, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(349, 446);
+            this.panel2.TabIndex = 2;
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.lblRating);
+            this.panel4.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panel4.Location = new System.Drawing.Point(0, 296);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(349, 150);
+            this.panel4.TabIndex = 3;
+            // 
+            // lblRating
+            // 
+            this.lblRating.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblRating.Font = new System.Drawing.Font("Pixeltype", 25F);
+            this.lblRating.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.lblRating.Location = new System.Drawing.Point(0, 0);
+            this.lblRating.Name = "lblRating";
+            this.lblRating.Size = new System.Drawing.Size(349, 41);
+            this.lblRating.TabIndex = 0;
+            this.lblRating.Text = "label1";
+            this.lblRating.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.pbxRating);
+            this.panel3.Location = new System.Drawing.Point(0, 3);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(349, 313);
+            this.panel3.TabIndex = 2;
+            // 
+            // pbxRating
+            // 
+            this.pbxRating.Image = global::Cozify.Properties.Resources.ALL_OF_THE_WEIRDEST_ANIMAL_CAFÉS_IN_SEOUL;
+            this.pbxRating.Location = new System.Drawing.Point(-194, -35);
+            this.pbxRating.Name = "pbxRating";
+            this.pbxRating.Size = new System.Drawing.Size(585, 333);
+            this.pbxRating.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbxRating.TabIndex = 3;
+            this.pbxRating.TabStop = false;
             // 
             // tableLayoutPanel1
             // 
@@ -65,11 +122,11 @@
             this.tableLayoutPanel1.Controls.Add(this.lblTimesLaunchedCozify, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.lblTimeSpentCozify, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.lblNoOfJournalEntries, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 0, 5);
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalTimeSpentPomo, 0, 6);
-            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 8);
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 9);
-            this.tableLayoutPanel1.Controls.Add(this.lblTotalHabitsAdded, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTimeSpentPomo, 0, 10);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalHabitsAdded, 0, 5);
+            this.tableLayoutPanel1.Controls.Add(this.lblTasksAdded, 0, 6);
+            this.tableLayoutPanel1.Controls.Add(this.lblTotalTasksCompleted, 0, 7);
+            this.tableLayoutPanel1.Controls.Add(this.lblPomoSessionsCompelted, 0, 8);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 12;
@@ -126,7 +183,7 @@
             this.lblPomoSessionsCompelted.AutoSize = true;
             this.lblPomoSessionsCompelted.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblPomoSessionsCompelted.ForeColor = System.Drawing.Color.White;
-            this.lblPomoSessionsCompelted.Location = new System.Drawing.Point(3, 200);
+            this.lblPomoSessionsCompelted.Location = new System.Drawing.Point(3, 320);
             this.lblPomoSessionsCompelted.Name = "lblPomoSessionsCompelted";
             this.lblPomoSessionsCompelted.Size = new System.Drawing.Size(222, 21);
             this.lblPomoSessionsCompelted.TabIndex = 35;
@@ -137,7 +194,7 @@
             this.lblTotalTimeSpentPomo.AutoSize = true;
             this.lblTotalTimeSpentPomo.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTotalTimeSpentPomo.ForeColor = System.Drawing.Color.White;
-            this.lblTotalTimeSpentPomo.Location = new System.Drawing.Point(3, 240);
+            this.lblTotalTimeSpentPomo.Location = new System.Drawing.Point(3, 400);
             this.lblTotalTimeSpentPomo.Name = "lblTotalTimeSpentPomo";
             this.lblTotalTimeSpentPomo.Size = new System.Drawing.Size(304, 21);
             this.lblTotalTimeSpentPomo.TabIndex = 36;
@@ -148,7 +205,7 @@
             this.lblTasksAdded.AutoSize = true;
             this.lblTasksAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTasksAdded.ForeColor = System.Drawing.Color.White;
-            this.lblTasksAdded.Location = new System.Drawing.Point(3, 320);
+            this.lblTasksAdded.Location = new System.Drawing.Point(3, 240);
             this.lblTasksAdded.Name = "lblTasksAdded";
             this.lblTasksAdded.Size = new System.Drawing.Size(203, 21);
             this.lblTasksAdded.TabIndex = 29;
@@ -159,7 +216,7 @@
             this.lblTotalTasksCompleted.AutoSize = true;
             this.lblTotalTasksCompleted.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTotalTasksCompleted.ForeColor = System.Drawing.Color.White;
-            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(3, 360);
+            this.lblTotalTasksCompleted.Location = new System.Drawing.Point(3, 280);
             this.lblTotalTasksCompleted.Name = "lblTotalTasksCompleted";
             this.lblTotalTasksCompleted.Size = new System.Drawing.Size(246, 21);
             this.lblTotalTasksCompleted.TabIndex = 30;
@@ -170,7 +227,7 @@
             this.lblTotalHabitsAdded.AutoSize = true;
             this.lblTotalHabitsAdded.Font = new System.Drawing.Font("Pixeltype", 20F);
             this.lblTotalHabitsAdded.ForeColor = System.Drawing.Color.White;
-            this.lblTotalHabitsAdded.Location = new System.Drawing.Point(3, 400);
+            this.lblTotalHabitsAdded.Location = new System.Drawing.Point(3, 200);
             this.lblTotalHabitsAdded.Name = "lblTotalHabitsAdded";
             this.lblTotalHabitsAdded.Size = new System.Drawing.Size(213, 21);
             this.lblTotalHabitsAdded.TabIndex = 34;
@@ -226,16 +283,6 @@
             this.btnShowStats.Text = "Show Stats";
             this.btnShowStats.Click += new System.EventHandler(this.btnShowStats_Click);
             // 
-            // lblRating
-            // 
-            this.lblRating.AutoSize = true;
-            this.lblRating.Font = new System.Drawing.Font("Pixeltype", 20F);
-            this.lblRating.Location = new System.Drawing.Point(475, 0);
-            this.lblRating.Name = "lblRating";
-            this.lblRating.Size = new System.Drawing.Size(66, 21);
-            this.lblRating.TabIndex = 1;
-            this.lblRating.Text = "label1";
-            // 
             // STATS
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -255,7 +302,10 @@
             this.Text = "STATS";
             this.Load += new System.EventHandler(this.STATS_Load);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
+            this.panel3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pbxRating)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
@@ -279,6 +329,10 @@
         private System.Windows.Forms.Label lblTotalTimeSpentPomo;
         private System.Windows.Forms.Label lblTotalHabitsAdded;
         private System.Windows.Forms.Label lblPomoSessionsCompelted;
-        private System.Windows.Forms.Label lblRating;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.PictureBox pbxRating;
+        private AntdUI.Label lblRating;
     }
 }

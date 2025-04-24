@@ -13,10 +13,12 @@ namespace finals
 {
     public partial class JOURNAL : BaseForm
     {
+
         public JOURNAL()
         {
             InitializeComponent();
             this.MouseDown += JOURNAL_MouseDown;
+
         }
 
         private void JOURNAL_Load(object sender, EventArgs e)
@@ -50,36 +52,51 @@ namespace finals
         private void btnAddJournalEntry_Click(object sender, EventArgs e)
         {
             lviewJournalEntries.SelectedItems.Clear();
-
-            string defaultTitle = "Enter Title";
-
-            tbxEntryTitle.Text = defaultTitle;
-            tbxJournalContent.Text = "Write something....";
-            tbxDateWritten.Text = DateTime.Now.ToString("MM/dd/yyyy");
-
-            if (!lviewJournalEntries.Items.Cast<ListViewItem>().Any(item => item.Text == defaultTitle))
-            {
-                lviewJournalEntries.Items.Add(new ListViewItem(defaultTitle));
-            }
-
+            ResetJournalFields();
             tbxEntryTitle.Focus();
+            tbxEntryTitle.SelectAll();
+        }
+
+        private void ResetJournalFields()
+        {
+            tbxEntryTitle.Text = "Enter Title";
+            tbxJournalContent.Text = "Write something...";
+            tbxDateWritten.Text = DateTime.Now.ToString("MM/dd/yyyy");
+            tbxEntryTitle.Focus();
+            tbxEntryTitle.SelectAll();
         }
 
         private void btnSaveEntry_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(tbxEntryTitle.Text) ||
+                tbxEntryTitle.Text == "Enter Title")
+            {
+                MessageBox.Show("Please enter a valid title!", "Error",
+                               MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                tbxEntryTitle.Focus();
+                return;
+            }
+
             string newTitle = tbxEntryTitle.Text.Trim();
             string newContent = tbxJournalContent.Text.Trim();
             string dateText = tbxDateWritten.Text;
-            string originalTitle = lviewJournalEntries.SelectedItems.Count > 0
-                ? lviewJournalEntries.SelectedItems[0].Text
-                : null;
+
+            bool isEditing = lviewJournalEntries.SelectedItems.Count > 0;
+            string originalTitle = isEditing ? lviewJournalEntries.SelectedItems[0].Text : null;
 
             db.SaveJournal(newTitle, newContent, dateText, originalTitle);
 
-            MessageBox.Show("Journal entry saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+            MessageBox.Show("Journal entry saved successfully!", "Success",
+                           MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoadJournalEntries();
-            ResetJournalFields();
+
+            var savedItem = lviewJournalEntries.Items.Cast<ListViewItem>()
+                              .FirstOrDefault(item => item.Text == newTitle);
+            if (savedItem != null)
+            {
+                savedItem.Selected = true;
+                savedItem.EnsureVisible();
+            }
         }
 
         private void btnDeleteEntry_Click(object sender, EventArgs e)
@@ -95,13 +112,6 @@ namespace finals
             db.DeleteJournalEntry(entryTitle);
             LoadJournalEntries();
             ResetJournalFields();
-        }
-
-        private void ResetJournalFields()
-        {
-            tbxEntryTitle.Text = "Enter Title";
-            tbxJournalContent.Text = "Write something....";
-            tbxDateWritten.Text = DateTime.Now.ToString("MM/dd/yyyy");
         }
 
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]

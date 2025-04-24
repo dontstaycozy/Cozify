@@ -102,6 +102,16 @@ namespace Cozify.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ALL_OF_THE_WEIRDEST_ANIMAL_CAFÉS_IN_SEOUL {
+            get {
+                object obj = ResourceManager.GetObject("ALL OF THE WEIRDEST ANIMAL CAFÉS IN SEOUL", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ana_luiza_speda_raposinha {
             get {
                 object obj = ResourceManager.GetObject("ana-luiza-speda-raposinha", resourceCulture);
@@ -695,6 +705,16 @@ namespace Cozify.Properties {
         internal static System.Drawing.Bitmap Voice {
             get {
                 object obj = ResourceManager.GetObject("Voice", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap WORKING_HARD1 {
+            get {
+                object obj = ResourceManager.GetObject("WORKING HARD1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
