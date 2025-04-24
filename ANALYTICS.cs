@@ -40,9 +40,18 @@ namespace Cozify
                 Visible = false
             };
             pnlChartContainer.Controls.Add(currentView);
+
+            // Ensure the chart is on top in the Z-order
+            mainChart.BringToFront();
         }
 
         private void btnPomoUsage_Click(object sender, EventArgs e)
+        {
+            LoadPomoUsage();
+            mainChart.Visible = true;
+            currentView.Visible = false;
+        }
+        private void LoadPomoUsage()
         {
             var dailyData = db.GetDailyPomodoroData(GlobalUser.LoggedInUsername);
 
@@ -139,10 +148,10 @@ namespace Cozify
                 BorderColor = Color.LightGray
             };
             mainChart.Legends.Add(legend);
-
             mainChart.Invalidate();
+            mainChart.Visible = true;
+            currentView.Visible = false;
         }
-
 
         private void btnHabitStreak_Click(object sender, EventArgs e)
         {
@@ -150,6 +159,8 @@ namespace Cozify
             {
                 var streakData = db.GetHabitStreakData(GlobalUser.LoggedInUsername);
                 Show7WeekStreakCalendar(streakData);
+                mainChart.Visible = false;
+                currentView.Visible = true;
             }
             catch (Exception ex)
             {
@@ -160,58 +171,67 @@ namespace Cozify
 
         private void Show7WeekStreakCalendar(StreakAnalyticsData streakData)
         {
-            pnlChartContainer.Controls.Clear();
+            currentView.Controls.Clear();
+
             var panel = new Panel
             {
                 Dock = DockStyle.Fill,
-                AutoScroll = true,
-                Padding = new Padding(10)
+                Padding = new Padding(10),
+                BackColor = Color.FromArgb(40, 56, 69)
             };
 
             var table = new TableLayoutPanel
             {
-                AutoSize = true,
-                ColumnCount = 8, // Week + 7 days
+                ColumnCount = 8,
+                RowCount = 8, // Header row + 7 data rows
                 CellBorderStyle = TableLayoutPanelCellBorderStyle.Single,
-                BackColor = Color.White,
-                Dock = DockStyle.Fill
+                BackColor = Color.FromArgb(52, 73, 91),
+                Dock = DockStyle.Fill, // Make the table fill the panel
+                AutoSize = false // Disable auto-sizing, we'll control the size
             };
 
-            // Set column widths
-            table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 70)); // Week column
-            for (int i = 0; i < 7; i++)
+            // Set equal width columns
+            for (int i = 0; i < 8; i++)
             {
-               // table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 40)); // Day columns
-                table.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 50));
+                table.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.5f));
             }
 
-            // Add headers with better styling
+            // Set equal height rows
+            for (int i = 0; i < 8; i++)
+            {
+                table.RowStyles.Add(new RowStyle(SizeType.Percent, 100f / 8)); // Divide total height equally
+            }
+
+            // Add headers
             table.Controls.Add(new Label
             {
                 Text = "Week",
-                Font = new Font("Arial", 9, FontStyle.Bold),
+                Font = new Font("Pixeltype", 23, FontStyle.Bold),
                 TextAlign = ContentAlignment.MiddleCenter,
-                Dock = DockStyle.Fill
+                Dock = DockStyle.Fill,
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(52, 73, 91),
+                BorderStyle = BorderStyle.FixedSingle
             }, 0, 0);
 
-            // Show last 7 weeks (including current week)
+            // Show last 7 weeks
             DateTime today = DateTime.Today;
-            DateTime startDate = today.AddDays(-(7 * 6)); // 6 weeks back + current week = 7 weeks total
+            DateTime startDate = today.AddDays(-(7 * 6));
 
             for (int week = 0; week < 7; week++)
             {
-                table.RowCount++;
-                table.RowStyles.Add(new RowStyle(SizeType.Absolute, 40)); // Fixed row height
-
                 DateTime weekStart = startDate.AddDays(week * 7);
 
-                // Week label with start-end dates
+                // Week label
                 var weekLabel = new Label
                 {
                     Text = $"{weekStart:MMM dd}\n{weekStart.AddDays(6):MMM dd}",
                     TextAlign = ContentAlignment.MiddleCenter,
                     Dock = DockStyle.Fill,
-                    Font = new Font("Arial", 8)
+                    Font = new Font("Pixeltype", 14, FontStyle.Regular),
+                    ForeColor = Color.White,
+                    BackColor = Color.FromArgb(52, 73, 91),
+                    BorderStyle = BorderStyle.FixedSingle
                 };
                 table.Controls.Add(weekLabel, 0, week + 1);
 
@@ -223,7 +243,9 @@ namespace Cozify
                         BackColor = GetDayColor(streakData, date),
                         Margin = new Padding(0),
                         Tag = date,
-                        Cursor = Cursors.Hand
+                        Cursor = Cursors.Hand,
+                        Dock = DockStyle.Fill,
+                        BorderStyle = BorderStyle.FixedSingle
                     };
 
                     var dayLabel = new Label
@@ -231,7 +253,8 @@ namespace Cozify
                         Text = date.Day.ToString(),
                         Dock = DockStyle.Fill,
                         TextAlign = ContentAlignment.MiddleCenter,
-                        ForeColor = date.Date == today.Date ? Color.Red : Color.Black // Highlight today
+                        ForeColor = date.Date == today.Date ? Color.Yellow : Color.White,
+                        BackColor = Color.Transparent
                     };
                     dayPanel.Controls.Add(dayLabel);
 
@@ -256,7 +279,6 @@ namespace Cozify
 
                     new ToolTip().SetToolTip(dayPanel, tooltip.ToString());
 
-                    // Add click event if you want to make days interactive
                     dayPanel.Click += (sender, e) =>
                     {
                         MessageBox.Show(tooltip.ToString(), $"{date:yyyy-MM-dd} Details");
@@ -267,40 +289,41 @@ namespace Cozify
             }
 
             panel.Controls.Add(table);
-            pnlChartContainer.Controls.Add(panel);
+            currentView.Controls.Add(panel);
 
-            // Add summary label at the bottom
+            // Add summary label below the calendar
             var summaryLabel = new Label
             {
                 Text = $"Showing last 7 weeks of habit completion\n" +
-                       $"Current streak: {streakData.TotalCurrentStreak} days | " +
-                       $"Longest streak: {streakData.TotalLongestStreak} days",
+               $"Current streak: {streakData.TotalCurrentStreak} days | " +
+               $"Longest streak: {streakData.TotalLongestStreak} days",
                 Dock = DockStyle.Bottom,
                 TextAlign = ContentAlignment.MiddleCenter,
-                Font = new Font("Arial", 9, FontStyle.Italic),
-                Height = 40
+                Font = new Font("Pixeltype", 20, FontStyle.Italic),
+                Height = 40,
+                ForeColor = Color.White,
+                BackColor = Color.FromArgb(40, 56, 69)
             };
-            pnlChartContainer.Controls.Add(summaryLabel);
+            currentView.Controls.Add(summaryLabel);
+            currentView.Visible = true;
+            mainChart.Visible = false;
         }
 
         private Color GetDayColor(StreakAnalyticsData streakData, DateTime date)
         {
             if (streakData.HabitStreaks.Count == 0)
-                return Color.LightGray;
+                return Color.FromArgb(40, 56, 69);
 
             int completedHabits = streakData.HabitStreaks
                 .Count(h => h.CompletionHistory.TryGetValue(date.Date, out bool completed) && completed);
 
             if (completedHabits == 0)
-                return Color.FromArgb(255, 230, 230); // Light red for 0%
+                return Color.FromArgb(40, 56, 69);
 
-            double completionRatio = (double)completedHabits / streakData.HabitStreaks.Count;
+            double ratio = (double)completedHabits / streakData.HabitStreaks.Count;
 
-            // Gradient from red (0%) to green (100%)
-            return Color.FromArgb(
-                255 - (int)(155 * completionRatio),    // Red component decreases
-                255 - (int)(155 * (1 - completionRatio)), // Green component increases
-                230);
+            int greenBlue = (int)(230 - (230 * ratio)); // from 230 down to 0
+            return Color.FromArgb(255, greenBlue, greenBlue); // Stays red, fades green/blue
         }
 
         private void btnCloseAnalytics_Click(object sender, EventArgs e)
@@ -386,12 +409,15 @@ namespace Cozify
                 mainChart.Legends.Add(legend);
 
                 mainChart.Invalidate();
+                mainChart.Visible = true;
+                currentView.Visible = false;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Error loading task data: {ex.Message}", "Error",
                               MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+
         }
     }
 }

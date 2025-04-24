@@ -28,226 +28,39 @@ namespace Cozify//database helper
     public class dbHelper
     {
         private static readonly string connectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source = C:\\Users\\fredwil\\Desktop\\Cozify Project\\CozifyUsers.accdb";
-        OleDbConnection myConn;
-        OleDbDataAdapter da;
-        OleDbCommand cmd;
-        DataSet ds;
+
+        private OleDbConnection myConn;
+        private OleDbDataAdapter da;
+        private OleDbCommand cmd;
+        private DataSet ds;
 
         public void connectionTest()
         {
-            myConn = new OleDbConnection(connectionString);
-            ds = new DataSet();
-            myConn.Open();
-            MessageBox.Show("Connected successfully!");
-            myConn.Close();
+            try
+            {
+                using (myConn = new OleDbConnection(connectionString))
+                {
+                    myConn.Open();
+                    MessageBox.Show("Connected successfully!");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Connection failed: {ex.Message}");
+            }
         }
-    //    public bool ExecuteNonQuery(string query, Dictionary<string, object> parameters = null)
-    //    {
-    //        using (myConn = new OleDbConnection(connectionString))
-    //        {
-    //            using (cmd = new OleDbCommand(query, myConn))
-    //            {
-    //                if (parameters != null)
-    //                {
-    //                    foreach (var param in parameters)
-    //                    {
-    //                        cmd.Parameters.AddWithValue(param.Key, param.Value);
-    //                    }
-    //                }
-    //                try
-    //                {
-    //                    myConn.Open();
-    //                    int rowsAffected = cmd.ExecuteNonQuery();
-    //                    return rowsAffected > 0;
-    //                }
-    //                catch (OleDbException ex)
-    //                {
-    //                    MessageBox.Show("Error executing query: " + ex.Message);
-    //                    return false; // Or throw the exception if you want the caller to handle it
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    // Method to execute queries and return a DataTable
-    //    public DataTable ExecuteQuery(string query, Dictionary<string, object> parameters = null)
-    //    {
-    //        using (myConn = new OleDbConnection(connectionString))
-    //        {
-    //            using (cmd = new OleDbCommand(query, myConn))
-    //            {
-    //                if (parameters != null)
-    //                {
-    //                    foreach (var param in parameters)
-    //                    {
-    //                        cmd.Parameters.AddWithValue(param.Key, param.Value);
-    //                    }
-    //                }
-    //                using (da = new OleDbDataAdapter(cmd))
-    //                {
-    //                    DataTable dt = new DataTable();
-    //                    try
-    //                    {
-    //                        myConn.Open();
-    //                        da.Fill(dt);
-    //                    }
-    //                    catch (OleDbException ex)
-    //                    {
-    //                        MessageBox.Show("Error executing query: " + ex.Message);
-    //                        return null; // Or throw the exception
-    //                    }
-    //                    return dt;
-    //                }
-    //            }
-    //        }
-    //    }
-
-    //    public int GetLastInsertId()
-    //    {
-    //        string query = "SELECT @@IDENTITY";
-    //        DataTable result = ExecuteQuery(query);
-    //        if (result != null && result.Rows.Count > 0)
-    //        {
-    //            return Convert.ToInt32(result.Rows[0][0]);
-    //        }
-    //        return -1;
-    //    }
-
-    //    // Method to add a new track to the MusicTracks table
-    //    public bool AddTrack(string username, string title, string artist, string filePath)
-    //    {
-    //        string query = "INSERT INTO MusicTracks (Username, Title, Artist, FilePath) VALUES (@Username, @Title, @Artist, @FilePath)";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@Username", username },
-    //            { "@Title", title },
-    //            { "@Artist", artist },
-    //            { "@FilePath", filePath }
-    //        };
-    //        return ExecuteNonQuery(query, parameters);
-    //    }
-
-    //    // Method to get all tracks for a specific user
-    //    public DataTable GetUserTracks(string username)
-    //    {
-    //        string query = "SELECT TrackID, Title, Artist, FilePath FROM MusicTracks WHERE Username = @Username";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@Username", username }
-    //        };
-    //        return ExecuteQuery(query, parameters);
-    //    }
-
-    //    // Method to add a new playlist
-    //    public int AddPlaylist(string username, string playlistName)
-    //    {
-    //        string query = "INSERT INTO Playlists (Username, PlaylistName) VALUES (@Username, @PlaylistName)";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //{
-    //    { "@Username", username },
-    //    { "@PlaylistName", playlistName }
-    //};
-
-    //        if (ExecuteNonQuery(query, parameters))
-    //        {
-    //            return GetLastInsertId();
-    //        }
-    //        return -1;
-    //    }
-
-    //    // Method to add a track to a playlist
-    //    public bool AddTrackToPlaylist(int playlistId, int trackId)
-    //    {
-    //         string query = "INSERT INTO PlaylistTracks (PlaylistID, TrackID) VALUES (@PlaylistID, @TrackID)";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@PlaylistID", playlistId },
-    //            { "@TrackID", trackId }
-    //        };
-    //        return ExecuteNonQuery(query, parameters);
-    //    }
-
-    //    // Method to get all playlists for a user.
-    //    public DataTable GetUserPlaylists(string username)
-    //    {
-    //        string query = "SELECT PlaylistID, PlaylistName FROM Playlists WHERE Username = @Username";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@Username", username }
-    //        };
-    //        return ExecuteQuery(query, parameters);
-    //    }
-
-    //    // Method to get tracks in a playlist
-    //    public DataTable GetTracksInPlaylist(int playlistId)
-    //    {
-    //        string query = @"SELECT mt.TrackID, mt.Title, mt.Artist, mt.FilePath
-    //                FROM MusicTracks AS mt
-    //                INNER JOIN PlaylistTracks AS pt ON mt.TrackID = pt.TrackID
-    //                WHERE pt.PlaylistID = @PlaylistID";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@PlaylistID", playlistId }
-    //        };
-    //        return ExecuteQuery(query, parameters);
-    //    }
-
-    //    // Method to delete a playlist
-    //    public bool DeletePlaylist(int playlistId)
-    //    {
-    //        //  Consider deleting related tracks in PlaylistTracks first (ON DELETE CASCADE would be better in the database, but we'll handle it here)
-    //        string deletePlaylistTracksQuery = "DELETE FROM PlaylistTracks WHERE PlaylistID = @PlaylistID";
-    //        Dictionary<string, object> deletePlaylistTracksParams = new Dictionary<string, object>
-    //        {
-    //            { "@PlaylistID", playlistId }
-    //        };
-
-    //        ExecuteNonQuery(deletePlaylistTracksQuery, deletePlaylistTracksParams); // Delete tracks from join table
-
-    //        // Now delete the playlist itself
-    //        string deletePlaylistQuery = "DELETE FROM Playlists WHERE PlaylistID = @PlaylistID";
-    //        Dictionary<string, object> deletePlaylistParams = new Dictionary<string, object>
-    //        {
-    //            { "@PlaylistID", playlistId }
-    //        };
-    //        return ExecuteNonQuery(deletePlaylistQuery, deletePlaylistParams);
-    //    }
-
-    //    // Method to delete a track from a playlist
-    //    public bool DeleteTrackFromPlaylist(int playlistId, int trackId)
-    //    {
-    //        string query = "DELETE FROM PlaylistTracks WHERE PlaylistID = @PlaylistID AND TrackID = @TrackID";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@PlaylistID", playlistId },
-    //            { "@TrackID", trackId }
-    //        };
-    //        return ExecuteNonQuery(query, parameters);
-    //    }
-
-    //    // Method to edit track details
-    //    public bool EditTrack(int trackId, string title, string artist)
-    //    {
-    //        string query = "UPDATE MusicTracks SET Title = @Title, Artist = @Artist WHERE TrackID = @TrackID";
-    //        Dictionary<string, object> parameters = new Dictionary<string, object>
-    //        {
-    //            { "@TrackID", trackId },
-    //            { "@Title", title },
-    //            { "@Artist", artist }
-    //        };
-    //        return ExecuteNonQuery(query, parameters);
-    //    }
 
         public void DeleteAcc()
         {
             string username = GlobalUser.LoggedInUsername;
 
-            DialogResult result = MessageBox.Show("Are you sure you want to delete your account? This action cannot be undone.",
-                                                  "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result != DialogResult.Yes)
-            {
-                return;
-            }
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to delete your account? This action cannot be undone.",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes) return;
 
             try
             {
@@ -255,58 +68,53 @@ namespace Cozify//database helper
                 {
                     conn.Open();
 
-                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
-                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
-                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
-                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
-                    string deleteUserQuery = "DELETE FROM [Users Table] WHERE Username = ?";
+                    // Delete all user data from related tables
+                    string[] deleteQueries = {
+                        "DELETE FROM [Journal Table] WHERE Username = ?",
+                        "DELETE FROM [Pomodoro Table] WHERE Username = ?",
+                        "DELETE FROM [Habit Checker Table] WHERE Username = ?",
+                        "DELETE FROM [ToDo List Table] WHERE Username = ?",
+                        "DELETE FROM [Users Table] WHERE Username = ?"
+                    };
 
-                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
+                    foreach (string query in deleteQueries)
                     {
-                        cmd1.Parameters.AddWithValue("?", username);
-                        cmd1.ExecuteNonQuery();
+                        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("?", username);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
 
-                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
-                    {
-                        cmd2.Parameters.AddWithValue("?", username);
-                        cmd2.ExecuteNonQuery();
-                    }
+                    MessageBox.Show("Your account has been deleted successfully.",
+                        "Account Deleted",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
 
-                    using (OleDbCommand cmd3 = new OleDbCommand(deleteUserQuery, conn))
-                    {
-                        cmd3.Parameters.AddWithValue("?", username);
-                        cmd3.ExecuteNonQuery();
-                    }
+                    // Close application and return to login
+                    GlobalUser.LoggedInUsername = null;
+                    Application.Exit();
                 }
-
-                MessageBox.Show("Your account has been deleted successfully.", "Account Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                foreach (Form form in Application.OpenForms)
-                {
-                    if (form is MAIN_HUB)
-                    {
-                        form.Close();
-                        break;
-                    }
-                }
-
-                // Log the user out and return to login screen
-                GlobalUser.LoggedInUsername = null;
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while deleting the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An error occurred while deleting the account:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
         public void ClearData()
         {
             string username = GlobalUser.LoggedInUsername;
 
-            DialogResult result = MessageBox.Show("Are you sure you want to clear your account? This action cannot be undone.",
-                                                  "Confirm Deletion", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-            if (result != DialogResult.Yes)
-                return;
+            DialogResult result = MessageBox.Show(
+                "Are you sure you want to clear your account? This action cannot be undone.",
+                "Confirm Deletion",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes) return;
 
             try
             {
@@ -314,52 +122,62 @@ namespace Cozify//database helper
                 {
                     conn.Open();
 
-                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
-                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
-                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
-                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
+                    // Clear data from all feature tables
+                    string[] clearQueries = {
+                        "DELETE FROM [Journal Table] WHERE Username = ?",
+                        "DELETE FROM [Pomodoro Table] WHERE Username = ?",
+                        "DELETE FROM [Habit Checker Table] WHERE Username = ?",
+                        "DELETE FROM [ToDo List Table] WHERE Username = ?"
+                    };
 
-                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
-                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
-                    using (OleDbCommand cmd3 = new OleDbCommand(deleteHabitsQuery, conn))
-                    using (OleDbCommand cmd4 = new OleDbCommand(deleteToDoQuery, conn))
+                    foreach (string query in clearQueries)
                     {
-                        cmd1.Parameters.AddWithValue("?", username);
-                        cmd2.Parameters.AddWithValue("?", username);
-                        cmd3.Parameters.AddWithValue("?", username);
-                        cmd4.Parameters.AddWithValue("?", username);
-
-                        cmd1.ExecuteNonQuery();
-                        cmd2.ExecuteNonQuery();
-                        cmd3.ExecuteNonQuery();
-                        cmd4.ExecuteNonQuery();
+                        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("?", username);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
+
+                    MessageBox.Show("Your account has been cleared successfully.",
+                        "Account Cleared",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
                 }
-
-                MessageBox.Show("Your account has been cleared successfully.", "Account Cleared", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occurred while clearing the account:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"An error occurred while clearing the account:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
         //admin
         public void LoadUserInfos(DataGridView dgv) //idk what to do here for now
         {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "SELECT Username, Password, CreatedAt FROM [Users Table]";
-                using (OleDbDataAdapter adapter = new OleDbDataAdapter(query, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    DataTable table = new DataTable();
-                    adapter.Fill(table);
-                    dgv.DataSource = table;
+                    conn.Open();
+                    string query = "SELECT Username, Password, CreatedAt FROM [Users Table]";
+
+                    using (OleDbDataAdapter adapter = new OleDbDataAdapter(query, conn))
+                    {
+                        DataTable table = new DataTable();
+                        adapter.Fill(table);
+                        dgv.DataSource = table;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading user data: {ex.Message}");
+            }
         }
+
         public void AdminDeleteAcc(string username)
         {
             try
@@ -368,38 +186,36 @@ namespace Cozify//database helper
                 {
                     conn.Open();
 
-                    // Delete related data first
-                    string deleteJournalsQuery = "DELETE FROM [Journal Table] WHERE Username = ?";
-                    string deletePomodoroQuery = "DELETE FROM [Pomodoro Table] WHERE Username = ?";
-                    string deleteHabitsQuery = "DELETE FROM [Habit Checker Table] WHERE Username = ?";
-                    string deleteToDoQuery = "DELETE FROM [ToDo List Table] WHERE Username = ?";
-                    string deleteUserQuery = "DELETE FROM [Users Table] WHERE Username = ?";
+                    // Delete all user data from related tables
+                    string[] deleteQueries = {
+                        "DELETE FROM [Journal Table] WHERE Username = ?",
+                        "DELETE FROM [Pomodoro Table] WHERE Username = ?",
+                        "DELETE FROM [Habit Checker Table] WHERE Username = ?",
+                        "DELETE FROM [ToDo List Table] WHERE Username = ?",
+                        "DELETE FROM [Users Table] WHERE Username = ?"
+                    };
 
-                    using (OleDbCommand cmd1 = new OleDbCommand(deleteJournalsQuery, conn))
-                    using (OleDbCommand cmd2 = new OleDbCommand(deletePomodoroQuery, conn))
-                    using (OleDbCommand cmd3 = new OleDbCommand(deleteHabitsQuery, conn))
-                    using (OleDbCommand cmd4 = new OleDbCommand(deleteToDoQuery, conn))
-                    using (OleDbCommand cmd5 = new OleDbCommand(deleteUserQuery, conn))
+                    foreach (string query in deleteQueries)
                     {
-                        cmd1.Parameters.AddWithValue("?", username);
-                        cmd2.Parameters.AddWithValue("?", username);
-                        cmd3.Parameters.AddWithValue("?", username);
-                        cmd4.Parameters.AddWithValue("?", username);
-                        cmd5.Parameters.AddWithValue("?", username);
-
-                        cmd1.ExecuteNonQuery();
-                        cmd2.ExecuteNonQuery();
-                        cmd3.ExecuteNonQuery();
-                        cmd4.ExecuteNonQuery();
-                        cmd5.ExecuteNonQuery();
+                        using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                        {
+                            cmd.Parameters.AddWithValue("?", username);
+                            cmd.ExecuteNonQuery();
+                        }
                     }
-                }
 
-                MessageBox.Show($"Account '{username}' and its data were deleted successfully.", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show($"Account '{username}' and its data were deleted successfully.",
+                        "Deleted",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error deleting user:\n" + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error deleting user:\n{ex.Message}",
+                    "Error",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
             }
         }
 
@@ -447,16 +263,24 @@ namespace Cozify//database helper
 
         public void UpdateAccountData(string username, string newPassword)// update account data
         {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            try
             {
-                conn.Open();
-                string query = "UPDATE [Users Table] SET [Password] = ? WHERE [Username] = ?";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("?", newPassword);
-                    cmd.Parameters.AddWithValue("?", username);
-                    cmd.ExecuteNonQuery();
+                    conn.Open();
+                    string query = "UPDATE [Users Table] SET [Password] = ? WHERE [Username] = ?";
+
+                    using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("?", newPassword);
+                        cmd.Parameters.AddWithValue("?", username);
+                        cmd.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating password: {ex.Message}");
             }
         }
 
@@ -468,22 +292,22 @@ namespace Cozify//database helper
             {
                 MailMessage mail = new MailMessage();
                 mail.From = new MailAddress(clientEmail);
-                mail.To.Add("totallycomfy.6969@gmail.com");  // Your admin email
-                mail.Subject = "Message from client: " + clientEmail;
+                mail.To.Add("totallycomfy.6969@gmail.com");
+                mail.Subject = $"Message from client: {clientEmail}";
                 mail.Body = message;
 
                 // Configure SMTP client for Gmail
-                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com");
-                smtpClient.Port = 587;
-                smtpClient.Credentials = new NetworkCredential("totallycomfy.6969@gmail.com", "emmh etxp rvtw aram");
-                smtpClient.EnableSsl = true;
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com")
+                {
+                    Port = 587,
+                    Credentials = new NetworkCredential("totallycomfy.6969@gmail.com", "emmh etxp rvtw aram"),
+                    EnableSsl = true
+                };
 
-                // Send the email
                 smtpClient.Send(mail);
             }
             catch (Exception ex)
             {
-                // You might want to log this error or handle it differently
                 throw new Exception("Failed to send email: " + ex.Message);
             }
         }
@@ -497,7 +321,7 @@ namespace Cozify//database helper
                 {
                     conn.Open();
 
-                    // Check if user exists
+                    // Check if username exists
                     string checkUserQuery = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ?";
                     using (OleDbCommand cmd = new OleDbCommand(checkUserQuery, conn))
                     {
@@ -506,27 +330,23 @@ namespace Cozify//database helper
 
                         if (userExists > 0)
                         {
-                            MessageBox.Show("Username already exists!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Username already exists!", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
                     }
 
-                    // Insert new user with explicit parameter types
+                    // Insert new user
                     string insertQuery = @"
-                INSERT INTO [Users Table] 
-                (Username, [Password], CreatedAt, TimeSpentUsingCozify, NoOfTimesCozifyOpened) 
-                VALUES (?, ?, ?, ?, ?)";
+                        INSERT INTO [Users Table] 
+                        (Username, [Password], CreatedAt, TimeSpentUsingCozify, NoOfTimesCozifyOpened) 
+                        VALUES (?, ?, ?, ?, ?)";
 
                     using (OleDbCommand cmd = new OleDbCommand(insertQuery, conn))
                     {
-                        // Add parameters with explicit types
                         cmd.Parameters.Add("@username", OleDbType.VarChar).Value = username;
                         cmd.Parameters.Add("@password", OleDbType.VarChar).Value = password;
-
-                        // Use proper date format without spaces
                         cmd.Parameters.Add("@createdAt", OleDbType.Date).Value = DateTime.Now;
-
-                        // Numeric defaults
                         cmd.Parameters.Add("@timeSpent", OleDbType.Double).Value = 0.0;
                         cmd.Parameters.Add("@launches", OleDbType.Integer).Value = 0;
 
@@ -534,11 +354,13 @@ namespace Cozify//database helper
 
                         if (rowsAffected > 0)
                         {
-                            MessageBox.Show("Registration successful!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Registration successful!", "Success",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                         else
                         {
-                            MessageBox.Show("Registration failed - no rows affected", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Registration failed - no rows affected", "Error",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
                 }
@@ -546,47 +368,49 @@ namespace Cozify//database helper
             catch (OleDbException dbEx)
             {
                 MessageBox.Show($"Database error: {dbEx.Message}\n\nPlease check your database structure.",
-                              "Database Error",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Error);
+                    "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Unexpected error: {ex.Message}",
-                              "Error",
-                              MessageBoxButtons.OK,
-                              MessageBoxIcon.Error);
+                MessageBox.Show($"Unexpected error: {ex.Message}", "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public void Login(string usernameLogin, string passwordLogin)
         {
-            using (OleDbConnection conn = new OleDbConnection(connectionString))
+            try
             {
-                conn.Open();
-
-                string query = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ? AND [Password] = ?";
-                using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                using (OleDbConnection conn = new OleDbConnection(connectionString))
                 {
-                    cmd.Parameters.AddWithValue("?", usernameLogin);
-                    cmd.Parameters.AddWithValue("?", passwordLogin);
+                    conn.Open();
 
-                    int userExists = (int)cmd.ExecuteScalar();
+                    string query = "SELECT COUNT(*) FROM [Users Table] WHERE Username = ? AND [Password] = ?";
+                    using (OleDbCommand cmd = new OleDbCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("?", usernameLogin);
+                        cmd.Parameters.AddWithValue("?", passwordLogin);
 
-                    if (userExists > 0)
-                    {
-                        MessageBox.Show("Login Successful!", "Welcome", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        GlobalUser.LoggedInUsername = usernameLogin;
-                        MAIN_HUB mainHub = new MAIN_HUB();
-                        mainHub.Show();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid Username or Password!", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        LoginReg loginReg = new LoginReg();
-                        loginReg.Show();
+                        int userExists = (int)cmd.ExecuteScalar();
+
+                        if (userExists > 0)
+                        {
+                            MessageBox.Show("Login Successful!", "Welcome",
+                                MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            GlobalUser.LoggedInUsername = usernameLogin;
+                            new MAIN_HUB().Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Invalid Username or Password!", "Login Failed",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Login error: {ex.Message}");
             }
         }
 
@@ -1921,12 +1745,52 @@ namespace Cozify//database helper
             }
         }
 
-        // Modified LoadUserStats without LastActive
+        // Rate giver
+        private bool IsDateInThisWeek(DateTime date)
+        {
+            var startOfWeek = DateTime.Today.AddDays(-(int)DateTime.Today.DayOfWeek);
+            var endOfWeek = startOfWeek.AddDays(6);
+            return date >= startOfWeek && date <= endOfWeek;
+        }
+
+        public string GetWeeklyProductivityRating(string username)
+        {
+            int totalScore = 0;
+
+            // Get Pomodoro data for this week
+            var pomodoroList = GetDailyPomodoroData(username)
+                .Where(d => IsDateInThisWeek(d.Date))
+                .ToList();
+
+            int pomodoroSessions = pomodoroList.Sum(d => d.CompletedSessions);
+            int workMinutes = pomodoroList.Sum(d => d.WorkMinutes);
+            totalScore += pomodoroSessions * 2;
+            totalScore += workMinutes / 30;
+
+            // Get Task data for this week
+            var taskList = GetThisWeeksTaskData(username);
+            int completedTasks = taskList.Sum(d => d.CompletedTasks);
+            totalScore += completedTasks * 3;
+
+            // Get Habit streak data
+            var habitStreak = GetHabitStreakData(username);
+            int currentStreakSum = habitStreak.HabitStreaks.Sum(h => h.CurrentStreak);
+            totalScore += currentStreakSum;
+
+            if (totalScore >= 90)
+                return "🔥 Super Productive!";
+            else if (totalScore >= 60)
+                return "💪 Doing Great!";
+            else if (totalScore >= 30)
+                return "🙂 Keep Going!";
+            else
+                return "😴 Time to Refocus!";
+        }
+
         public void LoadUserStats(Label UserTimeSpent, Label TimesLaunched)
         {
             try
             {
-                // Ensure stats record exists before loading
                 InitializeUserStats(GlobalUser.LoggedInUsername);
 
                 using (OleDbConnection conn = new OleDbConnection(connectionString))

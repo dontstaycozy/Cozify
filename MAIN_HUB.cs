@@ -9,12 +9,10 @@ using System.IO;
 using System.Linq;
 using System.Media;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using NAudio.Wave; // Use NAudio for audio playback
+using NAudio.Wave;
 using NAudio.CoreAudioApi;
 
 //add music player, add analytics and monitoring, add admin account
@@ -29,19 +27,19 @@ namespace finals
         private POMODORO pomo;
         private STATS sTAT;
         private MailToAdmin mailToAdmin;
+
         private bool isFocused = false;
         private Form activeFeature = null;
         private bool sessionActive = false;
+
         private string _currentPlaylistDirectory;
         private List<string> _currentPlaylistTracks = new List<string>();
         private int _currentTrackIndex = 0;
-        private IWavePlayer _wavePlayer; // Use IWavePlayer
+        private IWavePlayer _wavePlayer;
         private AudioFileReader _audioFileReader;
         private bool _isPlaying = false;
-        private float _volume = 1.0f; // Volume is a float (0.0 to 1.0) with NAudio
+        private float _volume = 1.0f;
         private bool _isLooping = false;
-
-
 
         [DllImport("user32.dll")]
         private static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
@@ -52,6 +50,7 @@ namespace finals
         {
             InitializeComponent();
             this.MouseDown += MAIN_HUB_MouseDown;
+
             Application.ApplicationExit += (sender, e) =>
             {
                 if (sessionActive)
@@ -60,6 +59,8 @@ namespace finals
                     sessionActive = false;
                 }
             };
+
+            // Volume Slider Init
             trkBarVolumeSlider.Minimum = 0;
             trkBarVolumeSlider.Maximum = 100;
             trkBarVolumeSlider.Value = (int)(_volume * 100);
@@ -67,29 +68,25 @@ namespace finals
             trkBarVolumeSlider.LargeChange = 10;
             trkBarVolumeSlider.SmallChange = 1;
         }
+
         private void MAIN_HUB_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 ReleaseCapture();
-                SendMessage(this.Handle, 0xA1, 0x2, 0); // Dragging action
+                SendMessage(this.Handle, 0xA1, 0x2, 0);
             }
         }
 
+        // Window Controls
         private void btnMaxMainHub_Click(object sender, EventArgs e)
         {
-
-            if (this.WindowState == FormWindowState.Maximized)
-                this.WindowState = FormWindowState.Normal;
-            else
-                this.WindowState = FormWindowState.Maximized;
-
+            this.WindowState = (this.WindowState == FormWindowState.Maximized)
+                ? FormWindowState.Normal
+                : FormWindowState.Maximized;
         }
 
-        private void btnMiniMainHub_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
+        private void btnMiniMainHub_Click(object sender, EventArgs e) => this.WindowState = FormWindowState.Minimized;
 
         private void btnExitMainHub_Click(object sender, EventArgs e)
         {
@@ -98,19 +95,15 @@ namespace finals
             Application.Exit();
         }
 
+
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             try
             {
-                // Close all child forms
-                if (habitChecker != null && !habitChecker.IsDisposed) habitChecker.Close();
-                if (toDo != null && !toDo.IsDisposed) toDo.Close();
-                if (journal != null && !journal.IsDisposed) journal.Close();
-                if (guide != null && !guide.IsDisposed) guide.Close();
-                if (pomo != null && !pomo.IsDisposed) pomo.Close();
-                if (sTAT != null && !sTAT.IsDisposed) sTAT.Close();
+                // Close all opened feature forms
+                foreach (Form feature in new Form[] { habitChecker, toDo, journal, guide, pomo, sTAT })
+                    if (feature != null && !feature.IsDisposed) feature.Close();
 
-                // Stop session timer
                 if (sessionActive)
                 {
                     db.StopSessionTimer();
@@ -118,8 +111,7 @@ namespace finals
                 }
 
                 this.Hide();
-                LOGIN lOGIN = new LOGIN();
-                lOGIN.Show();
+                new LOGIN().Show();
                 StopPlayback();
             }
             catch (Exception ex)
@@ -136,7 +128,6 @@ namespace finals
                 WelcomeLabel.Text = $"{GlobalUser.LoggedInUsername}'s space";
                 this.Resize += MAIN_HUB_Resize;
 
-                // Only start session if not already active
                 if (!sessionActive)
                 {
                     db.SessionStartTime();
@@ -151,11 +142,10 @@ namespace finals
             }
         }
 
-        private void MAIN_HUB_FormClosing(object sender, FormClosingEventArgs e)//fix TIMESPENT PLEASE
+        private void MAIN_HUB_FormClosing(object sender, FormClosingEventArgs e)
         {
             try
             {
-                // Only stop session if active
                 if (sessionActive)
                 {
                     db.StopSessionTimer();
@@ -167,29 +157,14 @@ namespace finals
             catch (Exception ex)
             {
                 Debug.WriteLine($"Error stopping session timer: {ex}");
-                // Don't prevent closing if there's an error
             }
-
         }
+
 
         private void MAIN_HUB_Resize(object sender, EventArgs e)
         {
-            if (this.WindowState == FormWindowState.Minimized)
-            {
-                // Minimize the active feature if it exists
-                if (activeFeature != null && !activeFeature.IsDisposed)
-                {
-                    activeFeature.WindowState = FormWindowState.Minimized;
-                }
-            }
-            else if (this.WindowState == FormWindowState.Normal)
-            {
-                // Restore the active feature if it exists
-                if (activeFeature != null && !activeFeature.IsDisposed)
-                {
-                    activeFeature.WindowState = FormWindowState.Normal;
-                }
-            }
+            if (activeFeature != null && !activeFeature.IsDisposed)
+                activeFeature.WindowState = this.WindowState;
         }
 
         private void MainHubClock(object sender, EventArgs e)
@@ -316,6 +291,8 @@ namespace finals
             lblClock.Visible = !isFocused;
             lblDate.Visible = !isFocused;
             btnStatistics.Visible = !isFocused;
+            btnSendMessageToAdmin.Visible = !isFocused;
+            btnMusicLib.Visible = !isFocused;
 
         }
 
@@ -375,21 +352,25 @@ namespace finals
             if (_currentPlaylistTracks.Count == 0)
                 return;
 
-            if (!_isPlaying)
+            if (!_isPlaying) 
             {
-                if (_wavePlayer == null) //create on first play
+                if (_wavePlayer == null)
+                {
                     PlayTrack(_currentTrackIndex);
+                }
                 else
-                    _wavePlayer.Play(); //resume
-                _isPlaying = true;
+                {
+                    _wavePlayer.Play();
+                    _isPlaying = true;
+                }
                 using (var ms = new MemoryStream(Cozify.Properties.Resources.Pause_Button))
                 {
                     btnPlayORStopTrack.Image = Image.FromStream(ms);
-                } // Corrected button text
+                }
             }
-            else
+            else // If currently playing, pause
             {
-                _wavePlayer?.Pause(); // Use the null-conditional operator
+                _wavePlayer?.Pause();
                 _isPlaying = false;
                 using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
                 {
@@ -407,14 +388,13 @@ namespace finals
 
             try
             {
-                // Dispose of any existing player and reader
                 _wavePlayer?.Dispose();
                 _audioFileReader?.Dispose();
 
                 _audioFileReader = new AudioFileReader(_currentPlaylistTracks[index]);
-                _wavePlayer = new WaveOut(); // You can choose a different output if needed
+                _wavePlayer = new WaveOut();
                 _wavePlayer.Init(_audioFileReader);
-                _wavePlayer.PlaybackStopped += OnPlaybackStopped; // Subscribe to the PlaybackStopped event
+                _wavePlayer.PlaybackStopped += OnPlaybackStopped; 
                 _wavePlayer.Play();
                 _isPlaying = true;
                 using (var ms = new MemoryStream(Cozify.Properties.Resources.Pause_Button))
@@ -450,13 +430,11 @@ namespace finals
                 }
                 else if (_isLooping && _currentPlaylistTracks.Count > 0)
                 {
-                    // Loop back to first track if looping is enabled
                     _currentTrackIndex = 0;
                     PlayTrack(_currentTrackIndex);
                 }
                 else
                 {
-                    // Playback ended normally
                     UpdateNowPlaying(-1);
                     using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))
                     {
@@ -478,7 +456,7 @@ namespace finals
             if (_currentPlaylistTracks.Count == 0)
                 return;
 
-            StopPlayback(); //use stop playback
+            StopPlayback();
             _currentTrackIndex++;
             if (_currentTrackIndex >= _currentPlaylistTracks.Count)
             {
@@ -500,7 +478,7 @@ namespace finals
             PlayTrack(_currentTrackIndex);
         }
 
-        private void btnMusicLib_Click(object sender, EventArgs e)//promps you to pick a file folder that has mpr or wav in it and use it as youre "playtlist"
+        private void btnMusicLib_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folderDialog = new FolderBrowserDialog();
             folderDialog.Description = "Select the folder containing your music files (mp3, wav).";
@@ -523,9 +501,7 @@ namespace finals
             if (files.Length > 0)
             {
                 _currentPlaylistTracks = files.OrderBy(f => Path.GetFileName(f)).ToList();
-                // You might want to update a ListBox or other control here to display the playlist
-                // instead of the commented-out ListView code.
-                UpdateNowPlaying(_currentTrackIndex); //show the first song
+                UpdateNowPlaying(_currentTrackIndex);
             }
             else
             {
@@ -535,7 +511,7 @@ namespace finals
 
         private void trkBarVolumeSlider_Scroll(object sender, EventArgs e)
         {
-            _volume = trkBarVolumeSlider.Value / 100.0f; // Convert to 0.0 to 1.0 range
+            _volume = trkBarVolumeSlider.Value / 100.0f;
             if (_wavePlayer != null)
                 _wavePlayer.Volume = _volume;
             this.Text = "Volume: " + (int)(_volume * 100);
@@ -555,19 +531,17 @@ namespace finals
         }
         private void btnLoopTracks_Click(object sender, EventArgs e)
         {
-
-            if (!_isLooping)
+            _isLooping = !_isLooping;
+            if (_isLooping)
             {
-                _isLooping = true;
-                using (MemoryStream ms = new MemoryStream(Cozify.Properties.Resources.Repeat))
+                using (MemoryStream ms = new MemoryStream(Cozify.Properties.Resources.RepeatActivated))
                 {
                     btnLoopTracks.Image = Image.FromStream(ms);
                 }
             }
             else
             {
-                _isLooping = false;
-                using (var ms = new MemoryStream(Cozify.Properties.Resources.RepeatActivated))
+                using (var ms = new MemoryStream(Cozify.Properties.Resources.Repeat))
                 {
                     btnLoopTracks.Image = Image.FromStream(ms);
                 }
@@ -578,7 +552,7 @@ namespace finals
             _wavePlayer?.Stop();
             _wavePlayer?.Dispose();
             _audioFileReader?.Dispose();
-            _wavePlayer = null; //important
+            _wavePlayer = null;
             _audioFileReader = null;
             _isPlaying = false;
             using (var ms = new MemoryStream(Cozify.Properties.Resources.Play_Button))

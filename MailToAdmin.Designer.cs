@@ -29,12 +29,13 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label2 = new AntdUI.Label();
             this.tbxMessage = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tbxEmailClient = new System.Windows.Forms.TextBox();
             this.lblUserMailConcern = new AntdUI.Label();
             this.btnSendMail = new AntdUI.Button();
-            this.label2 = new AntdUI.Label();
+            this.btnCloseMail = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,8 +51,18 @@
             this.panel1.Controls.Add(this.tbxEmailClient);
             this.panel1.Location = new System.Drawing.Point(26, 69);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(807, 443);
+            this.panel1.Size = new System.Drawing.Size(807, 416);
             this.panel1.TabIndex = 3;
+            // 
+            // label2
+            // 
+            this.label2.Font = new System.Drawing.Font("Pixeltype", 22F);
+            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.label2.Location = new System.Drawing.Point(25, 65);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(761, 51);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "What is your concern?";
             // 
             // tbxMessage
             // 
@@ -65,7 +76,7 @@
             this.tbxMessage.Location = new System.Drawing.Point(25, 119);
             this.tbxMessage.Multiline = true;
             this.tbxMessage.Name = "tbxMessage";
-            this.tbxMessage.Size = new System.Drawing.Size(761, 297);
+            this.tbxMessage.Size = new System.Drawing.Size(761, 253);
             this.tbxMessage.TabIndex = 7;
             // 
             // label1
@@ -113,15 +124,19 @@
             this.btnSendMail.Text = "Send";
             this.btnSendMail.Click += new System.EventHandler(this.btnSendMail_Click);
             // 
-            // label2
+            // btnCloseMail
             // 
-            this.label2.Font = new System.Drawing.Font("Pixeltype", 22F);
-            this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.label2.Location = new System.Drawing.Point(25, 65);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(761, 51);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "What is your concern?";
+            this.btnCloseMail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnCloseMail.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCloseMail.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
+            this.btnCloseMail.Image = global::Cozify.Properties.Resources.Back_Arrow;
+            this.btnCloseMail.Location = new System.Drawing.Point(26, 504);
+            this.btnCloseMail.Margin = new System.Windows.Forms.Padding(1);
+            this.btnCloseMail.Name = "btnCloseMail";
+            this.btnCloseMail.Size = new System.Drawing.Size(92, 79);
+            this.btnCloseMail.TabIndex = 24;
+            this.btnCloseMail.UseVisualStyleBackColor = false;
+            this.btnCloseMail.Click += new System.EventHandler(this.btnCloseMail_Click);
             // 
             // MailToAdmin
             // 
@@ -129,6 +144,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(56)))), ((int)(((byte)(69)))));
             this.ClientSize = new System.Drawing.Size(859, 595);
+            this.Controls.Add(this.btnCloseMail);
             this.Controls.Add(this.btnSendMail);
             this.Controls.Add(this.lblUserMailConcern);
             this.Controls.Add(this.panel1);
@@ -153,5 +169,6 @@
         private AntdUI.Label lblUserMailConcern;
         private AntdUI.Button btnSendMail;
         private AntdUI.Label label2;
+        private System.Windows.Forms.Button btnCloseMail;
     }
 }

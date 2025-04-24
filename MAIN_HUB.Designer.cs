@@ -705,6 +705,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MAIN_HUB_FormClosing);
             this.Load += new System.EventHandler(this.MAIN_HUB_Load);
             this.Resize += new System.EventHandler(this.MAIN_HUB_Resize);
             this.pnlTime.ResumeLayout(false);

@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net;
-using System.Net.Mail;
 
 namespace Cozify
 {
-    public partial class MailToAdmin: BaseForm
+    public partial class MailToAdmin : BaseForm
     {
         public MailToAdmin()
         {
@@ -26,16 +17,22 @@ namespace Cozify
 
         private void btnSendMail_Click(object sender, EventArgs e)
         {
+            string clientEmail = tbxEmailClient.Text.Trim();
             string message = tbxMessage.Text.Trim();
-            string ClientEmaile = tbxEmailClient.Text.Trim();
-            // Check if input fields are filled
-            if (string.IsNullOrWhiteSpace(ClientEmaile) || string.IsNullOrWhiteSpace(message))
+
+            if (string.IsNullOrWhiteSpace(clientEmail) || string.IsNullOrWhiteSpace(message))
             {
                 MessageBox.Show("Please enter both sender email and message.", "Mail Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            db.SendMailToAdmin(ClientEmaile, message);
+
+            db.SendMailToAdmin(clientEmail, message);
             MessageBox.Show("Mail sent successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnCloseMail_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }
