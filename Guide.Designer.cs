@@ -95,7 +95,7 @@
             this.label5.Size = new System.Drawing.Size(342, 101);
             this.label5.TabIndex = 9;
             this.label5.Text = "Deep Focus: Eliminate distractions! Hide all unneeded features and stay fully eng" +
-    "aged in your current task. Features return when you step out of focus.";
+    "aged in your current task.";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // label4

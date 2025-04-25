@@ -32,7 +32,7 @@ namespace Cozify
             lblTotalTasksCompleted.Text = $"Total Completed Tasks: {totalCompletedToDoCount}";
             lblTotalHabitsAdded.Text = $"Total Habits Added: {habitcount}";
             lblPomoSessionsCompelted.Text = $"Pomodoro Sessions Completed: {completedSessions}";
-            lblTotalTimeSpentPomo.Text = $"Total Time Spent Using Pomodoro: {pomoTimeSpent} hrs";
+            lblTotalTimeSpentPomo.Text = $"Total Time Spent Using Pomodoro: {pomoTimeSpent} hr/s";
             string ProductivityRating = db.GetWeeklyProductivityRating(GlobalUser.LoggedInUsername);
             lblRating.Text = $"{ProductivityRating}";
         }

@@ -97,5 +97,36 @@ namespace finals
             loginReg.Show();
             this.Hide();
         }
+
+        private void tbxPasswordConfirm_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r')
+            {
+                string username = tbxUsernameReg.Text.Trim();
+                string password = tbxPassword.Text.Trim();
+                string passwordConfirm = tbxPasswordConfirm.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                {
+                    MessageBox.Show("Please fill in all fields.", "Registration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (password != passwordConfirm)
+                {
+                    MessageBox.Show("Passwords do not match!", "Registration Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    MAIN_HUB mainHub = new MAIN_HUB();
+                    mainHub.Show();
+                    return;
+                }
+
+                db.Register(username, password);
+
+                LoginReg loginReg = new LoginReg();
+                loginReg.Show();
+                this.Hide();
+            }
+        }
     }
 }

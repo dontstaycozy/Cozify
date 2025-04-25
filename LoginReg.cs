@@ -75,5 +75,30 @@ namespace Cozify
             int panel2X = (formWidth - panel2.Width) / 2;
             int btnX = (formWidth - btnLogin.Width) / 2;
         }
+
+        private void tbxPasswordLogin_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '\r')
+            {
+                string username = tbxUsernameLogin.Text.Trim();
+                string password = tbxPasswordLogin.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                {
+                    MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (username == "admin" && password == "admin123")
+                {
+                    new Admin().Show();
+                    this.Hide();
+                    return;
+                }
+
+                db.Login(username, password);
+                this.Hide();
+            }
+        }
     }
 }

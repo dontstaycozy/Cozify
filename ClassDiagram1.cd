@@ -39,43 +39,6 @@
   </Class>
   <Class Name="Cozify.dbHelper" Collapsed="true">
     <Position X="32" Y="2.25" Width="1.5" />
-    <NestedTypes>
-      <Class Name="Cozify.dbHelper.HabitMetaData" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Cozify.dbHelper.HabitStreak" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Cozify.dbHelper.StreakAnalyticsData" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Cozify.dbHelper.TaskMetaData" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Cozify.dbHelper.DailyTaskData" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Cozify.dbHelper.PomodoroStats" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-      <Class Name="Cozify.dbHelper.DailyPomodoroData" Collapsed="true">
-        <TypeIdentifier>
-          <NewMemberFileName>GlobalUser.cs</NewMemberFileName>
-        </TypeIdentifier>
-      </Class>
-    </NestedTypes>
     <TypeIdentifier>
       <HashCode>AgEjAGEEIAKBCRwBQgAQAABBBogBATgAAJAyAAAAjAE=</HashCode>
       <FileName>GlobalUser.cs</FileName>
@@ -114,7 +77,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>AAAAAAAEKGAAAAAAAACEAAACAAIAgAIGAAhAAQ0BACQ=</HashCode>
+      <HashCode>AAAAAAAEKGAAAAAAAACEAAACAAIAgAIGAAhAAQ0BQCQ=</HashCode>
       <FileName>STATS.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -172,7 +135,7 @@
       </Class>
     </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAgAAAAEACQBCRBUAACEAEFCAEAAgEJGQAQAAQBAIQA=</HashCode>
+      <HashCode>AggAAAAGACQBCRBUAACEAEFaAEBAgEJCQEQIAwBAIQA=</HashCode>
       <FileName>POMODORO.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -196,7 +159,7 @@
   <Class Name="Cozify.Properties.Resources" Collapsed="true">
     <Position X="32" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QiYAgICAACIIBnxASACFNMMAAZGwSMUByCYBNSEIQJg=</HashCode>
+      <HashCode>QiYAgICAACIIBnxASACFNMMAAZGwWMUByCYBNTEIQJg=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Cozify.Properties.Settings" Collapsed="true">

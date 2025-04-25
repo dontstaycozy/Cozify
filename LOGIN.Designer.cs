@@ -124,6 +124,7 @@
             this.tbxPasswordConfirm.Size = new System.Drawing.Size(395, 21);
             this.tbxPasswordConfirm.TabIndex = 2;
             this.tbxPasswordConfirm.UseSystemPasswordChar = true;
+            this.tbxPasswordConfirm.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbxPasswordConfirm_KeyPress);
             // 
             // label5
             // 
@@ -337,9 +338,9 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::Cozify.Properties.Resources._234646_A_Gentle_Hour_of_Bliss;
-            this.pictureBox1.Location = new System.Drawing.Point(-442, 0);
+            this.pictureBox1.Location = new System.Drawing.Point(-520, 0);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(925, 650);
+            this.pictureBox1.Size = new System.Drawing.Size(1005, 650);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 28;
             this.pictureBox1.TabStop = false;
